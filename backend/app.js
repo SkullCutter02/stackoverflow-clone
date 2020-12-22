@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
+const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 const { v4 } = require("uuid");
 const { sequelize, User } = require("./models");
@@ -11,11 +12,12 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
+app.use(cookieParser());
 
 app.post("/signup", async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, rememberMe } = req.body;
 
-  if (username && email && password) {
+  if (username && email && password && rememberMe !== null) {
     const checkUsername = await User.findOne({
       where: { username: username },
     });
@@ -37,6 +39,11 @@ app.post("/signup", async (req, res) => {
           if (err) {
             return res.status(500).json({ err });
           } else {
+            if (!rememberMe) {
+              res.cookie("token", token);
+            } else {
+              res.cookie("token", token, { maxAge: 31536000000 });
+            }
             return res.json({ token });
           }
         });
