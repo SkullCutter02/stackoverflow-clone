@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
   }
   Post.init(
     {
+      uuid: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+      },
       title: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -23,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       userId: {
-        type: DataTypes.STRING,
+        type: DataTypes.UUID,
         allowNull: false,
       },
     },

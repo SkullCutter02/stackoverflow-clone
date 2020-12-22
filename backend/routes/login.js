@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
       const isValidPass = await comparePassword(password, user.hash);
 
       if (isValidPass) {
-        jwt.sign({ id: user.id }, "secretkey", (err, token) => {
+        jwt.sign({ uuid: user.uuid }, "secretkey", (err, token) => {
           if (err) {
             return res.status(500).json({ err });
           } else {

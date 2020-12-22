@@ -1,5 +1,4 @@
 const express = require("express");
-const { v4 } = require("uuid");
 const { User, Post } = require("../models");
 
 const router = express.Router();
@@ -13,7 +12,6 @@ router.post("/", async (req, res) => {
 
     if (user) {
       const post = await Post.create({
-        id: v4(),
         title,
         body,
         userId: user.id,

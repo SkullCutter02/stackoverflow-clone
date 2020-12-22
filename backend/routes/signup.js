@@ -1,6 +1,5 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const { v4 } = require("uuid");
 const { User } = require("../models");
 const { hashPassword } = require("../hash");
 
@@ -24,11 +23,11 @@ router.post("/", async (req, res) => {
         return res.status(500).json({ msg: "Email already exists" });
       } else {
         const hash = await hashPassword(password);
-        const user = await User.create({ id: v4(), username, email, hash });
+        const user = await User.create({ username, email, hash });
 
         if (user) {
-          const id = user.id;
-          jwt.sign({ id }, "secretkey", (err, token) => {
+          const uuid = user.uuid;
+          jwt.sign({ uuid }, "secretkey", (err, token) => {
             if (err) {
               return res.status(500).json({ err });
             } else {
