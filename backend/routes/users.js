@@ -3,11 +3,11 @@ const { User, Post } = require("../models");
 
 const router = express.Router();
 
-router.get("/:id", async (req, res) => {
+router.get("/:uuid", async (req, res) => {
   try {
-    const { id } = req.params;
+    const { uuid } = req.params;
     const user = await User.findOne({
-      where: { id: id },
+      where: { uuid: uuid },
       include: [Post],
     });
     return res.json(user);
