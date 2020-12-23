@@ -69,6 +69,28 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/:uuid/vote", async (req, res) => {
+  try {
+    const { voteType } = req.body;
+    const { uuid } = req.params;
+
+    const post = await Post.findOne({ where: { uuid: uuid } });
+
+    if (voteType === "upvote") {
+      await post.update({ votes: parseInt(post.votes) + 1 });
+    } else if (voteType === "downvote") {
+      await post.update({ votes: parseInt(post.votes) - 1 });
+    } else {
+      return res.status(500).json({ msg: "Wrong voting type" });
+    }
+
+    return res.json(post);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ err });
+  }
+});
+
 router.post("/:uuid/comments", async (req, res) => {
   try {
     const { body, userUuid } = req.body;
@@ -86,6 +108,33 @@ router.post("/:uuid/comments", async (req, res) => {
       return res.json({ comment });
     } else {
       return res.status(500).json({ msg: "User or post not found" });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ err });
+  }
+});
+
+router.post("/:postUuid/comments/:commentUuid/vote", async (req, res) => {
+  try {
+    const { voteType } = req.body;
+    const { postUuid, commentUuid } = req.params;
+
+    const post = await Post.findOne({ where: { uuid: postUuid } });
+    const comment = await Comment.findOne({ where: { uuid: commentUuid } });
+
+    if (post) {
+      if (voteType === "upvote") {
+        await comment.update({ votes: parseInt(comment.votes) + 1 });
+      } else if (voteType === "downvote") {
+        await comment.update({ votes: parseInt(comment.votes) - 1 });
+      } else {
+        return res.status(500).json({ msg: "Wrong voting type" });
+      }
+
+      return res.json(comment);
+    } else {
+      return res.status(500).json({ msg: "Post not found" });
     }
   } catch (err) {
     console.log(err);
