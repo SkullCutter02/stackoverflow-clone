@@ -47,7 +47,11 @@ router.post("/", async (req, res) => {
         userId: user.id,
       });
 
-      if (communities && communities.length > 0) {
+      if (
+        communities !== undefined &&
+        communities !== null &&
+        communities.length > 0
+      ) {
         post.setCommunities(communities);
       }
 
