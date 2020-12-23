@@ -1,5 +1,5 @@
 const express = require("express");
-const { User, Post, Community, Comment } = require("../models");
+const { User, Post, Community, Comment, PostVote } = require("../models");
 
 const router = express.Router();
 
@@ -71,17 +71,40 @@ router.post("/", async (req, res) => {
 
 router.post("/:uuid/vote", async (req, res) => {
   try {
-    const { voteType } = req.body;
+    const { userUuid, voteType } = req.body;
     const { uuid } = req.params;
 
     const post = await Post.findOne({ where: { uuid: uuid } });
+    const voteStatus = await PostVote.findOne({
+      where: { userUuid: userUuid, postUuid: uuid },
+    });
 
-    if (voteType === "upvote") {
-      await post.update({ votes: parseInt(post.votes) + 1 });
-    } else if (voteType === "downvote") {
-      await post.update({ votes: parseInt(post.votes) - 1 });
+    if (!voteStatus) {
+      await PostVote.create({
+        userUuid: userUuid,
+        postUuid: uuid,
+        voteType: voteType,
+      });
+
+      if (voteType === "upvote") {
+        await post.update({ votes: parseInt(post.votes) + 1 });
+      } else if (voteType === "downvote") {
+        await post.update({ votes: parseInt(post.votes) - 1 });
+      } else {
+        return res.status(500).json({ msg: "Wrong voting type" });
+      }
+    } else if (voteStatus.voteType !== voteType) {
+      await voteStatus.update({ voteType });
+
+      if (voteType === "upvote") {
+        await post.update({ votes: parseInt(post.votes) + 1 });
+      } else if (voteType === "downvote") {
+        await post.update({ votes: parseInt(post.votes) - 1 });
+      } else {
+        return res.status(500).json({ msg: "Wrong voting type" });
+      }
     } else {
-      return res.status(500).json({ msg: "Wrong voting type" });
+      return res.json({ msg: "User already voted" });
     }
 
     return res.json(post);
