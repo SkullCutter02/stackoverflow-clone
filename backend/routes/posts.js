@@ -1,5 +1,5 @@
 const express = require("express");
-const { User, Post } = require("../models");
+const { User, Post, Community } = require("../models");
 
 const router = express.Router();
 
@@ -13,6 +13,11 @@ router.get("/:uuid", async (req, res) => {
           model: User,
           as: "user",
           attributes: ["uuid", "username", "reputation"],
+        },
+        {
+          model: Community,
+          as: "communities",
+          through: { attributes: [] },
         },
       ],
     });
@@ -30,7 +35,7 @@ router.get("/:uuid", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { title, body, userUuid } = req.body;
+    const { title, body, userUuid, communities } = req.body;
     const user = await User.findOne({
       where: { uuid: userUuid },
     });
@@ -41,6 +46,11 @@ router.post("/", async (req, res) => {
         body,
         userId: user.id,
       });
+
+      if (communities && communities.length > 0) {
+        post.setCommunities(communities);
+      }
+
       return res.json(post);
     } else {
       return res.status(500).json({ msg: "User doesn't exist" });
