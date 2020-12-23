@@ -3,11 +3,33 @@ const { User, Post } = require("../models");
 
 const router = express.Router();
 
+router.get("/:uuid", async (req, res) => {
+  try {
+    const { uuid } = req.params;
+    const post = await Post.findOne({
+      where: { uuid: uuid },
+      include: {
+        model: User,
+        as: "user",
+      },
+    });
+
+    if (post) {
+      return res.json(post);
+    } else {
+      return res.status(500).json({ msg: "Post not found" });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ err });
+  }
+});
+
 router.post("/", async (req, res) => {
   try {
-    const { title, body, userId } = req.body;
+    const { title, body, userUuid } = req.body;
     const user = await User.findOne({
-      where: { id: userId },
+      where: { uuid: userUuid },
     });
 
     if (user) {

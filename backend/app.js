@@ -11,8 +11,7 @@ app.use(cors());
 app.use(helmet());
 app.use(cookieParser());
 
-app.use("/signup", require("./routes/signup"));
-app.use("/login", require("./routes/login"));
+app.use("/auth", require("./routes/auth"));
 app.use("/posts", require("./routes/posts"));
 app.use("/users", require("./routes/users"));
 
