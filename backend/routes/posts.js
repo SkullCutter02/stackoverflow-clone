@@ -74,40 +74,45 @@ router.post("/:uuid/vote", async (req, res) => {
     const { userUuid, voteType } = req.body;
     const { uuid } = req.params;
 
+    const user = await User.findOne({ where: { uuid: userUuid } });
     const post = await Post.findOne({ where: { uuid: uuid } });
     const voteStatus = await PostVote.findOne({
       where: { userUuid: userUuid, postUuid: uuid },
     });
 
-    if (!voteStatus) {
-      await PostVote.create({
-        userUuid: userUuid,
-        postUuid: uuid,
-        voteType: voteType,
-      });
+    if (user) {
+      if (!voteStatus) {
+        await PostVote.create({
+          userUuid: userUuid,
+          postUuid: uuid,
+          voteType: voteType,
+        });
 
-      if (voteType === "upvote") {
-        await post.update({ votes: parseInt(post.votes) + 1 });
-      } else if (voteType === "downvote") {
-        await post.update({ votes: parseInt(post.votes) - 1 });
-      } else {
-        return res.status(500).json({ msg: "Wrong voting type" });
-      }
-    } else if (voteStatus.voteType !== voteType) {
-      await voteStatus.update({ voteType });
+        if (voteType === "upvote") {
+          await post.update({ votes: parseInt(post.votes) + 1 });
+        } else if (voteType === "downvote") {
+          await post.update({ votes: parseInt(post.votes) - 1 });
+        } else {
+          return res.status(500).json({ msg: "Wrong voting type" });
+        }
+      } else if (voteStatus.voteType !== voteType) {
+        await voteStatus.update({ voteType });
 
-      if (voteType === "upvote") {
-        await post.update({ votes: parseInt(post.votes) + 1 });
-      } else if (voteType === "downvote") {
-        await post.update({ votes: parseInt(post.votes) - 1 });
+        if (voteType === "upvote") {
+          await post.update({ votes: parseInt(post.votes) + 1 });
+        } else if (voteType === "downvote") {
+          await post.update({ votes: parseInt(post.votes) - 1 });
+        } else {
+          return res.status(500).json({ msg: "Wrong voting type" });
+        }
       } else {
-        return res.status(500).json({ msg: "Wrong voting type" });
+        return res.json({ msg: "User already voted" });
       }
+
+      return res.json(post);
     } else {
-      return res.json({ msg: "User already voted" });
+      return res.status(500).json({ msg: "User doesn't exist" });
     }
-
-    return res.json(post);
   } catch (err) {
     console.log(err);
     return res.status(500).json({ err });
