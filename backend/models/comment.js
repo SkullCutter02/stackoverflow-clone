@@ -1,55 +1,55 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Post extends Model {
+  class Comment extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({ User, Community, Comment }) {
+    static associate({ Post, User }) {
       // define association here
+      this.belongsTo(Post, { foreignKey: "postId", as: "post" });
       this.belongsTo(User, { foreignKey: "userId", as: "user" });
-      this.belongsToMany(Community, {
-        foreignKey: "postId",
-        through: "CommunityPost",
-        as: "communities",
-      });
-      this.hasMany(Comment, { foreignKey: "postId", as: "comments" });
     }
 
     toJSON() {
-      return { ...this.get(), id: undefined, userId: undefined };
+      return {
+        ...this.get(),
+        id: undefined,
+        userId: undefined,
+        postId: undefined,
+      };
     }
   }
-  Post.init(
+  Comment.init(
     {
       uuid: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-      },
-      title: {
-        type: DataTypes.STRING,
-        allowNull: false,
       },
       body: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       votes: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         defaultValue: 0,
       },
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      postId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
     {
       sequelize,
-      tableName: "posts",
-      modelName: "Post",
+      tableName: "comments",
+      modelName: "Comment",
     }
   );
-  return Post;
+  return Comment;
 };

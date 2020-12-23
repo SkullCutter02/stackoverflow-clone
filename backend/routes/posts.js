@@ -1,5 +1,5 @@
 const express = require("express");
-const { User, Post, Community } = require("../models");
+const { User, Post, Community, Comment } = require("../models");
 
 const router = express.Router();
 
@@ -18,6 +18,10 @@ router.get("/:uuid", async (req, res) => {
           model: Community,
           as: "communities",
           through: { attributes: [] },
+        },
+        {
+          model: Comment,
+          as: "comments",
         },
       ],
     });
@@ -58,6 +62,30 @@ router.post("/", async (req, res) => {
       return res.json(post);
     } else {
       return res.status(500).json({ msg: "User doesn't exist" });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ err });
+  }
+});
+
+router.post("/:uuid/comments", async (req, res) => {
+  try {
+    const { body, userUuid } = req.body;
+    const { uuid } = req.params;
+
+    const user = await User.findOne({ where: { uuid: userUuid } });
+    const post = await Post.findOne({ where: { uuid: uuid } });
+
+    if (user && post) {
+      const comment = await Comment.create({
+        body,
+        userId: user.id,
+        postId: post.id,
+      });
+      return res.json({ comment });
+    } else {
+      return res.status(500).json({ msg: "User or post not found" });
     }
   } catch (err) {
     console.log(err);

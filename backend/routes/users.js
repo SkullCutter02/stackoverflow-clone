@@ -1,5 +1,5 @@
 const express = require("express");
-const { User, Post } = require("../models");
+const { User, Post, Community } = require("../models");
 
 const router = express.Router();
 
@@ -12,6 +12,11 @@ router.get("/:uuid", async (req, res) => {
         {
           model: Post,
           as: "posts",
+          include: {
+            model: Community,
+            as: "communities",
+            through: { attributes: [] },
+          },
         },
       ],
     });
