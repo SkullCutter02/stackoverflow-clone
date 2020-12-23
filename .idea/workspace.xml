@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="72f0844c-8b37-4796-b385-52962eac77fa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/migrations/20201223123841-create-comment.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/migrations/20201223125509-create-post.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/models/comment.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/migrations/20201222135514-create-post.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/migrations/20201222135514-create-post.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/post.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/post.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/posts.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/posts.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/users.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/users.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,7 +58,7 @@
       <workItem from="1608611411868" duration="3165000" />
       <workItem from="1608636116980" duration="6447000" />
       <workItem from="1608713972531" duration="631000" />
-      <workItem from="1608722449498" duration="4651000" />
+      <workItem from="1608722449498" duration="5003000" />
     </task>
     <servers />
   </component>
