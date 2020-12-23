@@ -8,10 +8,13 @@ router.get("/:uuid", async (req, res) => {
     const { uuid } = req.params;
     const post = await Post.findOne({
       where: { uuid: uuid },
-      include: {
-        model: User,
-        as: "user",
-      },
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: ["uuid", "username", "reputation"],
+        },
+      ],
     });
 
     if (post) {
