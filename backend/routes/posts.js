@@ -233,7 +233,7 @@ router.post("/:uuid/comments", async (req, res) => {
   }
 });
 
-router.post("/:postUuid/comments/:commentUuid/vote", async (req, res) => {
+router.post("/comments/:commentUuid/vote", async (req, res) => {
   try {
     const { userUuid, voteType } = req.body;
     const { commentUuid } = req.params;
@@ -302,6 +302,56 @@ router.post("/:postUuid/comments/:commentUuid/vote", async (req, res) => {
       }
     } else {
       return res.status(500).json({ msg: "User doesn't exist" });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ err });
+  }
+});
+
+router.patch("/comments/:commentUuid", async (req, res) => {
+  try {
+    const { body, userUuid } = req.body;
+    const { commentUuid } = req.params;
+
+    const comment = await Comment.findOne({
+      where: { uuid: commentUuid },
+      include: { model: User, as: "user", attributes: ["uuid"] },
+    });
+    const user = await User.findOne({ where: { uuid: userUuid } });
+
+    if (comment.user.uuid === user.uuid) {
+      await comment.update({ body: body });
+      return res.json(comment);
+    } else {
+      return res
+        .status(403)
+        .json({ msg: "You don't have access to edit this comment" });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ err });
+  }
+});
+
+router.delete("/comments/:commentUuid", async (req, res) => {
+  try {
+    const { userUuid } = req.body;
+    const { commentUuid } = req.params;
+
+    const comment = await Comment.findOne({
+      where: { uuid: commentUuid },
+      include: { model: User, as: "user", attributes: ["uuid"] },
+    });
+    const user = await User.findOne({ where: { uuid: userUuid } });
+
+    if (comment.user.uuid === user.uuid) {
+      await comment.destroy();
+      return res.json({ msg: "Post deleted" });
+    } else {
+      return res
+        .status(500)
+        .json({ msg: "You don't have access to delete this post" });
     }
   } catch (err) {
     console.log(err);
