@@ -75,7 +75,11 @@ router.post("/:uuid/vote", async (req, res) => {
     const { uuid } = req.params;
 
     const user = await User.findOne({ where: { uuid: userUuid } });
-    const post = await Post.findOne({ where: { uuid: uuid } });
+    const post = await Post.findOne({
+      where: { uuid: uuid },
+      include: { model: User, as: "user", attributes: ["uuid"] },
+    });
+    const postUser = await User.findOne({ where: { uuid: post.user.uuid } });
     const voteStatus = await PostVote.findOne({
       where: { userUuid: userUuid, postUuid: uuid },
     });
@@ -90,8 +94,14 @@ router.post("/:uuid/vote", async (req, res) => {
 
         if (voteType === "upvote") {
           await post.update({ votes: parseInt(post.votes) + 1 });
+          await postUser.update({
+            reputation: parseInt(postUser.reputation) + 1,
+          });
         } else if (voteType === "downvote") {
           await post.update({ votes: parseInt(post.votes) - 1 });
+          await postUser.update({
+            reputation: parseInt(postUser.reputation) - 1,
+          });
         } else {
           return res.status(500).json({ msg: "Wrong voting type" });
         }
@@ -99,9 +109,15 @@ router.post("/:uuid/vote", async (req, res) => {
         await voteStatus.update({ voteType });
 
         if (voteType === "upvote") {
-          await post.update({ votes: parseInt(post.votes) + 1 });
+          await post.update({ votes: parseInt(post.votes) + 2 });
+          await postUser.update({
+            reputation: parseInt(postUser.reputation) + 2,
+          });
         } else if (voteType === "downvote") {
-          await post.update({ votes: parseInt(post.votes) - 1 });
+          await post.update({ votes: parseInt(post.votes) - 2 });
+          await postUser.update({
+            reputation: parseInt(postUser.reputation) - 2,
+          });
         } else {
           return res.status(500).json({ msg: "Wrong voting type" });
         }
