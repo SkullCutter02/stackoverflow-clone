@@ -10,6 +10,8 @@ const {
 
 const router = express.Router();
 
+// -- Posts ------------------------------------------------------------------------------------------------------------
+
 router.get("/:uuid", async (req, res) => {
   try {
     const { uuid } = req.params;
@@ -154,6 +156,58 @@ router.post("/:uuid/vote", async (req, res) => {
     return res.status(500).json({ err });
   }
 });
+
+router.patch("/:uuid", async (req, res) => {
+  try {
+    const { body, userUuid } = req.body;
+    const { uuid } = req.params;
+
+    const post = await Post.findOne({
+      where: { uuid: uuid },
+      include: { model: User, as: "user", attributes: ["uuid"] },
+    });
+    const user = await User.findOne({ where: { uuid: userUuid } });
+
+    if (post.user.uuid === user.uuid) {
+      await post.update({ body: body });
+      return res.json(post);
+    } else {
+      return res
+        .status(403)
+        .json({ msg: "You don't have access to edit this post" });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ err });
+  }
+});
+
+router.delete("/:uuid", async (req, res) => {
+  try {
+    const { userUuid } = req.body;
+    const { uuid } = req.params;
+
+    const post = await Post.findOne({
+      where: { uuid: uuid },
+      include: { model: User, as: "user", attributes: ["uuid"] },
+    });
+    const user = await User.findOne({ where: { uuid: userUuid } });
+
+    if (post.user.uuid === user.uuid) {
+      await post.destroy();
+      return res.json({ msg: "Post deleted" });
+    } else {
+      return res
+        .status(500)
+        .json({ msg: "You don't have access to delete this post" });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ err });
+  }
+});
+
+// -- Comments ---------------------------------------------------------------------------------------------------------
 
 router.post("/:uuid/comments", async (req, res) => {
   try {
