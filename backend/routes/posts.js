@@ -1,5 +1,12 @@
 const express = require("express");
-const { User, Post, Community, Comment, PostVote } = require("../models");
+const {
+  User,
+  Post,
+  Community,
+  Comment,
+  PostVote,
+  CommentVote,
+} = require("../models");
 
 const router = express.Router();
 
@@ -22,6 +29,11 @@ router.get("/:uuid", async (req, res) => {
         {
           model: Comment,
           as: "comments",
+          include: {
+            model: User,
+            as: "user",
+            attributes: ["uuid", "username", "reputation"],
+          },
         },
       ],
     });
@@ -77,7 +89,11 @@ router.post("/:uuid/vote", async (req, res) => {
     const user = await User.findOne({ where: { uuid: userUuid } });
     const post = await Post.findOne({
       where: { uuid: uuid },
-      include: { model: User, as: "user" },
+      include: {
+        model: User,
+        as: "user",
+        attributes: ["uuid", "username"],
+      },
     });
     const postUser = await User.findOne({ where: { uuid: post.user.uuid } });
     const voteStatus = await PostVote.findOne({
@@ -165,24 +181,73 @@ router.post("/:uuid/comments", async (req, res) => {
 
 router.post("/:postUuid/comments/:commentUuid/vote", async (req, res) => {
   try {
-    const { voteType } = req.body;
-    const { postUuid, commentUuid } = req.params;
+    const { userUuid, voteType } = req.body;
+    const { commentUuid } = req.params;
 
-    const post = await Post.findOne({ where: { uuid: postUuid } });
-    const comment = await Comment.findOne({ where: { uuid: commentUuid } });
+    const user = await User.findOne({ where: { uuid: userUuid } });
+    const comment = await Comment.findOne({
+      where: { uuid: commentUuid },
+      include: {
+        model: User,
+        as: "user",
+        attributes: ["uuid", "username"],
+      },
+    });
+    const commentUser = await User.findOne({
+      where: { uuid: comment.user.uuid },
+    });
+    const voteStatus = await CommentVote.findOne({
+      where: { userUuid: userUuid, commentUuid: commentUuid },
+    });
 
-    if (post) {
-      if (voteType === "upvote") {
-        await comment.update({ votes: parseInt(comment.votes) + 1 });
-      } else if (voteType === "downvote") {
-        await comment.update({ votes: parseInt(comment.votes) - 1 });
+    if (user) {
+      if (user.uuid !== commentUser.uuid) {
+        if (!voteStatus) {
+          await CommentVote.create({
+            userUuid: userUuid,
+            commentUuid: commentUuid,
+            voteType: voteType,
+          });
+
+          if (voteType === "upvote") {
+            await comment.update({ votes: parseInt(comment.votes) + 1 });
+            await commentUser.update({
+              reputation: parseInt(commentUser.reputation) + 1,
+            });
+          } else if (voteType === "downvote") {
+            await comment.update({ votes: parseInt(comment.votes) - 1 });
+            await commentUser.update({
+              reputation: parseInt(commentUser.reputation) - 1,
+            });
+          } else {
+            return res.status(500).json({ msg: "Wrong voting type" });
+          }
+        } else if (voteStatus.voteType !== voteType) {
+          await voteStatus.update({ voteType });
+
+          if (voteType === "upvote") {
+            await comment.update({ votes: parseInt(comment.votes) + 2 });
+            await commentUser.update({
+              reputation: parseInt(commentUser.reputation) + 2,
+            });
+          } else if (voteType === "downvote") {
+            await comment.update({ votes: parseInt(comment.votes) - 2 });
+            await commentUser.update({
+              reputation: parseInt(commentUser.reputation) - 2,
+            });
+          } else {
+            return res.status(500).json({ msg: "Wrong voting type" });
+          }
+        } else {
+          return res.json({ msg: "User already voted" });
+        }
+
+        return res.json(comment);
       } else {
-        return res.status(500).json({ msg: "Wrong voting type" });
+        return res.json({ msg: "You cannot vote on your post" });
       }
-
-      return res.json(comment);
     } else {
-      return res.status(500).json({ msg: "Post not found" });
+      return res.status(500).json({ msg: "User doesn't exist" });
     }
   } catch (err) {
     console.log(err);
