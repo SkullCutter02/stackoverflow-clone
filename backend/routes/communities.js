@@ -1,5 +1,5 @@
 const express = require("express");
-const { Community, Post, User, Comment } = require("../models");
+const { Community, Post, User, Comment, sequelize } = require("../models");
 
 const router = express.Router();
 
@@ -35,29 +35,8 @@ router.get("/:uuid/posts", async (req, res) => {
   try {
     const { uuid } = req.params;
     const { page, limit } = req.query;
-    const community = await Community.findOne({
-      where: { uuid: uuid },
-      // include: [
-      //   {
-      //     model: Post,
-      //     as: "posts",
-      //     through: {
-      //       attributes: [],
-      //     },
-      //     include: [
-      //       {
-      //         model: User,
-      //         as: "user",
-      //         attributes: ["uuid", "username", "reputation"],
-      //       },
-      //       {
-      //         model: Comment,
-      //         as: "comments",
-      //       },
-      //     ],
-      //   },
-      // ],
-    });
+
+    const community = await Community.findOne({ where: { uuid: uuid } });
     const communityPosts = await community.getPosts({
       limit: limit * 1,
       offset: (page - 1) * limit,
@@ -75,7 +54,10 @@ router.get("/:uuid/posts", async (req, res) => {
     });
 
     if (community) {
-      return res.json({ community, posts: communityPosts });
+      return res.json({
+        community,
+        posts: communityPosts,
+      });
     } else {
       return res.status(500).json({ msg: "Community not found" });
     }
@@ -88,24 +70,9 @@ router.get("/:uuid/posts", async (req, res) => {
 router.get("/:uuid/posts/count", async (req, res) => {
   try {
     const { uuid } = req.params;
-    const community = await Community.findOne({
-      where: { uuid: uuid },
-      include: [
-        {
-          model: Post,
-          as: "posts",
-          through: {
-            attributes: [],
-          },
-        },
-      ],
-    });
-
-    if (community) {
-      return res.json({ count: community.posts.length });
-    } else {
-      return res.status(500).json({ msg: "Community not found" });
-    }
+    const community = await Community.findOne({ where: { uuid: uuid } });
+    const count = await community.getPosts();
+    return res.json({ count: count.length });
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);
