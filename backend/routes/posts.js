@@ -140,6 +140,20 @@ router.post("/:uuid/vote", async (req, res) => {
           } else {
             return res.status(500).json({ msg: "Wrong voting type" });
           }
+        } else if (voteStatus.voteType === voteType) {
+          if (voteType === "upvote") {
+            await post.update({ votes: parseInt(post.votes) - 1 });
+            await postUser.update({
+              reputation: parseInt(postUser.reputation) - 1,
+            });
+          } else if (voteType === "downvote") {
+            await post.update({ votes: parseInt(post.votes) + 1 });
+            await postUser.update({
+              reputation: parseInt(postUser.reputation) + 1,
+            });
+          }
+
+          await voteStatus.destroy();
         } else {
           return res.json({ msg: "User already voted" });
         }
@@ -292,6 +306,20 @@ router.post("/comments/:commentUuid/vote", async (req, res) => {
           } else {
             return res.status(500).json({ msg: "Wrong voting type" });
           }
+        } else if (voteStatus.voteType === voteType) {
+          if (voteType === "upvote") {
+            await comment.update({ votes: parseInt(comment.votes) - 1 });
+            await commentUser.update({
+              reputation: parseInt(commentUser.reputation) - 1,
+            });
+          } else if (voteType === "downvote") {
+            await comment.update({ votes: parseInt(comment.votes) + 1 });
+            await commentUser.update({
+              reputation: parseInt(commentUser.reputation) + 1,
+            });
+          }
+
+          await voteStatus.destroy();
         } else {
           return res.json({ msg: "User already voted" });
         }
