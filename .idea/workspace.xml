@@ -3,12 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="72f0844c-8b37-4796-b385-52962eac77fa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/build-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/build-manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages-manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/_app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/_app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/components/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Navbar.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/context/UserContext.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/context/UserContext.tsx" afterDir="false" />
     </list>
@@ -74,7 +72,7 @@
       <workItem from="1608855134562" duration="6303000" />
       <workItem from="1608862868655" duration="1863000" />
       <workItem from="1608865397675" duration="3045000" />
-      <workItem from="1608880590581" duration="3017000" />
+      <workItem from="1608880590581" duration="3928000" />
     </task>
     <servers />
   </component>

@@ -5,7 +5,6 @@ import { UserContext } from "../context/UserContext";
 
 const Navbar: React.FC = () => {
   const userContext = useContext(UserContext);
-  console.log(userContext);
 
   return (
     <React.Fragment>
@@ -15,10 +14,14 @@ const Navbar: React.FC = () => {
           <div className="nav-left">
             <h1 className="nav-site-name">AskProgramming</h1>
           </div>
-          <div className="nav-right">
-            <button className="nav-auth-btn nav-log-in-btn">Log In</button>
-            <button className="nav-auth-btn nav-sign-up-btn">Sign Up</button>
-          </div>
+          {userContext.user === undefined ? (
+            <div className="nav-right">
+              <button className="nav-auth-btn nav-log-in-btn">Log In</button>
+              <button className="nav-auth-btn nav-sign-up-btn">Sign Up</button>
+            </div>
+          ) : (
+            <div></div>
+          )}
         </div>
       </nav>
 
