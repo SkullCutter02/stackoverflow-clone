@@ -1,11 +1,15 @@
 const express = require("express");
-const { Community, Post, User, Comment, sequelize } = require("../models");
+const { Community, User, Comment } = require("../models");
 
 const router = express.Router();
 
 router.get("/", async (req, res) => {
   try {
-    const community = await Community.findAll();
+    const { page, limit } = req.query;
+    const community = await Community.findAll({
+      limit: limit,
+      offset: (page - 1) * limit,
+    });
     return res.json(community);
   } catch (err) {
     console.log(err);
