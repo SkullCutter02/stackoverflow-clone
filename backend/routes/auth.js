@@ -1,7 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const { v4 } = require("uuid");
-const { User } = require("../models");
+const { User, Email } = require("../models");
 const { hashPassword, comparePassword } = require("../hash");
 const transporter = require("../transporter");
 
@@ -113,7 +113,9 @@ router.post("/email/password/reset/send", async (req, res) => {
     if (user) {
       const host =
         process.env.NODE_ENV === "development" ? "http://localhost:3000" : "";
-      const link = `${host}/${v4()}/${user.uuid}/auth/password/reset`;
+      const uuid = await v4();
+      const link = `${host}/${uuid}/${user.uuid}/auth/password/reset`;
+      await Email.create({ uuid });
 
       const message = {
         from: "coolalan2016@gmail.com",
@@ -142,15 +144,21 @@ router.post("/email/password/reset/send", async (req, res) => {
 
 router.post("/email/password/reset", async (req, res) => {
   try {
-    const { newPassword, uuid } = req.body;
-    const user = await User.findOne({ where: { uuid: uuid } });
+    const { newPassword, userUuid, emailUuid } = req.body;
+    const user = await User.findOne({ where: { uuid: userUuid } });
+    const email = await Email.findOne({ where: { uuid: emailUuid } });
 
-    if (user) {
-      const hash = await hashPassword(newPassword);
-      await user.update({ hash: hash });
-      return res.json({ msg: "Password updated" });
+    if (email) {
+      if (user) {
+        const hash = await hashPassword(newPassword);
+        await user.update({ hash: hash });
+        await email.destroy();
+        return res.json({ msg: "Password updated" });
+      } else {
+        return res.status(500).json({ msg: "Reset failed" });
+      }
     } else {
-      return res.status(500).json({ msg: "User doesn't exist" });
+      return res.status(500).json({ msg: "Reset failed" });
     }
   } catch (err) {
     console.log(err);
