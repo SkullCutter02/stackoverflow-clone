@@ -105,7 +105,7 @@ router.post("/logout", (req, res) => {
   }
 });
 
-router.post("/email/password/reset", async (req, res) => {
+router.post("/email/password/reset/send", async (req, res) => {
   try {
     const { email } = req.body;
     const user = await User.findOne({ where: { email: email } });
@@ -113,7 +113,7 @@ router.post("/email/password/reset", async (req, res) => {
     if (user) {
       const host =
         process.env.NODE_ENV === "development" ? "http://localhost:3000" : "";
-      const link = `${host}/${v4()}/${user.uuid}/password/reset`;
+      const link = `${host}/${v4()}/${user.uuid}/auth/password/reset`;
 
       const message = {
         from: "coolalan2016@gmail.com",
@@ -133,6 +133,24 @@ router.post("/email/password/reset", async (req, res) => {
       });
     } else {
       return res.status(500).json({ msg: "Email doesn't exist" });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
+
+router.post("/email/password/reset", async (req, res) => {
+  try {
+    const { newPassword, uuid } = req.body;
+    const user = await User.findOne({ where: { uuid: uuid } });
+
+    if (user) {
+      const hash = await hashPassword(newPassword);
+      await user.update({ hash: hash });
+      return res.json({ msg: "Password updated" });
+    } else {
+      return res.status(500).json({ msg: "User doesn't exist" });
     }
   } catch (err) {
     console.log(err);
