@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import host from "../host";
+import { UserContext } from "../context/UserContext";
 
 const Navbar: React.FC = () => {
+  const userContext = useContext(UserContext);
+  console.log(userContext);
+
   return (
     <React.Fragment>
       <nav>

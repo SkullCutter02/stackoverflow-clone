@@ -16,7 +16,12 @@ function getCookie(cname: string): string {
   return "";
 }
 
-export const UserContext = createContext<string | null>(null);
+type UserContextType = {
+  token: string;
+  setState: (token: string) => void;
+};
+
+export const UserContext = createContext<UserContextType | null>(null);
 
 export const UserContextProvider = (props) => {
   const [state, setState] = useState<string | null>();
@@ -29,6 +34,8 @@ export const UserContextProvider = (props) => {
   }, []);
 
   return (
-    <UserContext.Provider value={state}>{props.children}</UserContext.Provider>
+    <UserContext.Provider value={{ token: state, setState }}>
+      {props.children}
+    </UserContext.Provider>
   );
 };
