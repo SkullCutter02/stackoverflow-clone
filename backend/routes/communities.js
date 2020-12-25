@@ -85,6 +85,33 @@ router.get("/:uuid/posts", async (req, res) => {
   }
 });
 
+router.get("/:uuid/posts/count", async (req, res) => {
+  try {
+    const { uuid } = req.params;
+    const community = await Community.findOne({
+      where: { uuid: uuid },
+      include: [
+        {
+          model: Post,
+          as: "posts",
+          through: {
+            attributes: [],
+          },
+        },
+      ],
+    });
+
+    if (community) {
+      return res.json({ count: community.posts.length });
+    } else {
+      return res.status(500).json({ msg: "Community not found" });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
+
 router.post("/", async (req, res) => {
   try {
     const { name, description } = req.body;
