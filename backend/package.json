@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon app",
-    "start": "node app"
+    "dev": "export NODE_ENV=development&& nodemon app",
+    "start": "export NODE_ENV=production&& node app"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
     "express": "^4.17.1",
     "helmet": "^4.2.0",
     "jsonwebtoken": "^8.5.1",
+    "nodemailer": "^6.4.17",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.3.5",

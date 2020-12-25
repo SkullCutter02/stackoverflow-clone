@@ -1,7 +1,9 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
+const { v4 } = require("uuid");
 const { User } = require("../models");
 const { hashPassword, comparePassword } = require("../hash");
+const transporter = require("../transporter");
 
 const router = express.Router();
 
@@ -97,6 +99,41 @@ router.post("/logout", (req, res) => {
   try {
     res.clearCookie("token");
     return res.json({ msg: "Logged out" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+});
+
+router.post("/email/password/reset", async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ where: { email: email } });
+
+    if (user) {
+      const host =
+        process.env.NODE_ENV === "development" ? "http://localhost:3000" : "";
+      const link = `${host}/${v4()}/${user.uuid}/password/reset`;
+
+      const message = {
+        from: "coolalan2016@gmail.com",
+        to: email,
+        subject: "Password reset link",
+        text: `Click here to reset your password: ${link}`,
+        html: `<p>Click here to reset your password: ${link}</p>`,
+      };
+
+      transporter.sendMail(message, (err, info) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json(err);
+        }
+
+        return res.json(info);
+      });
+    } else {
+      return res.status(500).json({ msg: "Email doesn't exist" });
+    }
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);
