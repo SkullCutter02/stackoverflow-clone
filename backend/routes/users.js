@@ -12,7 +12,7 @@ router.get("/:uuid", async (req, res) => {
     return res.json(user);
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ err });
+    return res.status(500).json(err);
   }
 });
 
@@ -42,7 +42,7 @@ router.get("/:uuid/posts", async (req, res) => {
     return res.json(user);
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ err });
+    return res.status(500).json(err);
   }
 });
 
@@ -67,7 +67,7 @@ router.get("/:uuid/comments", async (req, res) => {
     return res.json(user);
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ err });
+    return res.status(500).json(err);
   }
 });
 

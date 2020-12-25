@@ -48,7 +48,7 @@ router.post("/signup", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ err });
+    return res.status(500).json(err);
   }
 });
 
@@ -89,7 +89,17 @@ router.post("/login", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ err });
+    return res.status(500).json(err);
+  }
+});
+
+router.post("/logout", (req, res) => {
+  try {
+    res.clearCookie("token");
+    return res.json({ msg: "Logged out" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
   }
 });
 

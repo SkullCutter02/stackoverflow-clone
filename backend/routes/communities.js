@@ -27,7 +27,7 @@ router.get("/:uuid", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ err });
+    return res.status(500).json(err);
   }
 });
 
@@ -65,7 +65,7 @@ router.get("/:uuid/posts", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ err });
+    return res.status(500).json(err);
   }
 });
 
@@ -76,7 +76,23 @@ router.post("/", async (req, res) => {
     return res.json(community);
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ err });
+    return res.status(500).json(err);
+  }
+});
+
+router.patch("/:uuid", async (req, res) => {
+  try {
+    const { uuid } = req.params;
+    const { name, description } = req.body;
+    const community = await Community.findOne({ where: { uuid: uuid } });
+
+    if (name) await community.update({ name });
+    if (description) await community.update({ description });
+
+    return res.json(community);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
   }
 });
 

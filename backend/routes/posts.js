@@ -47,7 +47,7 @@ router.get("/:uuid", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ err });
+    return res.status(500).json(err);
   }
 });
 
@@ -79,7 +79,7 @@ router.post("/", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ err });
+    return res.status(500).json(err);
   }
 });
 
@@ -167,7 +167,26 @@ router.post("/:uuid/vote", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ err });
+    return res.status(500).json(err);
+  }
+});
+
+router.get("/:uuid/vote/status", async (req, res) => {
+  try {
+    const { uuid: postUuid } = req.params; // alias as postUuid
+    const { userUuid } = req.body;
+    const voteStatus = await PostVote.findOne({
+      where: { userUuid: userUuid, postUuid: postUuid },
+    });
+
+    if (voteStatus) {
+      return res.json({ status: true, type: voteStatus.voteType });
+    } else {
+      return res.json({ status: false, type: null });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -192,7 +211,7 @@ router.patch("/:uuid", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ err });
+    return res.status(500).json(err);
   }
 });
 
@@ -217,7 +236,7 @@ router.delete("/:uuid", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ err });
+    return res.status(500).json(err);
   }
 });
 
@@ -243,7 +262,7 @@ router.post("/:uuid/comments", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ err });
+    return res.status(500).json(err);
   }
 });
 
@@ -333,7 +352,26 @@ router.post("/comments/:commentUuid/vote", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ err });
+    return res.status(500).json(err);
+  }
+});
+
+router.get("/comments/:uuid/vote/status", async (req, res) => {
+  try {
+    const { uuid: commentUuid } = req.params; // alias as commentUuid
+    const { userUuid } = req.body;
+    const voteStatus = await CommentVote.findOne({
+      where: { userUuid: userUuid, commentUuid: commentUuid },
+    });
+
+    if (voteStatus) {
+      return res.json({ status: true, type: voteStatus.voteType });
+    } else {
+      return res.json({ status: false, type: null });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
   }
 });
 
@@ -358,7 +396,7 @@ router.patch("/comments/:commentUuid", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ err });
+    return res.status(500).json(err);
   }
 });
 
@@ -383,7 +421,7 @@ router.delete("/comments/:commentUuid", async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ err });
+    return res.status(500).json(err);
   }
 });
 
