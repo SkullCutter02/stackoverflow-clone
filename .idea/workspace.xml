@@ -2,19 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="72f0844c-8b37-4796-b385-52962eac77fa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/pages/_app.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/build-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/build-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/next/dist/pages/_error.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/next/dist/pages/_error.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/static/webpack/7e431cddae9f92b1e127.hot-update.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/static/webpack/cff36451558c75eb6443.hot-update.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/communitypost.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/communitypost.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/communities.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/communities.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +66,8 @@
       <workItem from="1608636116980" duration="6447000" />
       <workItem from="1608713972531" duration="631000" />
       <workItem from="1608722449498" duration="12279000" />
-      <workItem from="1608855134562" duration="5944000" />
+      <workItem from="1608855134562" duration="6303000" />
+      <workItem from="1608862868655" duration="1558000" />
     </task>
     <servers />
   </component>

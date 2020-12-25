@@ -12,7 +12,14 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     toJSON() {
-      return { ...this.get(), id: undefined };
+      return {
+        ...this.get(),
+        id: undefined,
+        communityId: undefined,
+        postId: undefined,
+        createdAt: undefined,
+        updatedAt: undefined,
+      };
     }
   }
   CommunityPost.init(

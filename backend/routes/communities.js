@@ -34,32 +34,48 @@ router.get("/:uuid", async (req, res) => {
 router.get("/:uuid/posts", async (req, res) => {
   try {
     const { uuid } = req.params;
+    const { page, limit } = req.query;
     const community = await Community.findOne({
       where: { uuid: uuid },
+      // include: [
+      //   {
+      //     model: Post,
+      //     as: "posts",
+      //     through: {
+      //       attributes: [],
+      //     },
+      //     include: [
+      //       {
+      //         model: User,
+      //         as: "user",
+      //         attributes: ["uuid", "username", "reputation"],
+      //       },
+      //       {
+      //         model: Comment,
+      //         as: "comments",
+      //       },
+      //     ],
+      //   },
+      // ],
+    });
+    const communityPosts = await community.getPosts({
+      limit: limit * 1,
+      offset: (page - 1) * limit,
       include: [
         {
-          model: Post,
-          as: "posts",
-          through: {
-            attributes: [],
-          },
-          include: [
-            {
-              model: User,
-              as: "user",
-              attributes: ["uuid", "username", "reputation"],
-            },
-            {
-              model: Comment,
-              as: "comments",
-            },
-          ],
+          model: User,
+          as: "user",
+          attributes: ["uuid", "username", "reputation"],
+        },
+        {
+          model: Comment,
+          as: "comments",
         },
       ],
     });
 
     if (community) {
-      return res.json(community);
+      return res.json({ community, posts: communityPosts });
     } else {
       return res.status(500).json({ msg: "Community not found" });
     }
