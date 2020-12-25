@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
+import Link from "next/link";
 
-import host from "../host";
 import { UserContext } from "../context/UserContext";
 
 const Navbar: React.FC = () => {
@@ -16,11 +16,17 @@ const Navbar: React.FC = () => {
           </div>
           {userContext.user === undefined ? (
             <div className="nav-right">
-              <button className="nav-auth-btn nav-log-in-btn">Log In</button>
-              <button className="nav-auth-btn nav-sign-up-btn">Sign Up</button>
+              <Link href={"/auth/login"}>
+                <button className="nav-auth-btn nav-log-in-btn">Log In</button>
+              </Link>
+              <Link href={"/auth/signup"}>
+                <button className="nav-auth-btn nav-sign-up-btn">
+                  Sign Up
+                </button>
+              </Link>
             </div>
           ) : (
-            <div></div>
+            <div className="nav-right">{userContext.user.username}</div>
           )}
         </div>
       </nav>
@@ -39,15 +45,20 @@ const Navbar: React.FC = () => {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          box-shadow: 0 3px 5px black;
+          box-shadow: 0 3px 5px #151515;
         }
 
         .nav-site-name {
           color: #f2f2f2;
-          margin-left: 35px;
+          margin-left: 50px;
           font-size: 1.3rem;
           cursor: pointer;
-          padding: 5px;
+          padding: 10px 20px;
+          height: calc(100%);
+        }
+
+        .nav-site-name:hover {
+          background: #4a4a4a;
         }
 
         .nav-left {
@@ -69,7 +80,7 @@ const Navbar: React.FC = () => {
           width: 80px;
           height: 60%;
           border-radius: 4px;
-          border: 1px solid #4f6f87;
+          border: 1.5px solid #4f6f87;
           margin: 0 10px;
           cursor: pointer;
         }
@@ -77,12 +88,23 @@ const Navbar: React.FC = () => {
         .nav-sign-up-btn {
           margin-right: 17%;
           background: #3580c2;
-          color: #ffffff;
+          color: #d2d2d2;
+        }
+
+        .nav-sign-up-btn:hover {
+          background: #076bb8;
+          color: #e2e2e2;
         }
 
         .nav-log-in-btn {
           color: #bdedff;
           background: #3f4a50;
+        }
+
+        .nav-log-in-btn:hover {
+          background: #4d606f;
+          border: 1.5px solid #4d606d;
+          color: #e2e2e2;
         }
       `}</style>
     </React.Fragment>
