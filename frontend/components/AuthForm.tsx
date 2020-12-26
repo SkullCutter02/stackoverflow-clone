@@ -10,23 +10,22 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
   const submitForm = (e) => {
     e.preventDefault();
 
-    const username = (document.getElementById("username") as HTMLInputElement)
-      .value;
-    const email = (document.getElementById("email") as HTMLInputElement).value;
-    const password = (document.getElementById("password") as HTMLInputElement)
-      .value;
-    const confirmPassword = (document.getElementById(
+    const username = document?.getElementById("username") as HTMLInputElement;
+    const email = document?.getElementById("email") as HTMLInputElement;
+    const password = document?.getElementById("password") as HTMLInputElement;
+    const confirmPassword = document?.getElementById(
       "confirmPassword"
-    ) as HTMLInputElement).value;
-    const rememberMe = (document.getElementById(
+    ) as HTMLInputElement;
+    const rememberMe = document?.getElementById(
       "rememberMe"
-    ) as HTMLInputElement).checked;
-    const identifier = (document.getElementById(
+    ) as HTMLInputElement;
+    const identifier = document?.getElementById(
       "identifier"
-    ) as HTMLInputElement).value;
+    ) as HTMLInputElement;
+    const errorMsg = document?.getElementById("error-msg") as HTMLInputElement;
 
     if (formType === "signup") {
-      if (password === confirmPassword) {
+      if (password.value === confirmPassword.value) {
         fetch(`${host}/auth/signup`, {
           method: "POST",
           headers: {
@@ -34,13 +33,25 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
           },
           credentials: "include",
           body: JSON.stringify({
-            username,
-            email,
-            password,
-            rememberMe,
+            username: username.value,
+            email: email.value,
+            password: password.value,
+            rememberMe: rememberMe.checked,
           }),
-        }).then((res) => res.json());
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.errors) {
+              errorMsg.innerText = data.errors[0].msg;
+            } else {
+              errorMsg.innerText = "";
+              console.log(data);
+            }
+          })
+          .catch((err) => console.log(err));
       } else {
+        errorMsg.innerText = "Password doesn't match";
+        console.log("ddd");
       }
     } else if (formType === "login") {
     }
@@ -96,6 +107,7 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
                   Remember Me
                 </label>
               </div>
+              <div className="auth-form-error-msg" id="error-msg" />
               <button type="submit" className="auth-form-submit-btn">
                 Signup
               </button>
@@ -129,7 +141,7 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
                   Remember Me
                 </label>
               </div>
-              <div className="auth-form-error-msg" />
+              <div className="auth-form-error-msg" id="error-msg" />
               <button type="submit" className="auth-form-submit-btn">
                 Login
               </button>
@@ -227,7 +239,8 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
           color: #e2e2e2;
         }
 
-        .auth-form-error-msg p {
+        .auth-form-error-msg {
+          color: #ff3f3f;
         }
       `}</style>
     </React.Fragment>

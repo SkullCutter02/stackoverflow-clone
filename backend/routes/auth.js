@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.post(
   "/signup",
-  signUpLimit,
+  // signUpLimit,
   check("username")
     .isLength({ max: 20 })
     .withMessage("Username must not be longer than 20 characters")
