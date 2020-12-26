@@ -1,9 +1,10 @@
 const express = require("express");
 const { User, Post, Community, Comment } = require("../models");
+const { getRouteLimit } = require("../limiters");
 
 const router = express.Router();
 
-router.get("/:uuid", async (req, res) => {
+router.get("/:uuid", getRouteLimit, async (req, res) => {
   try {
     const { uuid } = req.params;
     const user = await User.findOne({
@@ -16,7 +17,7 @@ router.get("/:uuid", async (req, res) => {
   }
 });
 
-router.get("/:uuid/posts", async (req, res) => {
+router.get("/:uuid/posts", getRouteLimit, async (req, res) => {
   try {
     const { uuid } = req.params;
     const user = await User.findOne({
@@ -46,7 +47,7 @@ router.get("/:uuid/posts", async (req, res) => {
   }
 });
 
-router.get("/:uuid/comments", async (req, res) => {
+router.get("/:uuid/comments", getRouteLimit, async (req, res) => {
   try {
     const { uuid } = req.params;
     const user = await User.findOne({

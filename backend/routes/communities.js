@@ -1,9 +1,10 @@
 const express = require("express");
 const { Community, User, Comment } = require("../models");
+const { getRouteLimit } = require("../limiters");
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", getRouteLimit, async (req, res) => {
   try {
     const { page, limit } = req.query;
     const community = await Community.findAll({
@@ -17,7 +18,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:uuid", async (req, res) => {
+router.get("/:uuid", getRouteLimit, async (req, res) => {
   try {
     const { uuid } = req.params;
     const community = await Community.findOne({
@@ -35,7 +36,7 @@ router.get("/:uuid", async (req, res) => {
   }
 });
 
-router.get("/:uuid/posts", async (req, res) => {
+router.get("/:uuid/posts", getRouteLimit, async (req, res) => {
   try {
     const { uuid } = req.params;
     const { page, limit } = req.query;
@@ -71,7 +72,7 @@ router.get("/:uuid/posts", async (req, res) => {
   }
 });
 
-router.get("/:uuid/posts/count", async (req, res) => {
+router.get("/:uuid/posts/count", getRouteLimit, async (req, res) => {
   try {
     const { uuid } = req.params;
     const community = await Community.findOne({ where: { uuid: uuid } });

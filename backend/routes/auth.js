@@ -4,10 +4,11 @@ const { v4 } = require("uuid");
 const { User, Email } = require("../models");
 const { hashPassword, comparePassword } = require("../hash");
 const transporter = require("../transporter");
+const { signUpLimit, logInLimit, forgetPasswordLimit } = require("../limiters");
 
 const router = express.Router();
 
-router.post("/signup", async (req, res) => {
+router.post("/signup", signUpLimit, async (req, res) => {
   try {
     const { username, email, password, rememberMe } = req.body;
 
@@ -54,7 +55,7 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", logInLimit, async (req, res) => {
   try {
     const { username, email, password, rememberMe } = req.body;
     const searchByUsername = !!username;
@@ -105,44 +106,48 @@ router.post("/logout", (req, res) => {
   }
 });
 
-router.post("/email/password/reset/send", async (req, res) => {
-  try {
-    const { email } = req.body;
-    const user = await User.findOne({ where: { email: email } });
+router.post(
+  "/email/password/reset/send",
+  forgetPasswordLimit,
+  async (req, res) => {
+    try {
+      const { email } = req.body;
+      const user = await User.findOne({ where: { email: email } });
 
-    if (user) {
-      const host =
-        process.env.NODE_ENV === "development" ? "http://localhost:3000" : "";
-      const uuid = await v4();
-      const link = `${host}/${uuid}/${user.uuid}/auth/password/reset`;
-      await Email.create({ uuid });
+      if (user) {
+        const host =
+          process.env.NODE_ENV === "development" ? "http://localhost:3000" : "";
+        const uuid = await v4();
+        const link = `${host}/${uuid}/${user.uuid}/auth/password/reset`;
+        await Email.create({ uuid });
 
-      const message = {
-        from: "coolalan2016@gmail.com",
-        to: email,
-        subject: "Password reset link",
-        text: `Click here to reset your password: ${link}`,
-        html: `<p>Click here to reset your password: ${link}</p>`,
-      };
+        const message = {
+          from: "coolalan2016@gmail.com",
+          to: email,
+          subject: "Password reset link",
+          text: `Click here to reset your password: ${link}`,
+          html: `<p>Click here to reset your password: ${link}</p>`,
+        };
 
-      transporter.sendMail(message, (err, info) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).json(err);
-        }
+        transporter.sendMail(message, (err, info) => {
+          if (err) {
+            console.log(err);
+            return res.status(500).json(err);
+          }
 
-        return res.json(info);
-      });
-    } else {
-      return res.status(500).json({ msg: "Email doesn't exist" });
+          return res.json(info);
+        });
+      } else {
+        return res.status(500).json({ msg: "Email doesn't exist" });
+      }
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json(err);
     }
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
   }
-});
+);
 
-router.post("/email/password/reset", async (req, res) => {
+router.post("/email/password/reset", forgetPasswordLimit, async (req, res) => {
   try {
     const { newPassword, userUuid, emailUuid } = req.body;
     const user = await User.findOne({ where: { uuid: userUuid } });

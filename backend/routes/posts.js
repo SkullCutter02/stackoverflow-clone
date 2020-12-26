@@ -7,12 +7,13 @@ const {
   PostVote,
   CommentVote,
 } = require("../models");
+const { getRouteLimit, postLimit, commentLimit } = require("../limiters");
 
 const router = express.Router();
 
 // -- Posts ------------------------------------------------------------------------------------------------------------
 
-router.get("/:uuid", async (req, res) => {
+router.get("/:uuid", getRouteLimit, async (req, res) => {
   try {
     const { uuid } = req.params;
     const post = await Post.findOne({
@@ -51,7 +52,7 @@ router.get("/:uuid", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", postLimit, async (req, res) => {
   try {
     const { title, body, userUuid, communities } = req.body;
     const user = await User.findOne({
@@ -242,7 +243,7 @@ router.delete("/:uuid", async (req, res) => {
 
 // -- Comments ---------------------------------------------------------------------------------------------------------
 
-router.post("/:uuid/comments", async (req, res) => {
+router.post("/:uuid/comments", commentLimit, async (req, res) => {
   try {
     const { body, userUuid } = req.body;
     const { uuid } = req.params;
