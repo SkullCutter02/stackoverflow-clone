@@ -87,53 +87,49 @@ router.post(
   }
 );
 
-router.post(
-  "/login",
-  // logInLimit,
-  async (req, res) => {
-    try {
-      const { username, email, password, rememberMe } = req.body;
-      const searchByUsername = !!username;
+router.post("/login", logInLimit, async (req, res) => {
+  try {
+    const { username, email, password, rememberMe } = req.body;
+    const searchByUsername = !!username;
 
-      const user = searchByUsername
-        ? await User.findOne({
-            where: { username: username },
-          })
-        : await User.findOne({
-            where: { email: email },
-          });
+    const user = searchByUsername
+      ? await User.findOne({
+          where: { username: username },
+        })
+      : await User.findOne({
+          where: { email: email },
+        });
 
-      if (user) {
-        const isValidPass = await comparePassword(password, user.hash);
+    if (user) {
+      const isValidPass = await comparePassword(password, user.hash);
 
-        if (isValidPass) {
-          jwt.sign({ uuid: user.uuid }, "secretkey", (err, token) => {
-            if (err) {
-              return res.status(500).json({ err });
+      if (isValidPass) {
+        jwt.sign({ uuid: user.uuid }, "secretkey", (err, token) => {
+          if (err) {
+            return res.status(500).json({ err });
+          } else {
+            if (!rememberMe) {
+              res.cookie("token", token, { secure: true });
             } else {
-              if (!rememberMe) {
-                res.cookie("token", token, { secure: true });
-              } else {
-                res.cookie("token", token, {
-                  maxAge: 31536000000,
-                  secure: true,
-                });
-              }
-              return res.json({ token });
+              res.cookie("token", token, {
+                maxAge: 31536000000,
+                secure: true,
+              });
             }
-          });
-        } else {
-          return res.status(500).json({ msg: "Invalid Credentials" });
-        }
+            return res.json({ token });
+          }
+        });
       } else {
         return res.status(500).json({ msg: "Invalid Credentials" });
       }
-    } catch (err) {
-      console.log(err);
-      return res.status(500).json(err);
+    } else {
+      return res.status(500).json({ msg: "Invalid Credentials" });
     }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
   }
-);
+});
 
 router.post("/logout", (req, res) => {
   try {

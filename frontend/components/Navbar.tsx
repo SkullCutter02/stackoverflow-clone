@@ -1,10 +1,26 @@
 import React, { useContext } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { UserContext } from "../context/UserContext";
+import host from "../host";
 
 const Navbar: React.FC = () => {
   const userContext = useContext(UserContext);
+  const router = useRouter();
+
+  const logOut = async () => {
+    try {
+      await fetch(`${host}/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+      userContext.setState(null);
+      await router.reload();
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <React.Fragment>
@@ -28,7 +44,12 @@ const Navbar: React.FC = () => {
               </Link>
             </div>
           ) : (
-            <div className="nav-right">{userContext.user.username}</div>
+            <div className="nav-right">
+              <p>{userContext.user.username}</p>
+              <button className="nav-auth-btn nav-sign-up-btn" onClick={logOut}>
+                Log Out
+              </button>
+            </div>
           )}
         </div>
       </nav>

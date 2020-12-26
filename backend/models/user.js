@@ -50,6 +50,10 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 0,
         allowNull: false,
       },
+      role: {
+        type: DataTypes.STRING,
+        defaultValue: "peasant",
+      },
     },
     {
       sequelize,
