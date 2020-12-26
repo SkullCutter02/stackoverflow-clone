@@ -42,7 +42,7 @@ export const UserContextProvider = (props) => {
     // document.cookie = "token=df215923-8a3c-44f0-80c2-9c331e1a58df"; // testing
     const token = getCookie("token");
     if (token !== "") {
-      fetch(`${host}/users/${token}`)
+      fetch(`${host}/users/${JSON.parse(atob(token.split(".")[1])).uuid}`)
         .then((res) => res.json())
         .then((data) => setState(data))
         .catch((err) => console.log(err));

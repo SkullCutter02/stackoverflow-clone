@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
+import { useRouter } from "next/router";
 
+import { UserContext } from "../context/UserContext";
 import host from "../host";
 
 interface Props {
@@ -7,6 +9,9 @@ interface Props {
 }
 
 const AuthForm: React.FC<Props> = ({ formType }) => {
+  const userContext = useContext(UserContext);
+  const router = useRouter();
+
   const submitForm = (e) => {
     e.preventDefault();
 
@@ -40,12 +45,17 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
           }),
         })
           .then((res) => res.json())
-          .then((data) => {
+          .then(async (data) => {
             if (data.errors) {
               errorMsg.innerText = data.errors[0].msg;
             } else {
               errorMsg.innerText = "";
-              console.log(data);
+              const payload = JSON.parse(atob(data.token.split(".")[1]));
+              fetch(`${host}/users/${payload.uuid}`)
+                .then((res) => res.json())
+                .then((data) => userContext.setState(data))
+                .catch((err) => console.log(err));
+              await router.push("/");
             }
           })
           .catch((err) => console.log(err));
