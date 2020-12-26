@@ -1,5 +1,7 @@
 import React from "react";
 
+import host from "../host";
+
 interface Props {
   formType: "signup" | "login";
 }
@@ -7,6 +9,41 @@ interface Props {
 const AuthForm: React.FC<Props> = ({ formType }) => {
   const submitForm = (e) => {
     e.preventDefault();
+
+    const username = (document.getElementById("username") as HTMLInputElement)
+      .value;
+    const email = (document.getElementById("email") as HTMLInputElement).value;
+    const password = (document.getElementById("password") as HTMLInputElement)
+      .value;
+    const confirmPassword = (document.getElementById(
+      "confirmPassword"
+    ) as HTMLInputElement).value;
+    const rememberMe = (document.getElementById(
+      "rememberMe"
+    ) as HTMLInputElement).checked;
+    const identifier = (document.getElementById(
+      "identifier"
+    ) as HTMLInputElement).value;
+
+    if (formType === "signup") {
+      if (password === confirmPassword) {
+        fetch(`${host}/auth/signup`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            username,
+            email,
+            password,
+            rememberMe,
+          }),
+        }).then((res) => res.json());
+      } else {
+      }
+    } else if (formType === "login") {
+    }
   };
 
   return (
@@ -92,6 +129,7 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
                   Remember Me
                 </label>
               </div>
+              <div className="auth-form-error-msg" />
               <button type="submit" className="auth-form-submit-btn">
                 Login
               </button>
@@ -103,14 +141,14 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
       <style jsx>{`
         .auth-form-page-container {
           width: 100%;
-          height: calc(100vh - 40px - 4px);
+          height: 650px;
           display: flex;
           justify-content: center;
           align-items: center;
         }
 
         .auth-form-container {
-          height: 80%;
+          height: 500px;
           width: 30%;
           min-width: 310px;
           transform: translateY(-30px);
@@ -187,6 +225,9 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
         .auth-form-submit-btn:hover {
           background: #076bb8;
           color: #e2e2e2;
+        }
+
+        .auth-form-error-msg p {
         }
       `}</style>
     </React.Fragment>
