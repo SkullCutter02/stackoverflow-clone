@@ -14,7 +14,7 @@ type UserType = {
   email: string;
   verified: boolean;
   reputation: number;
-  // role: string;
+  role: string;
   createdAt: string;
   updatedAt: string;
 };
