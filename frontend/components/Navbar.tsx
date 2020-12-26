@@ -54,7 +54,7 @@ const Navbar: React.FC = () => {
           font-size: 1.3rem;
           cursor: pointer;
           padding: 10px 20px;
-          height: calc(100%);
+          height: 100%;
         }
 
         .nav-site-name:hover {
