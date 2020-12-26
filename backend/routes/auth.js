@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.post(
   "/signup",
-  // signUpLimit,
+  signUpLimit,
   check("username")
     .isLength({ max: 20 })
     .withMessage("Username must not be longer than 20 characters")
@@ -63,9 +63,12 @@ router.post(
                 return res.status(500).json({ err });
               } else {
                 if (!rememberMe) {
-                  res.cookie("token", token);
+                  res.cookie("token", token, { secure: true });
                 } else {
-                  res.cookie("token", token, { maxAge: 31536000000 });
+                  res.cookie("token", token, {
+                    maxAge: 31536000000,
+                    secure: true,
+                  });
                 }
                 return res.json({ token });
               }
@@ -84,46 +87,53 @@ router.post(
   }
 );
 
-router.post("/login", logInLimit, async (req, res) => {
-  try {
-    const { username, email, password, rememberMe } = req.body;
-    const searchByUsername = !!username;
+router.post(
+  "/login",
+  // logInLimit,
+  async (req, res) => {
+    try {
+      const { username, email, password, rememberMe } = req.body;
+      const searchByUsername = !!username;
 
-    const user = searchByUsername
-      ? await User.findOne({
-          where: { username: username },
-        })
-      : await User.findOne({
-          where: { email: email },
-        });
+      const user = searchByUsername
+        ? await User.findOne({
+            where: { username: username },
+          })
+        : await User.findOne({
+            where: { email: email },
+          });
 
-    if (user) {
-      const isValidPass = await comparePassword(password, user.hash);
+      if (user) {
+        const isValidPass = await comparePassword(password, user.hash);
 
-      if (isValidPass) {
-        jwt.sign({ uuid: user.uuid }, "secretkey", (err, token) => {
-          if (err) {
-            return res.status(500).json({ err });
-          } else {
-            if (!rememberMe) {
-              res.cookie("token", token);
+        if (isValidPass) {
+          jwt.sign({ uuid: user.uuid }, "secretkey", (err, token) => {
+            if (err) {
+              return res.status(500).json({ err });
             } else {
-              res.cookie("token", token, { maxAge: 31536000000 });
+              if (!rememberMe) {
+                res.cookie("token", token, { secure: true });
+              } else {
+                res.cookie("token", token, {
+                  maxAge: 31536000000,
+                  secure: true,
+                });
+              }
+              return res.json({ token });
             }
-            return res.json({ token });
-          }
-        });
+          });
+        } else {
+          return res.status(500).json({ msg: "Invalid Credentials" });
+        }
       } else {
         return res.status(500).json({ msg: "Invalid Credentials" });
       }
-    } else {
-      return res.status(500).json({ msg: "Invalid Credentials" });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json(err);
     }
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
   }
-});
+);
 
 router.post("/logout", (req, res) => {
   try {

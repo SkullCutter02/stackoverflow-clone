@@ -12,7 +12,9 @@ const Navbar: React.FC = () => {
         <div className="nav-top-line" />
         <div className="nav-container">
           <div className="nav-left">
-            <h1 className="nav-site-name">AskProgramming</h1>
+            <Link href={"/"}>
+              <h1 className="nav-site-name">AskProgramming</h1>
+            </Link>
           </div>
           {userContext.user === undefined ? (
             <div className="nav-right">

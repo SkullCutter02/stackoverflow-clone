@@ -48,6 +48,8 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
           .then(async (data) => {
             if (data.errors) {
               errorMsg.innerText = data.errors[0].msg;
+            } else if (data.msg) {
+              errorMsg.innerText = data.msg;
             } else {
               errorMsg.innerText = "";
               const payload = JSON.parse(atob(data.token.split(".")[1]));
@@ -64,6 +66,63 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
         console.log("ddd");
       }
     } else if (formType === "login") {
+      if (identifier.value.includes("@")) {
+        fetch(`${host}/auth/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            email: identifier.value,
+            password: password.value,
+            rememberMe: rememberMe.checked,
+          }),
+        })
+          .then((res) => res.json())
+          .then(async (data) => {
+            if (data.msg) {
+              errorMsg.innerText = data.msg;
+            } else {
+              errorMsg.innerText = "";
+              const payload = JSON.parse(atob(data.token.split(".")[1]));
+              fetch(`${host}/users/${payload.uuid}`)
+                .then((res) => res.json())
+                .then((data) => userContext.setState(data))
+                .catch((err) => console.log(err));
+              await router.push("/");
+            }
+          })
+          .catch((err) => console.log(err));
+      } else {
+        fetch(`${host}/auth/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            username: identifier.value,
+            password: password.value,
+            rememberMe: rememberMe.checked,
+          }),
+        })
+          .then((res) => res.json())
+          .then(async (data) => {
+            if (data.msg) {
+              errorMsg.innerText = data.msg;
+            } else {
+              errorMsg.innerText = "";
+              const payload = JSON.parse(atob(data.token.split(".")[1]));
+              fetch(`${host}/users/${payload.uuid}`)
+                .then((res) => res.json())
+                .then((data) => userContext.setState(data))
+                .catch((err) => console.log(err));
+              await router.push("/");
+            }
+          })
+          .catch((err) => console.log(err));
+      }
     }
   };
 
@@ -150,6 +209,7 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
                 >
                   Remember Me
                 </label>
+                <p className="auth-form-forgot-password">Forgot Password?</p>
               </div>
               <div className="auth-form-error-msg" id="error-msg" />
               <button type="submit" className="auth-form-submit-btn">
@@ -225,7 +285,18 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
         .auth-form-checkbox-label {
           margin-left: 15px;
           font-size: 1rem;
+        }
+
+        .auth-form-forgot-password,
+        .auth-form-checkbox-label {
           transform: translateY(1px);
+        }
+
+        .auth-form-forgot-password {
+          color: grey;
+          margin-left: 120px;
+          text-decoration: underline;
+          cursor: pointer;
         }
 
         .auth-form-checkbox {

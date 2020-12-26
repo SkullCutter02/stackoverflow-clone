@@ -10,7 +10,7 @@ const signUpLimit = rateLimit({
 
 const logInLimit = rateLimit({
   windowMs: 60 * 60 * 1000,
-  max: 2,
+  max: 20,
   message,
 });
 
