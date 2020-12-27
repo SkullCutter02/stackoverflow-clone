@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 
 import { UserContext } from "../context/UserContext";
 import host from "../host";
+import * as css from "../cssVariables";
 
 const Navbar: React.FC = () => {
   const userContext = useContext(UserContext);
@@ -62,7 +63,7 @@ const Navbar: React.FC = () => {
         }
 
         .nav-container {
-          background: #393939;
+          background: ${css.secondaryBackground};
           width: 100%;
           height: 40px;
           display: flex;
@@ -103,31 +104,31 @@ const Navbar: React.FC = () => {
           width: 80px;
           height: 60%;
           border-radius: 4px;
-          border: 1.5px solid #4f6f87;
+          border: 1.5px solid ${css.buttonBorder};
           margin: 0 10px;
           cursor: pointer;
         }
 
         .nav-sign-up-btn {
           margin-right: 17%;
-          background: #3580c2;
-          color: #d2d2d2;
+          background: ${css.mainButton};
+          color: ${css.mainButtonText};
         }
 
         .nav-sign-up-btn:hover {
-          background: #076bb8;
-          color: #e2e2e2;
+          background: ${css.mainButtonHover};
+          color: ${css.mainButtonTextHover};
         }
 
         .nav-log-in-btn {
-          color: #bdedff;
-          background: #3f4a50;
+          color: ${css.secondaryButtonText};
+          background: ${css.secondaryButton};
         }
 
         .nav-log-in-btn:hover {
-          background: #4d606f;
+          background: ${css.secondaryButtonHover};
           border: 1.5px solid #4d606d;
-          color: #e2e2e2;
+          color: ${css.secondaryButtonTextHover};
         }
       `}</style>
     </React.Fragment>

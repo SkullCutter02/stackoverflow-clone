@@ -1,5 +1,7 @@
 import React from "react";
 
+import * as css from "../cssVariables";
+
 const HomePageSection: React.FC = () => {
   return (
     <React.Fragment>
@@ -42,7 +44,7 @@ const HomePageSection: React.FC = () => {
           display: flex;
           flex-direction: column;
           align-items: center;
-          border-right: 1px solid white;
+          border-right: 1px solid #ffffff;
         }
 
         main {
@@ -50,9 +52,9 @@ const HomePageSection: React.FC = () => {
         }
 
         .section-btn {
-          background-color: #3580c2;
-          border: 1.5px solid #4f6f87;
-          color: #d2d2d2;
+          background-color: ${css.mainButton};
+          border: 1.5px solid ${css.buttonBorder};
+          color: ${css.mainButtonText};
           height: 35px;
           width: 60%;
           font-size: 70%;
@@ -62,8 +64,8 @@ const HomePageSection: React.FC = () => {
         }
 
         .section-btn:hover {
-          background-color: #076bb8;
-          color: #ffff;
+          background-color: ${css.mainButtonHover};
+          color: ${css.mainButtonTextHover};
         }
 
         .section-heading-container {
@@ -82,9 +84,9 @@ const HomePageSection: React.FC = () => {
           height: 40px;
           margin: 25px 30px;
           text-indent: 15px;
-          background: #454545;
-          color: white;
-          border: 2px solid #dedede;
+          background: ${css.inputBackground};
+          color: #ffffff;
+          border: 2px solid ${css.inputBorder};
           font-size: 0.8rem;
         }
       `}</style>

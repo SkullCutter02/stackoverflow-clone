@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 
 import { UserContext } from "../context/UserContext";
 import host from "../host";
+import * as css from "../cssVariables";
+import { mainButton } from "../cssVariables";
 
 interface Props {
   formType: "signup" | "login";
@@ -256,15 +258,15 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
           height: 40px;
           margin: 11px 0;
           text-indent: 15px;
-          background: #454545;
-          color: white;
-          border: 2px solid #dedede;
+          background: ${css.inputBackground};
+          color: #ffffff;
+          border: 2px solid ${css.inputBorder};
           font-size: 0.8rem;
         }
 
         .auth-form-input::placeholder {
           font-size: 0.8rem;
-          color: white;
+          color: #ffffff;
         }
 
         #username {
@@ -293,7 +295,7 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
         }
 
         .auth-form-forgot-password {
-          color: grey;
+          color: #808080;
           margin-left: 120px;
           text-decoration: underline;
           cursor: pointer;
@@ -304,10 +306,10 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
         }
 
         .auth-form-submit-btn {
-          background: #3580c2;
-          border: 1.5px solid #4f6f87;
+          background: ${css.mainButton};
+          border: 1.5px solid ${css.buttonBorder};
           border-radius: 2px;
-          color: #bebebe;
+          color: ${css.mainButtonText};
           width: 70px;
           height: 30px;
           margin-top: 10px;
@@ -316,8 +318,8 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
         }
 
         .auth-form-submit-btn:hover {
-          background: #076bb8;
-          color: #e2e2e2;
+          background: ${css.mainButtonHover};
+          color: ${css.mainButtonTextHover};
         }
 
         .auth-form-error-msg {
