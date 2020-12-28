@@ -66,12 +66,14 @@ router.post("/", postLimit, async (req, res) => {
         userId: user.id,
       });
 
-      if (
-        communities !== undefined &&
-        communities !== null &&
-        communities.length > 0
-      ) {
-        post.setCommunities(communities);
+      let actualCommunities = [];
+
+      if (communities.length > 0) {
+        for (const uuid of communities) {
+          const community = await Community.findOne({ where: { uuid: uuid } });
+          actualCommunities.push(community.id);
+        }
+        post.setCommunities(actualCommunities);
       }
 
       return res.json(post);

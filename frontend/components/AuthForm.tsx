@@ -2,9 +2,8 @@ import React, { useContext } from "react";
 import { useRouter } from "next/router";
 
 import { UserContext } from "../context/UserContext";
-import host from "../host";
-import * as css from "../cssVariables";
-import { mainButton } from "../cssVariables";
+import host from "../utils/host";
+import * as css from "../utils/cssVariables";
 
 interface Props {
   formType: "signup" | "login";

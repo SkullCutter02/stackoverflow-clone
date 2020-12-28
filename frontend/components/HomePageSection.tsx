@@ -1,6 +1,6 @@
 import React from "react";
 
-import * as css from "../cssVariables";
+import * as css from "../utils/cssVariables";
 
 const HomePageSection: React.FC = () => {
   return (

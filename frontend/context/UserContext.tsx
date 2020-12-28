@@ -1,7 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 
-import host from "../host";
-import { getCookie } from "../utils";
+import host from "../utils/host";
+import { getCookie } from "../utils/functions";
 
 type UserContextType = {
   user: UserType;

@@ -23,8 +23,6 @@ router.post(
   check("password")
     .isLength({ min: 8 })
     .withMessage("Password must be more than 8 characters long")
-    .isLength({ max: 20 })
-    .withMessage("Password cannot be longer than 20 characters")
     .matches(/^.*(?=.{8,20})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/)
     .withMessage(
       "Password must contain at least one uppercase, one lowercase, and one special character"

@@ -3,8 +3,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { UserContext } from "../context/UserContext";
-import host from "../host";
-import * as css from "../cssVariables";
+import host from "../utils/host";
+import * as css from "../utils/cssVariables";
 
 const Navbar: React.FC = () => {
   const userContext = useContext(UserContext);
