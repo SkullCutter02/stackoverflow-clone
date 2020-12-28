@@ -8,11 +8,15 @@ const router = express.Router();
 router.get("/", getRouteLimit, async (req, res) => {
   try {
     const { page, limit } = req.query;
-    const community = await Community.findAll({
+    const communities = await Community.findAll({
       limit: limit,
       offset: (page - 1) * limit,
     });
-    return res.json(community);
+    const tempCommunities = await Community.findAll();
+    return res.json({
+      communities,
+      hasMore: tempCommunities.length > page * limit,
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json({ err });

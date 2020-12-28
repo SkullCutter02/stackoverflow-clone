@@ -1,6 +1,7 @@
 import React from "react";
 
 import Aside from "./Aside";
+import Communities from "./Communities";
 import * as css from "../utils/cssVariables";
 
 const HomePageSection: React.FC = () => {
@@ -20,6 +21,7 @@ const HomePageSection: React.FC = () => {
               placeholder="Search..."
             />
           </section>
+          <Communities />
         </main>
       </div>
 

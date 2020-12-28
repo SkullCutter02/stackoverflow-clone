@@ -1,11 +1,14 @@
 import { AppProps } from "next/app";
 import React from "react";
 import Head from "next/head";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 import Layout from "../components/Layout";
 import { UserContextProvider } from "../context/UserContext";
 
 import "../styles.css";
+
+const queryClient = new QueryClient();
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -19,10 +22,12 @@ function App({ Component, pageProps }: AppProps) {
           crossOrigin="anonymous"
         />
       </Head>
-      <UserContextProvider>
-        <Layout />
-        <Component {...pageProps} />
-      </UserContextProvider>
+      <QueryClientProvider client={queryClient}>
+        <UserContextProvider>
+          <Layout />
+          <Component {...pageProps} />
+        </UserContextProvider>
+      </QueryClientProvider>
     </React.Fragment>
   );
 }
