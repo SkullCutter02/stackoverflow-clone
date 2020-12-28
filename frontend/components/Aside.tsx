@@ -21,7 +21,7 @@ const Aside: React.FC = () => {
           width: 60%;
           font-size: 70%;
           cursor: pointer;
-          border-radius: 2px;
+          border-radius: 5px;
           margin-top: 40px;
         }
 

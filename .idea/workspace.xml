@@ -2,12 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="72f0844c-8b37-4796-b385-52962eac77fa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/components/Aside.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/migrations/20201228103346-change-column-type.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/seeders/20201228100951-create-communities.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/models/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/community.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/seeders/20201226114459-create-fake-users.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/seeders/20201226114459-create-fake-users.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/HomePageSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/HomePageSection.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/components/Aside.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Aside.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,7 +81,7 @@
       <workItem from="1608865397675" duration="3045000" />
       <workItem from="1608880590581" duration="5080000" />
       <workItem from="1608900881439" duration="19005000" />
-      <workItem from="1609148670678" duration="1023000" />
+      <workItem from="1609148670678" duration="2814000" />
     </task>
     <servers />
   </component>
