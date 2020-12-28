@@ -1,5 +1,6 @@
 import React from "react";
 
+import Aside from "./Aside";
 import * as css from "../utils/cssVariables";
 
 const HomePageSection: React.FC = () => {
@@ -7,12 +8,7 @@ const HomePageSection: React.FC = () => {
     <React.Fragment>
       <div className="home-page-section-container">
         <aside>
-          <button className="section-btn ask-question-btn">
-            <i className="fas fa-pencil-alt" /> Ask a Question
-          </button>
-          <button className="section-btn request-community-btn">
-            <i className="fas fa-tags" /> Request a Community
-          </button>
+          <Aside />
         </aside>
         <main>
           <section className="section-heading-container">
@@ -49,23 +45,6 @@ const HomePageSection: React.FC = () => {
 
         main {
           width: 80%;
-        }
-
-        .section-btn {
-          background-color: ${css.mainButton};
-          border: 1.5px solid ${css.buttonBorder};
-          color: ${css.mainButtonText};
-          height: 35px;
-          width: 60%;
-          font-size: 70%;
-          cursor: pointer;
-          border-radius: 2px;
-          margin-top: 40px;
-        }
-
-        .section-btn:hover {
-          background-color: ${css.mainButtonHover};
-          color: ${css.mainButtonTextHover};
         }
 
         .section-heading-container {
