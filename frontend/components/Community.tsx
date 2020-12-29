@@ -1,6 +1,6 @@
 import React from "react";
 
-import { tagBackground } from "../utils/cssVariables";
+import Tag from "./Tag";
 
 interface Props {
   uuid: string;
@@ -14,9 +14,7 @@ const Community: React.FC<Props> = ({ uuid, name, description, count }) => {
     <React.Fragment>
       <div className="community-container">
         <div className="name-count">
-          <span className="background">
-            <p className="name">{name}</p>
-          </span>
+          <Tag name={name} />
           <p className="count">Number of Posts: {count}</p>
         </div>
         <p className="description">{description}</p>
@@ -36,15 +34,6 @@ const Community: React.FC<Props> = ({ uuid, name, description, count }) => {
           justify-content: space-between;
           align-items: center;
           height: 50%;
-        }
-
-        .background {
-          background: ${tagBackground};
-          border-radius: 4px;
-        }
-
-        .name {
-          padding: 2px 7px;
         }
 
         .description {

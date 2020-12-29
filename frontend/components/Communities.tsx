@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery } from "react-query";
 
 import host from "../utils/host";
@@ -52,7 +52,9 @@ const Communities: React.FC<Props> = ({ filter }) => {
     }
   );
 
-  console.log(filter);
+  useEffect(() => {
+    setPage(1);
+  }, [filter]);
 
   return (
     <React.Fragment>
@@ -100,6 +102,7 @@ const Communities: React.FC<Props> = ({ filter }) => {
         .communities-container {
           position: relative;
           margin-bottom: 40px;
+          min-height: 20px;
         }
 
         .page-handlers {
