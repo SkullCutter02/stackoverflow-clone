@@ -26,6 +26,7 @@ label {
 
 .preview p {
   font-size: 0.9rem;
+  margin: 14px 0;
 }
 
 pre {
@@ -37,4 +38,20 @@ pre {
 
 pre code {
   color: #ffffff;
+}
+
+blockquote {
+  border-left: 4px solid grey;
+  border-radius: 1px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+}
+
+blockquote p {
+  margin-left: 10px;
+}
+
+hr {
+  margin: 10px 0;
 }

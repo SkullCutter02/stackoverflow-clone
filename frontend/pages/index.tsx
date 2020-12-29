@@ -8,7 +8,7 @@ const HomePage: React.FC = () => {
     <div>
       <PageHeading
         heading={
-          "Ever got stuck on something? AskProgramming is the ultimate place to ask!"
+          "Ever got stuck on something? AskProgramming will help you out!"
         }
       />
       <HomePageSection />

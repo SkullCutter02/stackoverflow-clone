@@ -1,11 +1,61 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { useQuery } from "react-query";
 
 import * as css from "../../utils/cssVariables";
+import host from "../../utils/host";
+
+type PostType = {
+  uuid: string;
+};
+
+type CommunityType = {
+  uuid: string;
+  name: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  posts: PostType[];
+};
+
+type DataType = {
+  communities: CommunityType[];
+  hasMore: boolean;
+};
 
 const RequestPostPage: React.FC = () => {
   const [body, setBody] = useState<string>("**Hello World!**");
+  const [text, setText] = useState<string>("");
+  const [tags, setTags] = useState<string[]>([]);
+
+  const fetchCommunities = async (filter: string = "") => {
+    const res = await fetch(
+      `${host}/communities?page=1&limit=6&filter=${filter}`
+    );
+    return await res.json();
+  };
+
+  const { isLoading, isError, error, data } = useQuery<DataType, Error>(
+    ["communities", text],
+    () => fetchCommunities(text)
+  );
+
+  useEffect(() => {
+    const tagExpand = document.getElementById("expand");
+    if (text !== "") {
+      tagExpand.style.width = "80%";
+      tagExpand.style.height = "190px";
+    } else {
+      tagExpand.style.width = "0";
+      tagExpand.style.height = "0";
+    }
+  }, [text]);
+
+  const tagClick = (e) => {
+    setTags([...tags, e.target.textContent]);
+    setText("");
+  };
 
   return (
     <React.Fragment>
@@ -35,7 +85,37 @@ const RequestPostPage: React.FC = () => {
           plugins={[remarkGfm]}
           source={body}
         />
-        <div className="tags"></div>
+        <div className="tags">
+          <input
+            type="text"
+            className="post-form-input"
+            placeholder="Tags: (maximum 5) "
+            value={text}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setText(e.target.value)
+            }
+          />
+          <div className="tags-expand" id="expand">
+            {isLoading ? (
+              <div>Loading...</div>
+            ) : isError ? (
+              <div>Error: {error.message}</div>
+            ) : (
+              <React.Fragment>
+                {data.communities.map((community) => (
+                  <div className="tags-expand-element">
+                    <div className="tag-container">
+                      <div className="tag-background" onClick={tagClick}>
+                        <p className="tag-name">{community.name}</p>
+                      </div>
+                    </div>
+                    <p>{community.description}</p>
+                  </div>
+                ))}
+              </React.Fragment>
+            )}
+          </div>
+        </div>
       </form>
 
       <style jsx>{`
@@ -48,7 +128,7 @@ const RequestPostPage: React.FC = () => {
           width: 65%;
           min-height: 500px;
           border-radius: 20px;
-          margin: 0 auto 50px;
+          margin: 0 auto 140px;
           background: #3b3b3b;
           display: flex;
           flex-direction: column;
@@ -81,6 +161,61 @@ const RequestPostPage: React.FC = () => {
           color: #ffffff;
           border: 2px solid ${css.inputBorder};
           padding: 15px;
+        }
+
+        .tags {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          margin-top: -40px;
+          margin-bottom: 40px;
+        }
+
+        .tags-expand {
+          width: 0;
+          height: 0;
+          background: #2b2b2b;
+          border: 1px solid #bebebe;
+          border-radius: 4px;
+          display: grid;
+          grid-template-rows: 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .tag-container {
+          display: flex;
+          justify-content: flex-start;
+        }
+
+        .tags-expand-element {
+          height: 87%;
+          overflow: hidden;
+          font-size: 0.8rem;
+        }
+
+        .tags-expand-element > p {
+          margin: 0 8px;
+        }
+
+        .tag-background {
+          background: ${css.tagBackground};
+          border-radius: 4px;
+          cursor: pointer;
+          margin: 5px;
+        }
+
+        .tag-background:hover {
+          background: #3e3e3e;
+        }
+
+        .tag-name {
+          padding: 2px 7px;
+        }
+
+        .tag-name:hover {
+          color: #c6c6c6;
         }
       `}</style>
     </React.Fragment>

@@ -9,15 +9,16 @@ interface Props {
 const Tag: React.FC<Props> = ({ name }) => {
   return (
     <React.Fragment>
-      <span className="background">
+      <div className="background">
         <p className="name">{name}</p>
-      </span>
+      </div>
 
       <style jsx>{`
         .background {
           background: ${tagBackground};
           border-radius: 4px;
           cursor: pointer;
+          margin: 5px;
         }
 
         .background:hover {
