@@ -60,7 +60,7 @@ const Communities: React.FC = () => {
                 uuid={community.uuid}
                 name={community.name}
                 description={community.description}
-                postLength={community.posts.length}
+                count={community.posts.length}
                 key={community.uuid}
               />
             ))}
