@@ -25,6 +25,7 @@ const Community: React.FC<Props> = ({ uuid, name, description, count }) => {
       <style jsx>{`
         .community-container {
           display: block;
+          height: 120px;
           width: 95%;
           margin: 0 auto;
           border-top: 1px solid #ffff;
@@ -35,7 +36,6 @@ const Community: React.FC<Props> = ({ uuid, name, description, count }) => {
           justify-content: space-between;
           align-items: center;
           height: 50%;
-          margin-top: 10px;
         }
 
         .background {
@@ -48,7 +48,8 @@ const Community: React.FC<Props> = ({ uuid, name, description, count }) => {
         }
 
         .description {
-          margin: 15px 0;
+          height: calc(50% - 28px);
+          overflow: hidden;
         }
       `}</style>
     </React.Fragment>

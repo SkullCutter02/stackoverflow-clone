@@ -1,10 +1,12 @@
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
 
 import Aside from "./Aside";
 import Communities from "./Communities";
 import * as css from "../utils/cssVariables";
 
 const HomePageSection: React.FC = () => {
+  const [filter, setFilter] = useState<string>("");
+
   return (
     <React.Fragment>
       <div className="home-page-section-container">
@@ -19,22 +21,27 @@ const HomePageSection: React.FC = () => {
               id="search"
               className="search-input"
               placeholder="Search..."
+              value={filter}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setFilter(e.target.value)
+              }
             />
           </section>
-          <Communities />
+          <Communities filter={filter} />
         </main>
       </div>
 
       <style jsx>{`
         .home-page-section-container {
           width: 100%;
-          height: 500px;
+          height: auto;
           display: flex;
+          min-height: 400px;
         }
 
         aside,
         main {
-          height: 100%;
+          height: auto;
         }
 
         aside {

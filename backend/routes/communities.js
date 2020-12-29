@@ -26,13 +26,8 @@ Array.prototype.skip = skip;
 
 router.get("/", getRouteLimit, async (req, res) => {
   try {
-    const { page, limit } = req.query;
-    // let communities = await Community.findAll({
-    //   limit: limit,
-    //   offset: (page - 1) * limit,
-    //   include: { model: Post, as: "posts", attributes: ["uuid"] },
-    // });
-    // communities = communities.sort((a, b) => a.posts.length - b.posts.length);
+    const { page, limit, filter } = req.query;
+
     const tempCommunities = await Community.findAll({
       include: {
         model: Post,
@@ -41,10 +36,23 @@ router.get("/", getRouteLimit, async (req, res) => {
         attributes: ["uuid"],
       },
     });
-    const communities = tempCommunities
+
+    let communities = tempCommunities
+      .filter((item) => item.name.includes(filter))
       .sort((a, b) => b.posts.length - a.posts.length)
       .skip((page - 1) * limit)
       .limit(limit);
+
+    const filteredCommunities = tempCommunities.filter((item) =>
+      item.name.includes(filter)
+    );
+
+    if (filter !== "") {
+      return res.json({
+        communities,
+        hasMore: filteredCommunities.length > page * limit,
+      });
+    }
 
     return res.json({
       communities,
