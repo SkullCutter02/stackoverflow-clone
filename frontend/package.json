@@ -16,7 +16,9 @@
     "next": "^10.0.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-query": "^3.5.5"
+    "react-markdown": "^5.0.3",
+    "react-query": "^3.5.5",
+    "remark-gfm": "^1.0.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.16",
