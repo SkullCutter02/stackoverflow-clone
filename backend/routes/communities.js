@@ -1,18 +1,51 @@
 const express = require("express");
-const { Community, User, Comment } = require("../models");
+const { Community, User, Comment, Post } = require("../models");
 const { getRouteLimit } = require("../limiters");
 const { comparePassword } = require("../hash");
 
 const router = express.Router();
 
+function limit(c) {
+  return this.filter((x, i) => {
+    if (i <= c - 1) {
+      return true;
+    }
+  });
+}
+
+function skip(c) {
+  return this.filter((x, i) => {
+    if (i > c - 1) {
+      return true;
+    }
+  });
+}
+
+Array.prototype.limit = limit;
+Array.prototype.skip = skip;
+
 router.get("/", getRouteLimit, async (req, res) => {
   try {
     const { page, limit } = req.query;
-    const communities = await Community.findAll({
-      limit: limit,
-      offset: (page - 1) * limit,
+    // let communities = await Community.findAll({
+    //   limit: limit,
+    //   offset: (page - 1) * limit,
+    //   include: { model: Post, as: "posts", attributes: ["uuid"] },
+    // });
+    // communities = communities.sort((a, b) => a.posts.length - b.posts.length);
+    const tempCommunities = await Community.findAll({
+      include: {
+        model: Post,
+        as: "posts",
+        through: { attributes: [] },
+        attributes: ["uuid"],
+      },
     });
-    const tempCommunities = await Community.findAll();
+    const communities = tempCommunities
+      .sort((a, b) => b.posts.length - a.posts.length)
+      .skip((page - 1) * limit)
+      .limit(limit);
+
     return res.json({
       communities,
       hasMore: tempCommunities.length > page * limit,

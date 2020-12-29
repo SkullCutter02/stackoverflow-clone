@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import { useQuery } from "react-query";
 
 import host from "../utils/host";
+import Community from "./Community";
+
+type PostType = {
+  uuid: string;
+};
 
 type CommunityType = {
   uuid: string;
@@ -9,6 +14,7 @@ type CommunityType = {
   description: string;
   createdAt: string;
   updatedAt: string;
+  posts: PostType[];
 };
 
 type DataType = {
@@ -21,7 +27,8 @@ const Communities: React.FC = () => {
 
   const fetchCommunities = async (page: number = 1) => {
     const res = await fetch(`${host}/communities?page=${page}&limit=5`);
-    return await res.json();
+    const data: DataType = await res.json();
+    return data;
   };
 
   const {
@@ -39,11 +46,6 @@ const Communities: React.FC = () => {
     }
   );
 
-  // // testing
-  // React.useEffect(() => {
-  //   console.log(data);
-  // }, [data]);
-
   return (
     <React.Fragment>
       <div className="communities-container">
@@ -54,10 +56,13 @@ const Communities: React.FC = () => {
         ) : (
           <React.Fragment>
             {data.communities.map((community) => (
-              <div className="community-container" key={community.uuid}>
-                <p>{community.name}</p>
-                <p>{community.description}</p>
-              </div>
+              <Community
+                uuid={community.uuid}
+                name={community.name}
+                description={community.description}
+                postLength={community.posts.length}
+                key={community.uuid}
+              />
             ))}
             <span>Current Page: {page}</span>
             <button
