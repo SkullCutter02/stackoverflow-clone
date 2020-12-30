@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import * as css from "../../utils/cssVariables";
 import host from "../../utils/host";
 import { UserContext } from "../../context/UserContext";
+import TagExpand from "../../components/TagExpand";
 
 type PostType = {
   uuid: string;
@@ -180,18 +181,7 @@ const RequestPostPage: React.FC = () => {
             ) : (
               <React.Fragment>
                 {data.communities.map((community) => (
-                  <div
-                    className="tags-expand-element"
-                    key={community.uuid}
-                    data-key={community.uuid}
-                  >
-                    <div className="tag-container">
-                      <div className="tag-background" onClick={tagClick}>
-                        <p className="tag-name">{community.name}</p>
-                      </div>
-                    </div>
-                    <p>{community.description}</p>
-                  </div>
+                  <TagExpand community={community} tagClick={tagClick} />
                 ))}
               </React.Fragment>
             )}
@@ -273,16 +263,6 @@ const RequestPostPage: React.FC = () => {
         .tag-container {
           display: flex;
           justify-content: flex-start;
-        }
-
-        .tags-expand-element {
-          height: 87%;
-          overflow: hidden;
-          font-size: 0.8rem;
-        }
-
-        .tags-expand-element > p {
-          margin: 0 8px;
         }
 
         .tag-background {
