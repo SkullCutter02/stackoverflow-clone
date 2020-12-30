@@ -28,6 +28,7 @@ const RequestPostPage: React.FC = () => {
   const [body, setBody] = useState<string>("**Hello World!**");
   const [text, setText] = useState<string>("");
   const [tags, setTags] = useState<string[]>([]);
+  const [uuids, setUuids] = useState<string[]>([]);
 
   const fetchCommunities = async (filter: string = "") => {
     const res = await fetch(
@@ -53,8 +54,35 @@ const RequestPostPage: React.FC = () => {
   }, [text]);
 
   const tagClick = (e) => {
-    setTags([...tags, e.target.textContent]);
-    setText("");
+    const errMsg = document.getElementById("err-msg");
+
+    if (tags.length < 5) {
+      if (!tags.includes(e.target.textContent)) {
+        setTags([...tags, e.target.textContent]);
+        setUuids([
+          ...uuids,
+          e.target.parentElement.parentElement.parentElement.getAttribute(
+            "data-key"
+          ),
+        ]);
+        setText("");
+        errMsg.innerText = "";
+      } else {
+        setText("");
+        errMsg.innerText = "Community already chosen!";
+      }
+    } else {
+      setText("");
+      errMsg.innerText = "Maximum amount of communities reached";
+    }
+  };
+
+  const removeTag = (e) => {
+    const index = tags.indexOf(
+      e.target.parentNode.parentNode.firstElementChild.textContent
+    );
+    setTags(tags.filter((tag) => tags.indexOf(tag) !== index));
+    setUuids(uuids.filter((uuid) => uuids.indexOf(uuid) !== index));
   };
 
   return (
@@ -86,15 +114,28 @@ const RequestPostPage: React.FC = () => {
           source={body}
         />
         <div className="tags">
+          <div className="active-tags-container">
+            {tags.map((tag) => (
+              <div key={uuids[tags.indexOf(tag)]} className="tag-container">
+                <div className="tag-background active-tag-background">
+                  <p className="tag-name">{tag}</p>
+                  <div className="tag-close-background" onClick={removeTag}>
+                    <i className="fas fa-times tag-close" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
           <input
             type="text"
             className="post-form-input"
-            placeholder="Tags: (maximum 5) "
+            placeholder="Communities: (maximum 5) "
             value={text}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setText(e.target.value)
             }
           />
+          <p className="error-msg" id="err-msg" />
           <div className="tags-expand" id="expand">
             {isLoading ? (
               <div>Loading...</div>
@@ -103,7 +144,11 @@ const RequestPostPage: React.FC = () => {
             ) : (
               <React.Fragment>
                 {data.communities.map((community) => (
-                  <div className="tags-expand-element">
+                  <div
+                    className="tags-expand-element"
+                    key={community.uuid}
+                    data-key={community.uuid}
+                  >
                     <div className="tag-container">
                       <div className="tag-background" onClick={tagClick}>
                         <p className="tag-name">{community.name}</p>
@@ -216,6 +261,34 @@ const RequestPostPage: React.FC = () => {
 
         .tag-name:hover {
           color: #c6c6c6;
+        }
+
+        .error-msg {
+          color: #ff3f3f;
+        }
+
+        .active-tag-background {
+          display: flex;
+          align-items: center;
+        }
+
+        .tag-close-background {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 80%;
+          margin-right: 7px;
+          width: 15px;
+          border-radius: 4px;
+        }
+
+        .tag-close-background:hover {
+          background: #999999;
+        }
+
+        .tag-close {
+          color: white;
+          display: block;
         }
       `}</style>
     </React.Fragment>
