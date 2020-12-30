@@ -3,6 +3,8 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useQuery } from "react-query";
 import { useRouter } from "next/router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import * as css from "../../utils/cssVariables";
 import host from "../../utils/host";
@@ -157,7 +159,8 @@ const RequestPostPage: React.FC = () => {
                 <div className="tag-background active-tag-background">
                   <p className="tag-name">{tag}</p>
                   <div className="tag-close-background" onClick={removeTag}>
-                    <i className="fas fa-times tag-close" />
+                    {/*<i className="fas fa-times tag-close" />*/}
+                    <FontAwesomeIcon icon={faTimes} color={"white"} />
                   </div>
                 </div>
               </div>
@@ -305,11 +308,6 @@ const RequestPostPage: React.FC = () => {
 
         .tag-close-background:hover {
           background: #999999;
-        }
-
-        .tag-close {
-          color: white;
-          display: block;
         }
 
         .active-tags-container {

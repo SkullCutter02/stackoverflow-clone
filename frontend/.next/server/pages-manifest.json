@@ -2,6 +2,8 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/auth/login": "pages/auth/login.js",
+  "/[community]": "pages/[community].js",
+  "/": "pages/index.js",
+  "/request/community": "pages/request/community.js",
   "/request/post": "pages/request/post.js"
 }

@@ -1,5 +1,7 @@
 import React from "react";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTags, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 import * as css from "../utils/cssVariables";
 import { getCookie } from "../utils/functions";
@@ -9,12 +11,12 @@ const Aside: React.FC = () => {
     <React.Fragment>
       <Link href={getCookie("token") ? "/request/post" : "/auth/signup"}>
         <button className="section-btn ask-question-btn">
-          <i className="fas fa-pencil-alt" /> Ask a Question
+          <FontAwesomeIcon icon={faPencilAlt} color={"white"} /> Ask a Question
         </button>
       </Link>
       <Link href={"/request/community"}>
         <button className="section-btn request-community-btn">
-          <i className="fas fa-tags" /> Request a Community
+          <FontAwesomeIcon icon={faTags} color={"white"} /> Request a Community
         </button>
       </Link>
 
@@ -24,7 +26,7 @@ const Aside: React.FC = () => {
           border: 1.5px solid ${css.buttonBorder};
           color: ${css.mainButtonText};
           height: 30px;
-          width: 50%;
+          width: 56%;
           font-size: 0.6rem;
           cursor: pointer;
           border-radius: 5px;

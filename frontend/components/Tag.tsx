@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 import { tagBackground } from "../utils/cssVariables";
 
@@ -9,9 +10,11 @@ interface Props {
 const Tag: React.FC<Props> = ({ name }) => {
   return (
     <React.Fragment>
-      <div className="background">
-        <p className="name">{name}</p>
-      </div>
+      <Link href={`${name}`}>
+        <div className="background">
+          <p className="name">{name}</p>
+        </div>
+      </Link>
 
       <style jsx>{`
         .background {

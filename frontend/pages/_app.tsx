@@ -17,10 +17,6 @@ function App({ Component, pageProps }: AppProps) {
         <title>
           AskProgramming | The ultimate site to ask for programming help!
         </title>
-        <script
-          src={"https://kit.fontawesome.com/a40d908160.js"}
-          crossOrigin="anonymous"
-        />
       </Head>
       <QueryClientProvider client={queryClient}>
         <UserContextProvider>
