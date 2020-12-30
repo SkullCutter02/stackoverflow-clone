@@ -2,11 +2,12 @@ import React from "react";
 import Link from "next/link";
 
 import * as css from "../utils/cssVariables";
+import { getCookie } from "../utils/functions";
 
 const Aside: React.FC = () => {
   return (
     <React.Fragment>
-      <Link href={"/request/post"}>
+      <Link href={getCookie("token") ? "/request/post" : "/auth/signup"}>
         <button className="section-btn ask-question-btn">
           <i className="fas fa-pencil-alt" /> Ask a Question
         </button>

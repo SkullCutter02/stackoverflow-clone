@@ -29,11 +29,11 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: DataTypes.UUIDV4,
       },
       title: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(400),
         allowNull: false,
       },
       body: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(10000),
         allowNull: false,
       },
       votes: {

@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 import { UserContext } from "../context/UserContext";
 import host from "../utils/host";
@@ -165,17 +166,24 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
                 required
               />
               <div className="auth-form-checkbox-container">
-                <input
-                  type="checkbox"
-                  className="auth-form-checkbox"
-                  id="rememberMe"
-                />
-                <label
-                  htmlFor="rememberMe"
-                  className="auth-form-checkbox-label"
-                >
-                  Remember Me
-                </label>
+                <div className="checkbox-remember-me">
+                  <input
+                    type="checkbox"
+                    className="auth-form-checkbox"
+                    id="rememberMe"
+                  />
+                  <label
+                    htmlFor="rememberMe"
+                    className="auth-form-checkbox-label"
+                  >
+                    Remember Me
+                  </label>
+                </div>
+                <Link href={"/auth/login"}>
+                  <p className="auth-form-forgot-password">
+                    Already have an account?
+                  </p>
+                </Link>
               </div>
               <div className="auth-form-error-msg" id="error-msg" />
               <button type="submit" className="auth-form-submit-btn">
@@ -199,17 +207,19 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
                 required
               />
               <div className="auth-form-checkbox-container">
-                <input
-                  type="checkbox"
-                  className="auth-form-checkbox"
-                  id="rememberMe"
-                />
-                <label
-                  htmlFor="rememberMe"
-                  className="auth-form-checkbox-label"
-                >
-                  Remember Me
-                </label>
+                <div className="checkbox-remember-me">
+                  <input
+                    type="checkbox"
+                    className="auth-form-checkbox"
+                    id="rememberMe"
+                  />
+                  <label
+                    htmlFor="rememberMe"
+                    className="auth-form-checkbox-label"
+                  >
+                    Remember Me
+                  </label>
+                </div>
                 <p className="auth-form-forgot-password">Forgot Password?</p>
               </div>
               <div className="auth-form-error-msg" id="error-msg" />
@@ -280,22 +290,16 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
           margin: 10px 0;
           width: 100%;
           display: flex;
-          justify-content: flex-start;
+          justify-content: space-between;
         }
 
         .auth-form-checkbox-label {
-          margin-left: 15px;
           font-size: 1rem;
-        }
-
-        .auth-form-forgot-password,
-        .auth-form-checkbox-label {
-          transform: translateY(1px);
+          margin-left: 10px;
         }
 
         .auth-form-forgot-password {
           color: #808080;
-          margin-left: 120px;
           text-decoration: underline;
           cursor: pointer;
         }

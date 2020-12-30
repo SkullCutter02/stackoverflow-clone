@@ -1,10 +1,12 @@
-import React, { ChangeEvent, useState, useEffect } from "react";
+import React, { ChangeEvent, useState, useEffect, useContext } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useQuery } from "react-query";
+import { useRouter } from "next/router";
 
 import * as css from "../../utils/cssVariables";
 import host from "../../utils/host";
+import { UserContext } from "../../context/UserContext";
 
 type PostType = {
   uuid: string;
@@ -29,6 +31,9 @@ const RequestPostPage: React.FC = () => {
   const [text, setText] = useState<string>("");
   const [tags, setTags] = useState<string[]>([]);
   const [uuids, setUuids] = useState<string[]>([]);
+
+  const userContext = useContext(UserContext);
+  const router = useRouter();
 
   const fetchCommunities = async (filter: string = "") => {
     const res = await fetch(
@@ -85,10 +90,41 @@ const RequestPostPage: React.FC = () => {
     setUuids(uuids.filter((uuid) => uuids.indexOf(uuid) !== index));
   };
 
+  const formSubmit = async (e) => {
+    e.preventDefault();
+
+    const errMsg = document.getElementById("err-msg");
+    const titleInput = document.getElementById("title") as HTMLInputElement;
+    const bodyTextArea = document.getElementById("body") as HTMLTextAreaElement;
+
+    if (titleInput.value.length <= 350) {
+      if (tags.length > 0) {
+        await fetch(`${host}/posts`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title: titleInput.value,
+            body: bodyTextArea.value,
+            userUuid: userContext.user.uuid,
+            communities: uuids,
+          }),
+        });
+        await router.push("/"); // placeholder, will change later
+      } else {
+        errMsg.innerText =
+          "Choose at least 1 community to post your question to";
+      }
+    } else {
+      errMsg.innerText = "Question title cannot be longer than 350 characters";
+    }
+  };
+
   return (
     <React.Fragment>
       <h1 className="post-form-heading">Ask a Question</h1>
-      <form className="post-form-container">
+      <form className="post-form-container" onSubmit={formSubmit}>
         <input
           type="text"
           className="post-form-input"
@@ -161,6 +197,11 @@ const RequestPostPage: React.FC = () => {
             )}
           </div>
         </div>
+        <div className="submit-btn-container">
+          <button type="submit" className="form-submit-btn">
+            Post your Question
+          </button>
+        </div>
       </form>
 
       <style jsx>{`
@@ -215,7 +256,7 @@ const RequestPostPage: React.FC = () => {
           align-items: center;
           justify-content: center;
           margin-top: -40px;
-          margin-bottom: 40px;
+          margin-bottom: 10px;
         }
 
         .tags-expand {
@@ -289,6 +330,31 @@ const RequestPostPage: React.FC = () => {
         .tag-close {
           color: white;
           display: block;
+        }
+
+        .active-tags-container {
+          display: flex;
+          margin-top: 40px;
+          justify-content: flex-start;
+          width: 80%;
+        }
+
+        .submit-btn-container {
+          width: 80%;
+          margin-bottom: 40px;
+        }
+
+        .form-submit-btn {
+          border: none;
+          background: ${css.mainButton};
+          color: #cbcbcb;
+          padding: 8px;
+          border-radius: 4px;
+        }
+
+        .form-submit-btn:hover {
+          background: ${css.mainButtonHover};
+          color: #dbdbdb;
         }
       `}</style>
     </React.Fragment>
