@@ -5,9 +5,10 @@ import { tagBackground } from "../utils/cssVariables";
 
 interface Props {
   name: string;
+  uuid: string;
 }
 
-const Tag: React.FC<Props> = ({ name }) => {
+const Tag: React.FC<Props> = ({ name, uuid }) => {
   return (
     <React.Fragment>
       <Link href={`${name}`}>

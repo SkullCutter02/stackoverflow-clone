@@ -10,24 +10,7 @@ import * as css from "../../utils/cssVariables";
 import host from "../../utils/host";
 import { UserContext } from "../../context/UserContext";
 import TagExpand from "../../components/TagExpand";
-
-type PostType = {
-  uuid: string;
-};
-
-type CommunityType = {
-  uuid: string;
-  name: string;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-  posts: PostType[];
-};
-
-type DataType = {
-  communities: CommunityType[];
-  hasMore: boolean;
-};
+import { CommunitiesType } from "../../utils/types/communityType";
 
 const RequestPostPage: React.FC = () => {
   const [body, setBody] = useState<string>("**Hello World!**");
@@ -45,7 +28,7 @@ const RequestPostPage: React.FC = () => {
     return await res.json();
   };
 
-  const { isLoading, isError, error, data } = useQuery<DataType, Error>(
+  const { isLoading, isError, error, data } = useQuery<CommunitiesType, Error>(
     ["communities", text],
     () => fetchCommunities(text)
   );
@@ -159,7 +142,6 @@ const RequestPostPage: React.FC = () => {
                 <div className="tag-background active-tag-background">
                   <p className="tag-name">{tag}</p>
                   <div className="tag-close-background" onClick={removeTag}>
-                    {/*<i className="fas fa-times tag-close" />*/}
                     <FontAwesomeIcon icon={faTimes} color={"white"} />
                   </div>
                 </div>

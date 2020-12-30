@@ -3,24 +3,7 @@ import { useQuery } from "react-query";
 
 import host from "../utils/host";
 import Community from "./Community";
-
-type PostType = {
-  uuid: string;
-};
-
-type CommunityType = {
-  uuid: string;
-  name: string;
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-  posts: PostType[];
-};
-
-type DataType = {
-  communities: CommunityType[];
-  hasMore: boolean;
-};
+import { CommunitiesType } from "../utils/types/communityType";
 
 interface Props {
   filter: string;
@@ -33,7 +16,7 @@ const Communities: React.FC<Props> = ({ filter }) => {
     const res = await fetch(
       `${host}/communities?page=${page}&limit=5&filter=${filter}`
     );
-    const data: DataType = await res.json();
+    const data: CommunitiesType = await res.json();
     return data;
   };
 
@@ -44,7 +27,7 @@ const Communities: React.FC<Props> = ({ filter }) => {
     data,
     isFetching,
     isPreviousData,
-  } = useQuery<DataType, Error>(
+  } = useQuery<CommunitiesType, Error>(
     ["communities", page, filter],
     () => fetchCommunities(page, filter),
     {

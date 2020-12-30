@@ -82,12 +82,12 @@ router.get("/:uuid", getRouteLimit, async (req, res) => {
   }
 });
 
-router.get("/:uuid/posts", getRouteLimit, async (req, res) => {
+router.get("/:name/posts", getRouteLimit, async (req, res) => {
   try {
-    const { uuid } = req.params;
+    const { name } = req.params;
     const { page, limit } = req.query;
 
-    const community = await Community.findOne({ where: { uuid: uuid } });
+    const community = await Community.findOne({ where: { name: name } });
     const communityPosts = await community.getPosts({
       limit: limit * 1,
       offset: (page - 1) * limit,
@@ -103,11 +103,13 @@ router.get("/:uuid/posts", getRouteLimit, async (req, res) => {
         },
       ],
     });
+    const tempPosts = await community.getPosts();
 
     if (community) {
       return res.json({
         community,
         posts: communityPosts,
+        hasMore: tempPosts.length > page * limit,
       });
     } else {
       return res.status(500).json({ msg: "Community not found" });
