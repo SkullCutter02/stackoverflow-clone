@@ -1,21 +1,25 @@
 import React from "react";
-import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { tagBackground } from "../utils/cssVariables";
 
 interface Props {
   name: string;
-  uuid: string;
 }
 
-const Tag: React.FC<Props> = ({ name, uuid }) => {
+const Tag: React.FC<Props> = ({ name }) => {
+  const router = useRouter();
+
   return (
     <React.Fragment>
-      <Link href={`${name}`}>
-        <div className="background">
-          <p className="name">{name}</p>
-        </div>
-      </Link>
+      <div
+        className="background"
+        onClick={async () => {
+          await router.push(`/${name}`);
+        }}
+      >
+        <p className="name">{name}</p>
+      </div>
 
       <style jsx>{`
         .background {

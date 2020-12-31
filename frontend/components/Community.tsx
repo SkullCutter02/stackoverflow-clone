@@ -14,7 +14,7 @@ const Community: React.FC<Props> = ({ uuid, name, description, count }) => {
     <React.Fragment>
       <div className="community-container">
         <div className="name-count">
-          <Tag name={name} uuid={uuid} />
+          <Tag name={name} />
           <p className="count">Number of Posts: {count}</p>
         </div>
         <p className="description">{description}</p>

@@ -101,6 +101,12 @@ router.get("/:name/posts", getRouteLimit, async (req, res) => {
           model: Comment,
           as: "comments",
         },
+        {
+          model: Community,
+          as: "communities",
+          through: { attributes: [] },
+          attributes: ["name"],
+        },
       ],
     });
     const tempPosts = await community.getPosts();

@@ -12,6 +12,10 @@ export type CommentType = {
   updatedAt: string;
 };
 
+export type CommunitiesType = {
+  name: string;
+};
+
 export type PostType = {
   uuid: string;
   title: string;
@@ -21,6 +25,7 @@ export type PostType = {
   updatedAt: string;
   user: UserType;
   comments: CommentType[];
+  communities: CommunitiesType[];
   CommunityPost: object;
 };
 

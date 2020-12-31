@@ -81,27 +81,32 @@ const RequestPostPage: React.FC = () => {
     const titleInput = document.getElementById("title") as HTMLInputElement;
     const bodyTextArea = document.getElementById("body") as HTMLTextAreaElement;
 
-    if (titleInput.value.length <= 350) {
+    if (titleInput.value.length <= 350 && titleInput.value.length > 50) {
       if (tags.length > 0) {
-        await fetch(`${host}/posts`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            title: titleInput.value,
-            body: bodyTextArea.value,
-            userUuid: userContext.user.uuid,
-            communities: uuids,
-          }),
-        });
-        await router.push("/"); // placeholder, will change later
+        if (userContext.user) {
+          await fetch(`${host}/posts`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              title: titleInput.value,
+              body: bodyTextArea.value,
+              userUuid: userContext.user.uuid,
+              communities: uuids,
+            }),
+          });
+          await router.push("/"); // TODO: placeholder, will change later
+        } else {
+          errMsg.innerText = "Please login to post a question";
+        }
       } else {
         errMsg.innerText =
           "Choose at least 1 community to post your question to";
       }
     } else {
-      errMsg.innerText = "Question title cannot be longer than 350 characters";
+      errMsg.innerText =
+        "Question title cannot be longer than 350 characters or shorter than 50 characters";
     }
   };
 
@@ -188,7 +193,7 @@ const RequestPostPage: React.FC = () => {
           min-height: 500px;
           border-radius: 20px;
           margin: 0 auto 140px;
-          background: #3b3b3b;
+          background: ${css.floatingPostBackground};
           display: flex;
           flex-direction: column;
           align-items: center;

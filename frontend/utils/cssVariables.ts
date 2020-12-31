@@ -17,3 +17,5 @@ export const inputBorder = "#dedede";
 export const tagBackground = "#4a4a4a";
 
 export const headerBackground = "#323636";
+
+export const floatingPostBackground = "#3b3b3b";

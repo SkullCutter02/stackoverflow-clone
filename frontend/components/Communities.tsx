@@ -14,7 +14,7 @@ const Communities: React.FC<Props> = ({ filter }) => {
 
   const fetchCommunities = async (page: number = 1, filter: string = "") => {
     const res = await fetch(
-      `${host}/communities?page=${page}&limit=5&filter=${filter}`
+      `${host}/communities?page=${page}&limit=10&filter=${filter}`
     );
     const data: CommunitiesType = await res.json();
     return data;
@@ -52,7 +52,10 @@ const Communities: React.FC<Props> = ({ filter }) => {
             <div className="page-handlers">
               <p className="current-page">Current Page: {page}</p>
               <button
-                onClick={() => setPage((old) => Math.max(old - 1, 0))}
+                onClick={() => {
+                  setPage((old) => Math.max(old - 1, 0));
+                  window.scrollTo(0, -500);
+                }}
                 disabled={page === 1}
               >
                 Previous Page
@@ -61,6 +64,7 @@ const Communities: React.FC<Props> = ({ filter }) => {
                 onClick={() => {
                   if (!isPreviousData && data.hasMore) {
                     setPage((old) => old + 1);
+                    window.scrollTo(0, -500);
                   }
                 }}
                 disabled={isPreviousData || !data.hasMore}

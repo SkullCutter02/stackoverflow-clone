@@ -2,22 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="72f0844c-8b37-4796-b385-52962eac77fa" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/components/CommunityPost.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/components/CommunityPosts.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/communities.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/communities.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/[community].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/[community].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/_app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/request/post.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/request/post.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/[community].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/[community].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/_app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/request/post.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/request/post.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/Aside.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Aside.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/components/Communities.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Communities.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/HomePageSection.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/HomePageSection.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/PageHeading.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/PageHeading.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/components/Community.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Community.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/components/Tag.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Tag.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/[community]/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/[community]/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/_app.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/request/post.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/request/post.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/utils/cssVariables.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/utils/cssVariables.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/utils/types/postType.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/utils/types/postType.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,8 +33,8 @@
       <list>
         <option value="CSS File" />
         <option value="JavaScript File" />
-        <option value="TypeScript JSX File" />
         <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -91,7 +95,7 @@
       <workItem from="1608900881439" duration="19005000" />
       <workItem from="1609148670678" duration="17758000" />
       <workItem from="1609237261126" duration="17878000" />
-      <workItem from="1609319682893" duration="9044000" />
+      <workItem from="1609319682893" duration="13735000" />
     </task>
     <servers />
   </component>
