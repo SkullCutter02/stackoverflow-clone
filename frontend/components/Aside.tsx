@@ -6,21 +6,37 @@ import { faTags, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import * as css from "../utils/cssVariables";
 import { getCookie } from "../utils/functions";
 
-const Aside: React.FC = () => {
+interface Props {
+  borderSide: "left" | "right";
+}
+
+const Aside: React.FC<Props> = ({ borderSide }) => {
   return (
     <React.Fragment>
-      <Link href={getCookie("token") ? "/request/post" : "/auth/signup"}>
-        <button className="section-btn ask-question-btn">
-          <FontAwesomeIcon icon={faPencilAlt} color={"white"} /> Ask a Question
-        </button>
-      </Link>
-      <Link href={"/request/community"}>
-        <button className="section-btn request-community-btn">
-          <FontAwesomeIcon icon={faTags} color={"white"} /> Request a Community
-        </button>
-      </Link>
+      <aside>
+        <Link href={getCookie("token") ? "/request/post" : "/auth/signup"}>
+          <button className="section-btn ask-question-btn">
+            <FontAwesomeIcon icon={faPencilAlt} color={"white"} /> Ask a
+            Question
+          </button>
+        </Link>
+        <Link href={"/request/community"}>
+          <button className="section-btn request-community-btn">
+            <FontAwesomeIcon icon={faTags} color={"white"} /> Request a
+            Community
+          </button>
+        </Link>
+      </aside>
 
       <style jsx>{`
+        aside {
+          width: 20%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          border-${borderSide}: 1px solid #ffffff;
+        }
+
         .section-btn {
           background-color: ${css.mainButton};
           border: 1.5px solid ${css.buttonBorder};

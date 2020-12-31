@@ -20,20 +20,12 @@ const Communities: React.FC<Props> = ({ filter }) => {
     return data;
   };
 
-  const {
-    isLoading,
-    isError,
-    error,
-    data,
-    isFetching,
-    isPreviousData,
-  } = useQuery<CommunitiesType, Error>(
-    ["communities", page, filter],
-    () => fetchCommunities(page, filter),
-    {
-      keepPreviousData: true,
-    }
-  );
+  const { isLoading, isError, error, data, isPreviousData } = useQuery<
+    CommunitiesType,
+    Error
+  >(["communities", page, filter], () => fetchCommunities(page, filter), {
+    keepPreviousData: true,
+  });
 
   useEffect(() => {
     setPage(1);
@@ -78,7 +70,6 @@ const Communities: React.FC<Props> = ({ filter }) => {
             </div>
           </React.Fragment>
         )}
-        {isFetching ? <span>Loading...</span> : null}
       </div>
 
       <style jsx>{`

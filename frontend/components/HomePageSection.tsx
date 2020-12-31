@@ -10,9 +10,7 @@ const HomePageSection: React.FC = () => {
   return (
     <React.Fragment>
       <div className="home-page-section-container">
-        <aside>
-          <Aside />
-        </aside>
+        <Aside borderSide={"right"} />
         <main>
           <section className="section-heading-container">
             <h2 className="section-heading">Communities</h2>
@@ -42,14 +40,6 @@ const HomePageSection: React.FC = () => {
         aside,
         main {
           height: auto;
-        }
-
-        aside {
-          width: 20%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          border-right: 1px solid #ffffff;
         }
 
         main {

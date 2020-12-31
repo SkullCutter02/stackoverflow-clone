@@ -2,6 +2,7 @@ import { AppProps } from "next/app";
 import React from "react";
 import Head from "next/head";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 import Layout from "../components/Layout";
 import { UserContextProvider } from "../context/UserContext";
@@ -23,6 +24,7 @@ function App({ Component, pageProps }: AppProps) {
           <Layout />
           <Component {...pageProps} />
         </UserContextProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </React.Fragment>
   );

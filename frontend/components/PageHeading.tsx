@@ -1,5 +1,7 @@
 import React from "react";
 
+import { headerBackground } from "../utils/cssVariables";
+
 interface Props {
   heading: string;
 }
@@ -15,7 +17,7 @@ const PageHeading: React.FC<Props> = ({ heading }) => {
         .page-heading-container {
           width: 100%;
           height: 190px;
-          background: #323636;
+          background: ${headerBackground};
           display: flex;
           justify-content: center;
           align-items: center;

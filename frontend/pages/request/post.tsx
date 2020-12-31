@@ -52,9 +52,7 @@ const RequestPostPage: React.FC = () => {
         setTags([...tags, e.target.textContent]);
         setUuids([
           ...uuids,
-          e.target.parentElement.parentElement.parentElement.getAttribute(
-            "data-key"
-          ),
+          e.target.parentNode.parentNode.parentNode.getAttribute("data-key"),
         ]);
         setText("");
         errMsg.innerText = "";
@@ -70,7 +68,7 @@ const RequestPostPage: React.FC = () => {
 
   const removeTag = (e) => {
     const index = tags.indexOf(
-      e.target.parentNode.parentNode.firstElementChild.textContent
+      e.target.parentNode.parentNode.parentNode.firstElementChild.textContent
     );
     setTags(tags.filter((tag) => tags.indexOf(tag) !== index));
     setUuids(uuids.filter((uuid) => uuids.indexOf(uuid) !== index));
