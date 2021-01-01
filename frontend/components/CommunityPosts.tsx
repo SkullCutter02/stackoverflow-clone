@@ -45,9 +45,15 @@ const CommunityPosts: React.FC<Props> = ({ community }) => {
           ) : (
             <React.Fragment>
               <div className="community-posts-container">
-                {data.posts.map((post) => (
-                  <CommunityPost post={post} key={post.uuid} />
-                ))}
+                {data.posts
+                  .sort((a, b) => {
+                    const dateA = Date.parse(a.createdAt);
+                    const dateB = Date.parse(b.createdAt);
+                    return dateB > dateA ? 1 : -1;
+                  })
+                  .map((post) => (
+                    <CommunityPost post={post} key={post.uuid} />
+                  ))}
               </div>
               <div className="page-handlers">
                 <p className="current-page">Current Page: {page}</p>
@@ -105,6 +111,22 @@ const CommunityPosts: React.FC<Props> = ({ community }) => {
           display: flex;
           flex-direction: column;
           align-items: center;
+        }
+
+        .page-handlers {
+          width: 90%;
+          margin: 30px auto;
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          height: 30px;
+        }
+
+        button {
+          height: 70%;
+          width: 90px;
+          margin: 0 5px;
+          font-size: 0.6rem;
         }
       `}</style>
     </React.Fragment>

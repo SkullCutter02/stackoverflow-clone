@@ -4,6 +4,7 @@ import * as css from "../utils/cssVariables";
 import { PostType } from "../utils/types/postType";
 import Tag from "./Tag";
 import { UserContext } from "../context/UserContext";
+import { getTime } from "../utils/functions";
 
 interface Props {
   post: PostType;
@@ -36,7 +37,8 @@ const CommunityPost: React.FC<Props> = ({ post }) => {
               ))}
             </div>
             <i className="asked-by">
-              asked by: <span>{post.user.username}</span>
+              asked by: <span className="username">{post.user.username}</span>
+              <span className="time"> {getTime(post.createdAt)}</span>
             </i>
           </div>
         </div>
@@ -128,7 +130,7 @@ const CommunityPost: React.FC<Props> = ({ post }) => {
           margin-right: 15px;
         }
 
-        .asked-by span {
+        .asked-by .username {
           color: ${post.user.uuid === userContext.user.uuid
             ? "#3ca4ff"
             : "#fff"};
