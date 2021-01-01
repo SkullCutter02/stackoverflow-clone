@@ -22,16 +22,16 @@ export function getTime(time: string): string {
   const difference = Math.abs(comparedTime - now);
 
   if (difference <= 60000) {
-    return `${Math.ceil(difference / 1000).toString()} secs ago`;
+    return `${Math.round(difference / 1000).toString()} secs ago`;
   } else if (difference < 3600000) {
-    return `${Math.ceil(difference / 100000).toString()} mins ago`;
+    return `${Math.round(difference / 60000).toString()} mins ago`;
   } else if (difference < 86400000) {
-    return `${Math.ceil(difference / 10000000).toString()} hrs ago`;
+    return `${Math.round(difference / 3600000).toString()} hrs ago`;
   } else if (difference < 2678400000) {
-    return `${Math.ceil(difference / 1000000000).toString()} days ago`;
+    return `${Math.round(difference / 86400000).toString()} days ago`;
   } else if (difference < 31557600000) {
-    return `${Math.ceil(difference / 100000000000).toString()} months ago`;
+    return `${Math.round(difference / 2629800000).toString()} months ago`;
   } else if (difference >= 31557600000) {
-    return `${Math.ceil(difference / 10000000000000).toString()} yrs ago`;
+    return `${Math.round(difference / 31557600000).toString()} yrs ago`;
   }
 }

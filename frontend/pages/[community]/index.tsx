@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 
-import CommunityPosts from "../../components/CommunityPosts";
+import CommunityQuestions from "../../components/CommunityQuestions";
 
 interface Props {
   community: string;
@@ -16,7 +16,7 @@ const CommunityPostPage: React.FC<Props> = ({ community }) => {
 
   return (
     <React.Fragment>
-      <CommunityPosts community={community} key={key} />
+      <CommunityQuestions community={community} key={key} />
     </React.Fragment>
   );
 };

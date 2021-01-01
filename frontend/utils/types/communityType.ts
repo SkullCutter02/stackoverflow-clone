@@ -1,8 +1,8 @@
-export type PostType = {
+type PostType = {
   uuid: string;
 };
 
-export type CommunityType = {
+type CommunityType = {
   uuid: string;
   name: string;
   description: string;

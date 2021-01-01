@@ -14,13 +14,13 @@ const Aside: React.FC<Props> = ({ borderSide }) => {
   return (
     <React.Fragment>
       <aside>
-        <Link href={getCookie("token") ? "/request/post" : "/auth/signup"}>
+        <Link href={getCookie("token") ? "/request/question" : "/auth/signup"}>
           <button className="section-btn ask-question-btn">
             <FontAwesomeIcon icon={faPencilAlt} color={"white"} /> Ask a
             Question
           </button>
         </Link>
-        <Link href={"/request/community"}>
+        <Link href={getCookie("token") ? "/request/community" : "/auth/signup"}>
           <button className="section-btn request-community-btn">
             <FontAwesomeIcon icon={faTags} color={"white"} /> Request a
             Community

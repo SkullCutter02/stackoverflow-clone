@@ -64,11 +64,11 @@ router.get("/", getRouteLimit, async (req, res) => {
   }
 });
 
-router.get("/:uuid", getRouteLimit, async (req, res) => {
+router.get("/:name", getRouteLimit, async (req, res) => {
   try {
-    const { uuid } = req.params;
+    const { name } = req.params;
     const community = await Community.findOne({
-      where: { uuid: uuid },
+      where: { name: name },
     });
 
     if (community) {
