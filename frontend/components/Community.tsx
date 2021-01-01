@@ -17,7 +17,9 @@ const Community: React.FC<Props> = ({ uuid, name, description, count }) => {
           <Tag name={name} />
           <p className="count">Number of Posts: {count}</p>
         </div>
-        <p className="description">{description}</p>
+        <div className="description">
+          <p>{description}</p>
+        </div>
       </div>
 
       <style jsx>{`
@@ -36,9 +38,13 @@ const Community: React.FC<Props> = ({ uuid, name, description, count }) => {
           height: 50%;
         }
 
-        .description {
-          height: calc(50% - 28px);
+        .description > p {
+          font-size: 14px;
+          display: block;
+          word-wrap: break-word;
           overflow: hidden;
+          line-height: 1.2em;
+          max-height: 2.4em;
         }
       `}</style>
     </React.Fragment>

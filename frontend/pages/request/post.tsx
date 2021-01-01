@@ -261,15 +261,11 @@ const RequestPostPage: React.FC = () => {
         }
 
         .tag-background:hover {
-          background: #3e3e3e;
+          background: ${css.tagHover};
         }
 
         .tag-name {
           padding: 2px 7px;
-        }
-
-        .tag-name:hover {
-          color: #c6c6c6;
         }
 
         .error-msg {

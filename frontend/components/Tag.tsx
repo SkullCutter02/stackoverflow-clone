@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 
-import { tagBackground } from "../utils/cssVariables";
+import * as css from "../utils/cssVariables";
 
 interface Props {
   name: string;
@@ -23,22 +23,18 @@ const Tag: React.FC<Props> = ({ name }) => {
 
       <style jsx>{`
         .background {
-          background: ${tagBackground};
+          background: ${css.tagBackground};
           border-radius: 4px;
           cursor: pointer;
           margin: 5px;
         }
 
         .background:hover {
-          background: #3e3e3e;
+          background: ${css.tagHover};
         }
 
         .name {
           padding: 2px 7px;
-        }
-
-        .name:hover {
-          color: #c6c6c6;
         }
       `}</style>
     </React.Fragment>

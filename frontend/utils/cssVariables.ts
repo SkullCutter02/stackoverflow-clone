@@ -15,6 +15,7 @@ export const inputBackground = "#454545";
 export const inputBorder = "#dedede";
 
 export const tagBackground = "#4a4a4a";
+export const tagHover = "#5b5b5b";
 
 export const headerBackground = "#323636";
 
