@@ -1,10 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
-import { useMutation } from "react-query";
 
 import { QuestionType } from "../utils/types/individualQuestionType";
 import Aside from "./Aside";
@@ -17,28 +16,94 @@ interface Props {
 }
 
 const Question: React.FC<Props> = ({ data }) => {
+  const [votes, setVotes] = useState<number>(data.votes);
+  const [upvoteColor, setUpvoteColor] = useState<string>("grey");
+  const [downvoteColor, setDownvoteColor] = useState<string>("grey");
+
   const userContext = useContext(UserContext);
   const router = useRouter();
 
+  const upvote = "#ff4400";
+  const downvote = "#7193ff";
+
   const style = { cursor: "pointer" };
 
-  const postVote = async (newVote) => {
-    const res = await fetch(`${host}/posts/${data.uuid}/vote`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getCookie("token")}`,
-      },
-      body: JSON.stringify(newVote),
-    });
-    return await res.json();
-  };
-
-  const mutation = useMutation(postVote);
+  useEffect(() => {
+    if (userContext.user) {
+      fetch(`${host}/posts/${data.uuid}/vote/status`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userUuid: userContext.user.uuid,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data2) => {
+          if (data2.status) {
+            if (data2.type === "upvote") {
+              setUpvoteColor(upvote);
+            } else if (data2.type === "downvote") {
+              setDownvoteColor(downvote);
+            }
+          }
+        });
+    }
+  }, [userContext]);
 
   const vote = async (voteType: "upvote" | "downvote") => {
     if (userContext.user) {
-      mutation.mutate({ userUuid: userContext.user.uuid, voteType });
+      fetch(`${host}/posts/${data.uuid}/vote/status`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userUuid: userContext.user.uuid,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data2) => {
+          if (data2.status === false) {
+            if (voteType === "upvote") {
+              setVotes(votes + 1);
+              setUpvoteColor(upvote);
+            } else if (voteType === "downvote") {
+              setVotes(votes - 1);
+              setDownvoteColor(downvote);
+            }
+          } else if (data2.status === true) {
+            if (data2.type === "upvote" && voteType === "upvote") {
+              setVotes(votes - 1);
+              setUpvoteColor("grey");
+              setDownvoteColor("grey");
+            } else if (data2.type === "downvote" && voteType === "downvote") {
+              setVotes(votes + 1);
+              setUpvoteColor("grey");
+              setDownvoteColor("grey");
+            } else if (data2.type === "upvote" && voteType === "downvote") {
+              setVotes(votes - 2);
+              setUpvoteColor("grey");
+              setDownvoteColor(downvote);
+            } else if (data2.type === "downvote" && voteType === "upvote") {
+              setVotes(votes + 2);
+              setUpvoteColor(upvote);
+              setDownvoteColor("grey");
+            }
+          }
+        });
+      await fetch(`${host}/posts/${data.uuid}/vote`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${getCookie("token")}`,
+        },
+        body: JSON.stringify({
+          userUuid: userContext.user.uuid,
+          voteType: voteType,
+        }),
+      });
     } else {
       await router.push("/auth/signup");
     }
@@ -54,7 +119,7 @@ const Question: React.FC<Props> = ({ data }) => {
             <div className="votes">
               <FontAwesomeIcon
                 icon={faSortUp}
-                color={"grey"}
+                color={upvoteColor}
                 style={style}
                 size={"2x"}
                 onClick={() => vote("upvote")}
@@ -63,15 +128,11 @@ const Question: React.FC<Props> = ({ data }) => {
                 className="vote-count"
                 style={{ color: "#c6c6c6", margin: "-8px 0" }}
               >
-                {mutation.isLoading
-                  ? data.votes
-                  : mutation.data
-                  ? mutation.data.votes
-                  : data.votes}
+                {votes}
               </p>
               <FontAwesomeIcon
                 icon={faSortDown}
-                color={"grey"}
+                color={downvoteColor}
                 style={style}
                 size={"2x"}
                 onClick={() => vote("downvote")}

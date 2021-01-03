@@ -126,68 +126,72 @@ router.post("/:uuid/vote", verifyToken, (req, res) => {
           where: { userUuid: userUuid, postUuid: uuid },
         });
 
-        if (user) {
-          if (user.uuid !== postUser.uuid) {
-            if (!voteStatus) {
-              await PostVote.create({
-                userUuid: userUuid,
-                postUuid: uuid,
-                voteType: voteType,
-              });
+        if (authData.uuid === user.uuid) {
+          if (user) {
+            if (user.uuid !== postUser.uuid) {
+              if (!voteStatus) {
+                await PostVote.create({
+                  userUuid: userUuid,
+                  postUuid: uuid,
+                  voteType: voteType,
+                });
 
-              if (voteType === "upvote") {
-                await post.update({ votes: parseInt(post.votes) + 1 });
-                await postUser.update({
-                  reputation: parseInt(postUser.reputation) + 1,
-                });
-              } else if (voteType === "downvote") {
-                await post.update({ votes: parseInt(post.votes) - 1 });
-                await postUser.update({
-                  reputation: parseInt(postUser.reputation) - 1,
-                });
+                if (voteType === "upvote") {
+                  await post.update({ votes: parseInt(post.votes) + 1 });
+                  await postUser.update({
+                    reputation: parseInt(postUser.reputation) + 1,
+                  });
+                } else if (voteType === "downvote") {
+                  await post.update({ votes: parseInt(post.votes) - 1 });
+                  await postUser.update({
+                    reputation: parseInt(postUser.reputation) - 1,
+                  });
+                } else {
+                  return res.status(500).json({ msg: "Wrong voting type" });
+                }
+              } else if (voteStatus.voteType !== voteType) {
+                await voteStatus.update({ voteType });
+
+                if (voteType === "upvote") {
+                  await post.update({ votes: parseInt(post.votes) + 2 });
+                  await postUser.update({
+                    reputation: parseInt(postUser.reputation) + 2,
+                  });
+                } else if (voteType === "downvote") {
+                  await post.update({ votes: parseInt(post.votes) - 2 });
+                  await postUser.update({
+                    reputation: parseInt(postUser.reputation) - 2,
+                  });
+                } else {
+                  return res.status(500).json({ msg: "Wrong voting type" });
+                }
+              } else if (voteStatus.voteType === voteType) {
+                if (voteType === "upvote") {
+                  await post.update({ votes: parseInt(post.votes) - 1 });
+                  await postUser.update({
+                    reputation: parseInt(postUser.reputation) - 1,
+                  });
+                } else if (voteType === "downvote") {
+                  await post.update({ votes: parseInt(post.votes) + 1 });
+                  await postUser.update({
+                    reputation: parseInt(postUser.reputation) + 1,
+                  });
+                }
+
+                await voteStatus.destroy();
               } else {
-                return res.status(500).json({ msg: "Wrong voting type" });
-              }
-            } else if (voteStatus.voteType !== voteType) {
-              await voteStatus.update({ voteType });
-
-              if (voteType === "upvote") {
-                await post.update({ votes: parseInt(post.votes) + 2 });
-                await postUser.update({
-                  reputation: parseInt(postUser.reputation) + 2,
-                });
-              } else if (voteType === "downvote") {
-                await post.update({ votes: parseInt(post.votes) - 2 });
-                await postUser.update({
-                  reputation: parseInt(postUser.reputation) - 2,
-                });
-              } else {
-                return res.status(500).json({ msg: "Wrong voting type" });
-              }
-            } else if (voteStatus.voteType === voteType) {
-              if (voteType === "upvote") {
-                await post.update({ votes: parseInt(post.votes) - 1 });
-                await postUser.update({
-                  reputation: parseInt(postUser.reputation) - 1,
-                });
-              } else if (voteType === "downvote") {
-                await post.update({ votes: parseInt(post.votes) + 1 });
-                await postUser.update({
-                  reputation: parseInt(postUser.reputation) + 1,
-                });
+                return res.json({ msg: "User already voted" });
               }
 
-              await voteStatus.destroy();
+              return res.json(post);
             } else {
-              return res.json({ msg: "User already voted" });
+              return res.json({ msg: "You cannot vote on your post" });
             }
-
-            return res.json(post);
           } else {
-            return res.json({ msg: "You cannot vote on your post" });
+            return res.status(500).json({ msg: "User doesn't exist" });
           }
         } else {
-          return res.status(500).json({ msg: "User doesn't exist" });
+          return res.status(403).json({ msg: "Forbidden access" });
         }
       } catch (err) {
         console.log(err);
@@ -197,7 +201,7 @@ router.post("/:uuid/vote", verifyToken, (req, res) => {
   });
 });
 
-router.get("/:uuid/vote/status", async (req, res) => {
+router.post("/:uuid/vote/status", async (req, res) => {
   try {
     const { uuid: postUuid } = req.params; // alias as postUuid
     const { userUuid } = req.body;
@@ -322,94 +326,104 @@ router.post("/:uuid/comments", verifyToken, commentLimit, (req, res) => {
   });
 });
 
-router.post("/comments/:commentUuid/vote", async (req, res) => {
-  try {
-    const { userUuid, voteType } = req.body;
-    const { commentUuid } = req.params;
-
-    const user = await User.findOne({ where: { uuid: userUuid } });
-    const comment = await Comment.findOne({
-      where: { uuid: commentUuid },
-      include: {
-        model: User,
-        as: "user",
-        attributes: ["uuid", "username"],
-      },
-    });
-    const commentUser = await User.findOne({
-      where: { uuid: comment.user.uuid },
-    });
-    const voteStatus = await CommentVote.findOne({
-      where: { userUuid: userUuid, commentUuid: commentUuid },
-    });
-
-    if (user) {
-      if (user.uuid !== commentUser.uuid) {
-        if (!voteStatus) {
-          await CommentVote.create({
-            userUuid: userUuid,
-            commentUuid: commentUuid,
-            voteType: voteType,
-          });
-
-          if (voteType === "upvote") {
-            await comment.update({ votes: parseInt(comment.votes) + 1 });
-            await commentUser.update({
-              reputation: parseInt(commentUser.reputation) + 1,
-            });
-          } else if (voteType === "downvote") {
-            await comment.update({ votes: parseInt(comment.votes) - 1 });
-            await commentUser.update({
-              reputation: parseInt(commentUser.reputation) - 1,
-            });
-          } else {
-            return res.status(500).json({ msg: "Wrong voting type" });
-          }
-        } else if (voteStatus.voteType !== voteType) {
-          await voteStatus.update({ voteType });
-
-          if (voteType === "upvote") {
-            await comment.update({ votes: parseInt(comment.votes) + 2 });
-            await commentUser.update({
-              reputation: parseInt(commentUser.reputation) + 2,
-            });
-          } else if (voteType === "downvote") {
-            await comment.update({ votes: parseInt(comment.votes) - 2 });
-            await commentUser.update({
-              reputation: parseInt(commentUser.reputation) - 2,
-            });
-          } else {
-            return res.status(500).json({ msg: "Wrong voting type" });
-          }
-        } else if (voteStatus.voteType === voteType) {
-          if (voteType === "upvote") {
-            await comment.update({ votes: parseInt(comment.votes) - 1 });
-            await commentUser.update({
-              reputation: parseInt(commentUser.reputation) - 1,
-            });
-          } else if (voteType === "downvote") {
-            await comment.update({ votes: parseInt(comment.votes) + 1 });
-            await commentUser.update({
-              reputation: parseInt(commentUser.reputation) + 1,
-            });
-          }
-
-          await voteStatus.destroy();
-        } else {
-          return res.json({ msg: "User already voted" });
-        }
-
-        return res.json(comment);
-      } else {
-        return res.json({ msg: "You cannot vote on your post" });
-      }
+router.post("/comments/:commentUuid/vote", verifyToken, (req, res) => {
+  jwt.verify(req.token, "secretkey", async (err, authData) => {
+    if (err) {
+      res.sendStatus(403);
     } else {
-      return res.status(500).json({ msg: "User doesn't exist" });
+      try {
+        const { userUuid, voteType } = req.body;
+        const { commentUuid } = req.params;
+
+        const user = await User.findOne({ where: { uuid: userUuid } });
+        const comment = await Comment.findOne({
+          where: { uuid: commentUuid },
+          include: {
+            model: User,
+            as: "user",
+            attributes: ["uuid", "username"],
+          },
+        });
+        const commentUser = await User.findOne({
+          where: { uuid: comment.user.uuid },
+        });
+        const voteStatus = await CommentVote.findOne({
+          where: { userUuid: userUuid, commentUuid: commentUuid },
+        });
+
+        if (authData.uuid === user.uuid) {
+          if (user) {
+            if (user.uuid !== commentUser.uuid) {
+              if (!voteStatus) {
+                await CommentVote.create({
+                  userUuid: userUuid,
+                  commentUuid: commentUuid,
+                  voteType: voteType,
+                });
+
+                if (voteType === "upvote") {
+                  await comment.update({ votes: parseInt(comment.votes) + 1 });
+                  await commentUser.update({
+                    reputation: parseInt(commentUser.reputation) + 1,
+                  });
+                } else if (voteType === "downvote") {
+                  await comment.update({ votes: parseInt(comment.votes) - 1 });
+                  await commentUser.update({
+                    reputation: parseInt(commentUser.reputation) - 1,
+                  });
+                } else {
+                  return res.status(500).json({ msg: "Wrong voting type" });
+                }
+              } else if (voteStatus.voteType !== voteType) {
+                await voteStatus.update({ voteType });
+
+                if (voteType === "upvote") {
+                  await comment.update({ votes: parseInt(comment.votes) + 2 });
+                  await commentUser.update({
+                    reputation: parseInt(commentUser.reputation) + 2,
+                  });
+                } else if (voteType === "downvote") {
+                  await comment.update({ votes: parseInt(comment.votes) - 2 });
+                  await commentUser.update({
+                    reputation: parseInt(commentUser.reputation) - 2,
+                  });
+                } else {
+                  return res.status(500).json({ msg: "Wrong voting type" });
+                }
+              } else if (voteStatus.voteType === voteType) {
+                if (voteType === "upvote") {
+                  await comment.update({ votes: parseInt(comment.votes) - 1 });
+                  await commentUser.update({
+                    reputation: parseInt(commentUser.reputation) - 1,
+                  });
+                } else if (voteType === "downvote") {
+                  await comment.update({ votes: parseInt(comment.votes) + 1 });
+                  await commentUser.update({
+                    reputation: parseInt(commentUser.reputation) + 1,
+                  });
+                }
+
+                await voteStatus.destroy();
+              } else {
+                return res.json({ msg: "User already voted" });
+              }
+
+              return res.json(comment);
+            } else {
+              return res.json({ msg: "You cannot vote on your post" });
+            }
+          } else {
+            return res.status(500).json({ msg: "User doesn't exist" });
+          }
+        } else {
+          return res.status(403).json({ msg: "Forbidden access" });
+        }
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
+      }
     }
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
-  }
+  });
 });
 
 router.get("/comments/:uuid/vote/status", async (req, res) => {

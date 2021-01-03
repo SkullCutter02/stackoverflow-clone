@@ -2,16 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="72f0844c-8b37-4796-b385-52962eac77fa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/auth.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/posts.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/posts.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/build-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/build-manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/[community].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/[community].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/questions/[uuid].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/questions/[uuid].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/[community].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/[community].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/questions/[uuid].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/questions/[uuid].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/components/CommunityQuestion.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/CommunityQuestion.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/components/Question.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Question.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -97,7 +99,7 @@
       <workItem from="1609487301392" duration="289000" />
       <workItem from="1609503832282" duration="3491000" />
       <workItem from="1609638966020" duration="14000" />
-      <workItem from="1609638998308" duration="7471000" />
+      <workItem from="1609638998308" duration="12955000" />
     </task>
     <servers />
   </component>

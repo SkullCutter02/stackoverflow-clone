@@ -134,7 +134,7 @@ const CommunityQuestion: React.FC<Props> = ({ post }) => {
         }
 
         .asked-by .username {
-          color: ${post.user.uuid === userContext.user.uuid
+          color: ${post.user.uuid === userContext?.user?.uuid
             ? "#3ca4ff"
             : "#fff"};
         }
