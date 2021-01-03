@@ -8,6 +8,8 @@ const {
   CommentVote,
 } = require("../models");
 const { getRouteLimit, postLimit, commentLimit } = require("../limiters");
+const verifyToken = require("../verifyToken");
+const jwt = require("jsonwebtoken");
 
 const router = express.Router();
 
@@ -52,126 +54,151 @@ router.get("/:uuid", getRouteLimit, async (req, res) => {
   }
 });
 
-router.post("/", postLimit, async (req, res) => {
-  try {
-    const { title, body, userUuid, communities } = req.body;
-    const user = await User.findOne({
-      where: { uuid: userUuid },
-    });
-
-    if (user) {
-      const post = await Post.create({
-        title,
-        body,
-        userId: user.id,
-      });
-
-      let actualCommunities = [];
-
-      if (communities.length > 0) {
-        for (const uuid of communities) {
-          const community = await Community.findOne({ where: { uuid: uuid } });
-          actualCommunities.push(community.id);
-        }
-        post.setCommunities(actualCommunities);
-      }
-
-      return res.json(post);
+router.post("/", verifyToken, postLimit, (req, res) => {
+  jwt.verify(req.token, "secretkey", async (err, authData) => {
+    if (err) {
+      return res.sendStatus(403);
     } else {
-      return res.status(500).json({ msg: "User doesn't exist" });
+      try {
+        const { title, body, userUuid, communities } = req.body;
+        const user = await User.findOne({
+          where: { uuid: userUuid },
+        });
+
+        if (authData.uuid === user.uuid) {
+          if (user) {
+            const post = await Post.create({
+              title,
+              body,
+              userId: user.id,
+            });
+            console.log(authData);
+
+            let actualCommunities = [];
+
+            if (communities.length > 0) {
+              for (const uuid of communities) {
+                const community = await Community.findOne({
+                  where: { uuid: uuid },
+                });
+                actualCommunities.push(community.id);
+              }
+              post.setCommunities(actualCommunities);
+            }
+
+            return res.json(post);
+          } else {
+            return res.status(500).json({ msg: "User doesn't exist" });
+          }
+        } else {
+          return res.status(403).json({ msg: "Forbidden access" });
+        }
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
+      }
     }
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
-  }
+  });
 });
 
-router.post("/:uuid/vote", async (req, res) => {
-  try {
-    const { userUuid, voteType } = req.body;
-    const { uuid } = req.params;
-
-    const user = await User.findOne({ where: { uuid: userUuid } });
-    const post = await Post.findOne({
-      where: { uuid: uuid },
-      include: {
-        model: User,
-        as: "user",
-        attributes: ["uuid", "username"],
-      },
-    });
-    const postUser = await User.findOne({ where: { uuid: post.user.uuid } });
-    const voteStatus = await PostVote.findOne({
-      where: { userUuid: userUuid, postUuid: uuid },
-    });
-
-    if (user) {
-      if (user.uuid !== postUser.uuid) {
-        if (!voteStatus) {
-          await PostVote.create({
-            userUuid: userUuid,
-            postUuid: uuid,
-            voteType: voteType,
-          });
-
-          if (voteType === "upvote") {
-            await post.update({ votes: parseInt(post.votes) + 1 });
-            await postUser.update({
-              reputation: parseInt(postUser.reputation) + 1,
-            });
-          } else if (voteType === "downvote") {
-            await post.update({ votes: parseInt(post.votes) - 1 });
-            await postUser.update({
-              reputation: parseInt(postUser.reputation) - 1,
-            });
-          } else {
-            return res.status(500).json({ msg: "Wrong voting type" });
-          }
-        } else if (voteStatus.voteType !== voteType) {
-          await voteStatus.update({ voteType });
-
-          if (voteType === "upvote") {
-            await post.update({ votes: parseInt(post.votes) + 2 });
-            await postUser.update({
-              reputation: parseInt(postUser.reputation) + 2,
-            });
-          } else if (voteType === "downvote") {
-            await post.update({ votes: parseInt(post.votes) - 2 });
-            await postUser.update({
-              reputation: parseInt(postUser.reputation) - 2,
-            });
-          } else {
-            return res.status(500).json({ msg: "Wrong voting type" });
-          }
-        } else if (voteStatus.voteType === voteType) {
-          if (voteType === "upvote") {
-            await post.update({ votes: parseInt(post.votes) - 1 });
-            await postUser.update({
-              reputation: parseInt(postUser.reputation) - 1,
-            });
-          } else if (voteType === "downvote") {
-            await post.update({ votes: parseInt(post.votes) + 1 });
-            await postUser.update({
-              reputation: parseInt(postUser.reputation) + 1,
-            });
-          }
-
-          await voteStatus.destroy();
-        } else {
-          return res.json({ msg: "User already voted" });
-        }
-
-        return res.json(post);
-      } else {
-        return res.json({ msg: "You cannot vote on your post" });
-      }
+router.post("/:uuid/vote", verifyToken, (req, res) => {
+  jwt.verify(req.token, "secretkey", async (err, authData) => {
+    if (err) {
+      return res.status(403);
     } else {
-      return res.status(500).json({ msg: "User doesn't exist" });
+      try {
+        const { userUuid, voteType } = req.body;
+        const { uuid } = req.params;
+
+        const user = await User.findOne({ where: { uuid: userUuid } });
+        const post = await Post.findOne({
+          where: { uuid: uuid },
+          include: {
+            model: User,
+            as: "user",
+            attributes: ["uuid", "username"],
+          },
+        });
+        const postUser = await User.findOne({
+          where: { uuid: post.user.uuid },
+        });
+        const voteStatus = await PostVote.findOne({
+          where: { userUuid: userUuid, postUuid: uuid },
+        });
+
+        if (authData.uuid === user.uuid) {
+          if (user) {
+            if (user.uuid !== postUser.uuid) {
+              if (!voteStatus) {
+                await PostVote.create({
+                  userUuid: userUuid,
+                  postUuid: uuid,
+                  voteType: voteType,
+                });
+
+                if (voteType === "upvote") {
+                  await post.update({ votes: parseInt(post.votes) + 1 });
+                  await postUser.update({
+                    reputation: parseInt(postUser.reputation) + 1,
+                  });
+                } else if (voteType === "downvote") {
+                  await post.update({ votes: parseInt(post.votes) - 1 });
+                  await postUser.update({
+                    reputation: parseInt(postUser.reputation) - 1,
+                  });
+                } else {
+                  return res.status(500).json({ msg: "Wrong voting type" });
+                }
+              } else if (voteStatus.voteType !== voteType) {
+                await voteStatus.update({ voteType });
+
+                if (voteType === "upvote") {
+                  await post.update({ votes: parseInt(post.votes) + 2 });
+                  await postUser.update({
+                    reputation: parseInt(postUser.reputation) + 2,
+                  });
+                } else if (voteType === "downvote") {
+                  await post.update({ votes: parseInt(post.votes) - 2 });
+                  await postUser.update({
+                    reputation: parseInt(postUser.reputation) - 2,
+                  });
+                } else {
+                  return res.status(500).json({ msg: "Wrong voting type" });
+                }
+              } else if (voteStatus.voteType === voteType) {
+                if (voteType === "upvote") {
+                  await post.update({ votes: parseInt(post.votes) - 1 });
+                  await postUser.update({
+                    reputation: parseInt(postUser.reputation) - 1,
+                  });
+                } else if (voteType === "downvote") {
+                  await post.update({ votes: parseInt(post.votes) + 1 });
+                  await postUser.update({
+                    reputation: parseInt(postUser.reputation) + 1,
+                  });
+                }
+
+                await voteStatus.destroy();
+              } else {
+                return res.json({ msg: "User already voted" });
+              }
+
+              return res.json(post);
+            } else {
+              return res.json({ msg: "You cannot vote on your post" });
+            }
+          } else {
+            return res.status(500).json({ msg: "User doesn't exist" });
+          }
+        } else {
+          return res.status(403).json({ msg: "Forbidden access" });
+        }
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
+      }
     }
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
-  }
+  });
 });
 
 router.get("/:uuid/vote/status", async (req, res) => {
@@ -193,80 +220,110 @@ router.get("/:uuid/vote/status", async (req, res) => {
   }
 });
 
-router.patch("/:uuid", async (req, res) => {
-  try {
-    const { body, userUuid } = req.body;
-    const { uuid } = req.params;
-
-    const post = await Post.findOne({
-      where: { uuid: uuid },
-      include: { model: User, as: "user", attributes: ["uuid"] },
-    });
-    const user = await User.findOne({ where: { uuid: userUuid } });
-
-    if (post.user.uuid === user.uuid) {
-      await post.update({ body: body });
-      return res.json(post);
+router.patch("/:uuid", verifyToken, (req, res) => {
+  jwt.verify(req.token, "secretkey", async (err, authData) => {
+    if (err) {
+      return res.status(403);
     } else {
-      return res
-        .status(403)
-        .json({ msg: "You don't have access to edit this post" });
+      try {
+        const { body, userUuid } = req.body;
+        const { uuid } = req.params;
+
+        const post = await Post.findOne({
+          where: { uuid: uuid },
+          include: { model: User, as: "user", attributes: ["uuid"] },
+        });
+        const user = await User.findOne({ where: { uuid: userUuid } });
+
+        if (authData.uuid === user.uuid) {
+          if (post.user.uuid === user.uuid) {
+            await post.update({ body: body });
+            return res.json(post);
+          } else {
+            return res
+              .status(403)
+              .json({ msg: "You don't have access to edit this post" });
+          }
+        } else {
+          return res.status(403).json({ msg: "Forbidden access" });
+        }
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
+      }
     }
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
-  }
+  });
 });
 
-router.delete("/:uuid", async (req, res) => {
-  try {
-    const { userUuid } = req.body;
-    const { uuid } = req.params;
-
-    const post = await Post.findOne({
-      where: { uuid: uuid },
-      include: { model: User, as: "user", attributes: ["uuid"] },
-    });
-    const user = await User.findOne({ where: { uuid: userUuid } });
-
-    if (post.user.uuid === user.uuid) {
-      await post.destroy();
-      return res.json({ msg: "Post deleted" });
+router.delete("/:uuid", verifyToken, (req, res) => {
+  jwt.verify(req.token, "secretkey", async (err, authData) => {
+    if (err) {
+      return res.status(403);
     } else {
-      return res
-        .status(500)
-        .json({ msg: "You don't have access to delete this post" });
+      try {
+        const { userUuid } = req.body;
+        const { uuid } = req.params;
+
+        const post = await Post.findOne({
+          where: { uuid: uuid },
+          include: { model: User, as: "user", attributes: ["uuid"] },
+        });
+        const user = await User.findOne({ where: { uuid: userUuid } });
+
+        if (authData.uuid === user.uuid) {
+          if (post.user.uuid === user.uuid) {
+            await post.destroy();
+            return res.json({ msg: "Post deleted" });
+          } else {
+            return res
+              .status(500)
+              .json({ msg: "You don't have access to delete this post" });
+          }
+        } else {
+          return res.status(403).json({ msg: "Forbidden access" });
+        }
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
+      }
     }
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
-  }
+  });
 });
 
 // -- Comments ---------------------------------------------------------------------------------------------------------
 
-router.post("/:uuid/comments", commentLimit, async (req, res) => {
-  try {
-    const { body, userUuid } = req.body;
-    const { uuid } = req.params;
-
-    const user = await User.findOne({ where: { uuid: userUuid } });
-    const post = await Post.findOne({ where: { uuid: uuid } });
-
-    if (user && post) {
-      const comment = await Comment.create({
-        body,
-        userId: user.id,
-        postId: post.id,
-      });
-      return res.json({ comment });
+router.post("/:uuid/comments", verifyToken, commentLimit, (req, res) => {
+  jwt.verify(req.token, "secretkey", async (err, authData) => {
+    if (err) {
+      return res.status(403);
     } else {
-      return res.status(500).json({ msg: "User or post not found" });
+      try {
+        const { body, userUuid } = req.body;
+        const { uuid } = req.params;
+
+        const user = await User.findOne({ where: { uuid: userUuid } });
+        const post = await Post.findOne({ where: { uuid: uuid } });
+
+        if (authData.uuid === user.uuid) {
+          if (user && post) {
+            const comment = await Comment.create({
+              body,
+              userId: user.id,
+              postId: post.id,
+            });
+            return res.json({ comment });
+          } else {
+            return res.status(500).json({ msg: "User or post not found" });
+          }
+        } else {
+          return res.status(403).json({ msg: "Forbidden access" });
+        }
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
+      }
     }
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
-  }
+  });
 });
 
 router.post("/comments/:commentUuid/vote", async (req, res) => {
@@ -378,54 +435,74 @@ router.get("/comments/:uuid/vote/status", async (req, res) => {
   }
 });
 
-router.patch("/comments/:commentUuid", async (req, res) => {
-  try {
-    const { body, userUuid } = req.body;
-    const { commentUuid } = req.params;
-
-    const comment = await Comment.findOne({
-      where: { uuid: commentUuid },
-      include: { model: User, as: "user", attributes: ["uuid"] },
-    });
-    const user = await User.findOne({ where: { uuid: userUuid } });
-
-    if (comment.user.uuid === user.uuid) {
-      await comment.update({ body: body });
-      return res.json(comment);
+router.patch("/comments/:commentUuid", verifyToken, (req, res) => {
+  jwt.verify(req.token, "secretkey", async (err, authData) => {
+    if (err) {
+      return res.status(403);
     } else {
-      return res
-        .status(403)
-        .json({ msg: "You don't have access to edit this comment" });
+      try {
+        const { body, userUuid } = req.body;
+        const { commentUuid } = req.params;
+
+        const comment = await Comment.findOne({
+          where: { uuid: commentUuid },
+          include: { model: User, as: "user", attributes: ["uuid"] },
+        });
+        const user = await User.findOne({ where: { uuid: userUuid } });
+
+        if (authData.uuid === user.uuid) {
+          if (comment.user.uuid === user.uuid) {
+            await comment.update({ body: body });
+            return res.json(comment);
+          } else {
+            return res
+              .status(403)
+              .json({ msg: "You don't have access to edit this comment" });
+          }
+        } else {
+          return res.status(403).json({ msg: "Forbidden access" });
+        }
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
+      }
     }
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
-  }
+  });
 });
 
-router.delete("/comments/:commentUuid", async (req, res) => {
-  try {
-    const { userUuid } = req.body;
-    const { commentUuid } = req.params;
-
-    const comment = await Comment.findOne({
-      where: { uuid: commentUuid },
-      include: { model: User, as: "user", attributes: ["uuid"] },
-    });
-    const user = await User.findOne({ where: { uuid: userUuid } });
-
-    if (comment.user.uuid === user.uuid) {
-      await comment.destroy();
-      return res.json({ msg: "Post deleted" });
+router.delete("/comments/:commentUuid", verifyToken, (req, res) => {
+  jwt.verify(req.token, "secretkey", async (err, authData) => {
+    if (err) {
+      return res.status(403);
     } else {
-      return res
-        .status(500)
-        .json({ msg: "You don't have access to delete this post" });
+      try {
+        const { userUuid } = req.body;
+        const { commentUuid } = req.params;
+
+        const comment = await Comment.findOne({
+          where: { uuid: commentUuid },
+          include: { model: User, as: "user", attributes: ["uuid"] },
+        });
+        const user = await User.findOne({ where: { uuid: userUuid } });
+
+        if (authData.uuid === user.uuid) {
+          if (comment.user.uuid === user.uuid) {
+            await comment.destroy();
+            return res.json({ msg: "Post deleted" });
+          } else {
+            return res
+              .status(500)
+              .json({ msg: "You don't have access to delete this post" });
+          }
+        } else {
+          return res.status(403).json({ msg: "Forbidden access" });
+        }
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
+      }
     }
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
-  }
+  });
 });
 
 module.exports = router;

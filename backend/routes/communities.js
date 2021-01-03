@@ -126,18 +126,6 @@ router.get("/:name/posts", getRouteLimit, async (req, res) => {
   }
 });
 
-router.get("/:uuid/posts/count", getRouteLimit, async (req, res) => {
-  try {
-    const { uuid } = req.params;
-    const community = await Community.findOne({ where: { uuid: uuid } });
-    const count = await community.getPosts();
-    return res.json({ count: count.length });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
-  }
-});
-
 router.post("/", async (req, res) => {
   try {
     const { name, description, email, password } = req.body;

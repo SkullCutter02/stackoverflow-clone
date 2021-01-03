@@ -11,6 +11,7 @@ import host from "../../utils/host";
 import { UserContext } from "../../context/UserContext";
 import TagExpand from "../../components/TagExpand";
 import { CommunitiesType } from "../../utils/types/communityType";
+import { getCookie } from "../../utils/functions";
 
 const RequestPostPage: React.FC = () => {
   const [body, setBody] = useState<string>("**Hello World!**");
@@ -88,6 +89,7 @@ const RequestPostPage: React.FC = () => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${getCookie("token")}`,
             },
             body: JSON.stringify({
               title: titleInput.value,
@@ -95,8 +97,15 @@ const RequestPostPage: React.FC = () => {
               userUuid: userContext.user.uuid,
               communities: uuids,
             }),
-          });
-          await router.push("/"); // TODO: placeholder, will change later
+          })
+            .then((res) => {
+              if (res.status >= 200 && res.status < 300) {
+                router.push("/"); // TODO: Placeholder, change Link later
+              } else {
+                errMsg.innerText = "Something went wrong";
+              }
+            })
+            .catch((err) => console.log(err));
         } else {
           errMsg.innerText = "Please login to post a question";
         }
