@@ -10,6 +10,8 @@ import Aside from "./Aside";
 import host from "../utils/host";
 import { UserContext } from "../context/UserContext";
 import { getCookie } from "../utils/functions";
+import { voteType } from "../utils/types/voteType";
+import { updateVote } from "../utils/functions";
 
 interface Props {
   data: QuestionType;
@@ -40,7 +42,7 @@ const Question: React.FC<Props> = ({ data }) => {
         }),
       })
         .then((res) => res.json())
-        .then((data2) => {
+        .then((data2: voteType) => {
           if (data2.status) {
             if (data2.type === "upvote") {
               setUpvoteColor(upvote);
@@ -64,35 +66,16 @@ const Question: React.FC<Props> = ({ data }) => {
         }),
       })
         .then((res) => res.json())
-        .then((data2) => {
-          if (data2.status === false) {
-            if (voteType === "upvote") {
-              setVotes(votes + 1);
-              setUpvoteColor(upvote);
-            } else if (voteType === "downvote") {
-              setVotes(votes - 1);
-              setDownvoteColor(downvote);
-            }
-          } else if (data2.status === true) {
-            if (data2.type === "upvote" && voteType === "upvote") {
-              setVotes(votes - 1);
-              setUpvoteColor("grey");
-              setDownvoteColor("grey");
-            } else if (data2.type === "downvote" && voteType === "downvote") {
-              setVotes(votes + 1);
-              setUpvoteColor("grey");
-              setDownvoteColor("grey");
-            } else if (data2.type === "upvote" && voteType === "downvote") {
-              setVotes(votes - 2);
-              setUpvoteColor("grey");
-              setDownvoteColor(downvote);
-            } else if (data2.type === "downvote" && voteType === "upvote") {
-              setVotes(votes + 2);
-              setUpvoteColor(upvote);
-              setDownvoteColor("grey");
-            }
-          }
-        });
+        .then((data2: voteType) =>
+          updateVote(
+            data2,
+            voteType,
+            setVotes,
+            setUpvoteColor,
+            setDownvoteColor,
+            votes
+          )
+        );
       await fetch(`${host}/posts/${data.uuid}/vote`, {
         method: "POST",
         headers: {

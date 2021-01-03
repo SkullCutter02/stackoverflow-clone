@@ -1,3 +1,5 @@
+import { voteType } from "./types/voteType";
+
 export function getCookie(cname: string): string {
   if (process.browser) {
     let name = cname + "=";
@@ -33,5 +35,45 @@ export function getTime(time: string): string {
     return `${Math.round(difference / 2629800000).toString()} months ago`;
   } else if (difference >= 31557600000) {
     return `${Math.round(difference / 31557600000).toString()} yrs ago`;
+  }
+}
+
+export function updateVote(
+  data2: voteType,
+  voteType: "upvote" | "downvote",
+  setVotes: (votes: number) => void,
+  setUpvoteColor: (color: string) => void,
+  setDownvoteColor: (color: string) => void,
+  votes: number
+): void {
+  const upvote = "#ff4400";
+  const downvote = "#7193ff";
+
+  if (data2.status === false) {
+    if (voteType === "upvote") {
+      setVotes(votes + 1);
+      setUpvoteColor(upvote);
+    } else if (voteType === "downvote") {
+      setVotes(votes - 1);
+      setDownvoteColor(downvote);
+    }
+  } else if (data2.status === true) {
+    if (data2.type === "upvote" && voteType === "upvote") {
+      setVotes(votes - 1);
+      setUpvoteColor("grey");
+      setDownvoteColor("grey");
+    } else if (data2.type === "downvote" && voteType === "downvote") {
+      setVotes(votes + 1);
+      setUpvoteColor("grey");
+      setDownvoteColor("grey");
+    } else if (data2.type === "upvote" && voteType === "downvote") {
+      setVotes(votes - 2);
+      setUpvoteColor("grey");
+      setDownvoteColor(downvote);
+    } else if (data2.type === "downvote" && voteType === "upvote") {
+      setVotes(votes + 2);
+      setUpvoteColor(upvote);
+      setDownvoteColor("grey");
+    }
   }
 }
