@@ -73,3 +73,5 @@ router.get("/:uuid/comments", getRouteLimit, async (req, res) => {
 });
 
 module.exports = router;
+
+// TODO: Create JWT check
