@@ -1,21 +1,47 @@
-import React from "react";
+import React, { useContext } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/router";
+import { useMutation } from "react-query";
 
 import { QuestionType } from "../utils/types/individualQuestionType";
 import Aside from "./Aside";
+import host from "../utils/host";
+import { UserContext } from "../context/UserContext";
+import { getCookie } from "../utils/functions";
 
 interface Props {
   data: QuestionType;
 }
 
 const Question: React.FC<Props> = ({ data }) => {
+  const userContext = useContext(UserContext);
+  const router = useRouter();
+
   const style = { cursor: "pointer" };
 
-  const vote = (voteType: "upvote" | "downvote") => {
-    console.log(voteType);
+  const postVote = async (newVote) => {
+    const res = await fetch(`${host}/posts/${data.uuid}/vote`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getCookie("token")}`,
+      },
+      body: JSON.stringify(newVote),
+    });
+    return await res.json();
+  };
+
+  const mutation = useMutation(postVote);
+
+  const vote = async (voteType: "upvote" | "downvote") => {
+    if (userContext.user) {
+      mutation.mutate({ userUuid: userContext.user.uuid, voteType });
+    } else {
+      await router.push("/auth/signup");
+    }
   };
 
   return (
@@ -37,7 +63,11 @@ const Question: React.FC<Props> = ({ data }) => {
                 className="vote-count"
                 style={{ color: "#c6c6c6", margin: "-8px 0" }}
               >
-                {data.votes}
+                {mutation.isLoading
+                  ? data.votes
+                  : mutation.data
+                  ? mutation.data.votes
+                  : data.votes}
               </p>
               <FontAwesomeIcon
                 icon={faSortDown}

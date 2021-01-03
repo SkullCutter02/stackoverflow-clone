@@ -7,6 +7,8 @@ const { sequelize } = require("./models");
 const app = express();
 
 app.use(express.json());
+app.use(helmet());
+app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
@@ -14,8 +16,6 @@ app.use(
       process.env.NODE_ENV === "development" ? "http://localhost:3000" : "",
   })
 );
-app.use(helmet());
-app.use(cookieParser());
 
 app.use("/auth", require("./routes/auth"));
 app.use("/posts", require("./routes/posts"));
