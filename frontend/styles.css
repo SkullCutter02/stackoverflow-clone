@@ -56,3 +56,7 @@ blockquote p {
 hr {
   margin: 10px 0;
 }
+
+.post-body-mkd {
+  width: 95%;
+}

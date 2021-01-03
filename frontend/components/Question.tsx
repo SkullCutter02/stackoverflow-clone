@@ -6,12 +6,12 @@ import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/router";
 
 import { QuestionType } from "../utils/types/individualQuestionType";
-import Aside from "./Aside";
+import { getCookie, updateVote } from "../utils/functions";
+import { voteType } from "../utils/types/voteType";
 import host from "../utils/host";
 import { UserContext } from "../context/UserContext";
-import { getCookie } from "../utils/functions";
-import { voteType } from "../utils/types/voteType";
-import { updateVote } from "../utils/functions";
+import AskedBy from "./AskedBy";
+import Tag from "./Tag";
 
 interface Props {
   data: QuestionType;
@@ -56,37 +56,43 @@ const Question: React.FC<Props> = ({ data }) => {
 
   const vote = async (voteType: "upvote" | "downvote") => {
     if (userContext.user) {
-      fetch(`${host}/posts/${data.uuid}/vote/status`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userUuid: userContext.user.uuid,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data2: voteType) =>
-          updateVote(
-            data2,
-            voteType,
-            setVotes,
-            setUpvoteColor,
-            setDownvoteColor,
-            votes
-          )
-        );
-      await fetch(`${host}/posts/${data.uuid}/vote`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${getCookie("token")}`,
-        },
-        body: JSON.stringify({
-          userUuid: userContext.user.uuid,
-          voteType: voteType,
-        }),
-      });
+      if (userContext.user.uuid !== data.user.uuid) {
+        fetch(`${host}/posts/${data.uuid}/vote/status`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userUuid: userContext.user.uuid,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data2: voteType) =>
+            updateVote(
+              data2,
+              voteType,
+              setVotes,
+              setUpvoteColor,
+              setDownvoteColor,
+              votes,
+              upvote,
+              downvote
+            )
+          );
+        await fetch(`${host}/posts/${data.uuid}/vote`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${getCookie("token")}`,
+          },
+          body: JSON.stringify({
+            userUuid: userContext.user.uuid,
+            voteType: voteType,
+          }),
+        });
+      } else {
+        alert("You can't vote on your own post!");
+      }
     } else {
       await router.push("/auth/signup");
     }
@@ -94,8 +100,6 @@ const Question: React.FC<Props> = ({ data }) => {
 
   return (
     <React.Fragment>
-      <h1>{data.title}</h1>
-      <div className="h1-border-btm" />
       <main>
         <div className="question-container">
           <div className="main">
@@ -122,35 +126,35 @@ const Question: React.FC<Props> = ({ data }) => {
               />
             </div>
             <div className="main-right">
-              <ReactMarkdown source={data.body} plugins={[remarkGfm]} />
+              <div className="post-body">
+                <ReactMarkdown
+                  className="preview post-body-mkd"
+                  source={data.body}
+                  plugins={[remarkGfm]}
+                />
+              </div>
+              <div className="post-body-btm">
+                <div className="communities-container">
+                  {data.communities.map((community) => (
+                    <Tag name={community.name} key={community.name} />
+                  ))}
+                </div>
+                <AskedBy
+                  username={data.user.username}
+                  createdAt={data.createdAt}
+                  postUuid={data.user.uuid}
+                  userUuid={userContext?.user?.uuid}
+                />
+              </div>
             </div>
           </div>
         </div>
-        <Aside borderSide={"left"} />
       </main>
 
       <style jsx>{`
-        main {
-          display: flex;
-          justify-content: space-between;
-        }
-
         .question-container {
-          width: 73%;
+          width: 92%;
           margin: 0 auto;
-        }
-
-        h1 {
-          font-size: 1.3rem;
-          line-height: 1.4em;
-          margin: 20px auto;
-          width: 88%;
-        }
-
-        .h1-border-btm {
-          width: 93%;
-          margin: 0 auto;
-          border-bottom: 1px solid #fff;
         }
 
         .main {
@@ -164,11 +168,23 @@ const Question: React.FC<Props> = ({ data }) => {
           flex-direction: column;
           align-items: center;
           justify-content: flex-start;
-          margin-right: 10px;
+          margin: 14px 20px;
         }
 
         .main-right {
           width: 95%;
+        }
+
+        .post-body-btm {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 95%;
+          margin-bottom: 20px;
+        }
+
+        .communities-container {
+          display: flex;
         }
       `}</style>
     </React.Fragment>

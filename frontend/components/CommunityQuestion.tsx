@@ -5,7 +5,7 @@ import * as css from "../utils/cssVariables";
 import { QuestionType } from "../utils/types/questionType";
 import Tag from "./Tag";
 import { UserContext } from "../context/UserContext";
-import { getTime } from "../utils/functions";
+import AskedBy from "./AskedBy";
 
 interface Props {
   post: QuestionType;
@@ -39,10 +39,12 @@ const CommunityQuestion: React.FC<Props> = ({ post }) => {
                 <Tag name={community.name} key={community.name} />
               ))}
             </div>
-            <i className="asked-by">
-              asked by: <span className="username">{post.user.username}</span>
-              <span className="time"> {getTime(post.createdAt)}</span>
-            </i>
+            <AskedBy
+              username={post.user.username}
+              createdAt={post.createdAt}
+              postUuid={post.user.uuid}
+              userUuid={userContext?.user?.uuid}
+            />
           </div>
         </div>
       </div>
@@ -125,18 +127,6 @@ const CommunityQuestion: React.FC<Props> = ({ post }) => {
 
         .communities-container {
           display: flex;
-        }
-
-        .asked-by {
-          font-size: 0.9rem;
-          color: #fff;
-          margin-right: 15px;
-        }
-
-        .asked-by .username {
-          color: ${post.user.uuid === userContext?.user?.uuid
-            ? "#3ca4ff"
-            : "#fff"};
         }
       `}</style>
     </React.Fragment>

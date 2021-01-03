@@ -82,40 +82,44 @@ const RequestPostPage: React.FC = () => {
     const titleInput = document.getElementById("title") as HTMLInputElement;
     const bodyTextArea = document.getElementById("body") as HTMLTextAreaElement;
 
-    if (titleInput.value.length <= 350 && titleInput.value.length > 50) {
-      if (tags.length > 0) {
-        if (userContext.user) {
-          await fetch(`${host}/posts`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${getCookie("token")}`,
-            },
-            body: JSON.stringify({
-              title: titleInput.value,
-              body: bodyTextArea.value,
-              userUuid: userContext.user.uuid,
-              communities: uuids,
-            }),
-          })
-            .then((res) => {
-              if (res.status >= 200 && res.status < 300) {
-                router.push("/"); // TODO: Placeholder, change Link later
-              } else {
-                errMsg.innerText = "Something went wrong";
-              }
+    if (bodyTextArea.value.length > 100 && bodyTextArea.value.length < 9500) {
+      if (titleInput.value.length <= 350 && titleInput.value.length > 50) {
+        if (tags.length > 0) {
+          if (userContext.user) {
+            await fetch(`${host}/posts`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${getCookie("token")}`,
+              },
+              body: JSON.stringify({
+                title: titleInput.value,
+                body: bodyTextArea.value,
+                userUuid: userContext.user.uuid,
+                communities: uuids,
+              }),
             })
-            .catch((err) => console.log(err));
+              .then((res) => {
+                if (res.status >= 200 && res.status < 300) {
+                  router.push("/"); // TODO: Placeholder, change Link later
+                } else {
+                  errMsg.innerText = "Something went wrong";
+                }
+              })
+              .catch((err) => console.log(err));
+          } else {
+            errMsg.innerText = "Please login to post a question";
+          }
         } else {
-          errMsg.innerText = "Please login to post a question";
+          errMsg.innerText =
+            "Choose at least 1 community to post your question to";
         }
       } else {
         errMsg.innerText =
-          "Choose at least 1 community to post your question to";
+          "Question title cannot be longer than 350 characters or shorter than 50 characters";
       }
     } else {
-      errMsg.innerText =
-        "Question title cannot be longer than 350 characters or shorter than 50 characters";
+      errMsg.innerText = "Question body must be longer than 100 characters";
     }
   };
 

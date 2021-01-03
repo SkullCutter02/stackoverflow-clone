@@ -44,11 +44,10 @@ export function updateVote(
   setVotes: (votes: number) => void,
   setUpvoteColor: (color: string) => void,
   setDownvoteColor: (color: string) => void,
-  votes: number
+  votes: number,
+  upvote: string,
+  downvote: string
 ): void {
-  const upvote = "#ff4400";
-  const downvote = "#7193ff";
-
   if (data2.status === false) {
     if (voteType === "upvote") {
       setVotes(votes + 1);

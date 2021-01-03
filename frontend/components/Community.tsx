@@ -9,7 +9,7 @@ interface Props {
   count: number;
 }
 
-const Community: React.FC<Props> = ({ uuid, name, description, count }) => {
+const Community: React.FC<Props> = ({ name, description, count }) => {
   return (
     <React.Fragment>
       <div className="community-container">
