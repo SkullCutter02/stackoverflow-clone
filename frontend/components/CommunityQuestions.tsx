@@ -86,7 +86,7 @@ const CommunityQuestions: React.FC<Props> = ({ community }) => {
 
       <style jsx>{`
         .community-post-header-container {
-          height: 140px;
+          //height: 140px;
           width: 100%;
           background: ${css.headerBackground};
           display: flex;
@@ -98,7 +98,14 @@ const CommunityQuestions: React.FC<Props> = ({ community }) => {
         .header-title,
         .header-description {
           width: 90%;
-          margin: 10px 0;
+        }
+
+        .header-title {
+          margin: 20px 0;
+        }
+
+        .header-description {
+          margin-bottom: 20px;
         }
 
         .community-post-page-container {

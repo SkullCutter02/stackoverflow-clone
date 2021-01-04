@@ -82,7 +82,7 @@ const RequestPostPage: React.FC = () => {
     const titleInput = document.getElementById("title") as HTMLInputElement;
     const bodyTextArea = document.getElementById("body") as HTMLTextAreaElement;
 
-    if (bodyTextArea.value.length > 100 && bodyTextArea.value.length < 9500) {
+    if (bodyTextArea.value.length > 100 && bodyTextArea.value.length < 29000) {
       if (titleInput.value.length <= 350 && titleInput.value.length > 50) {
         if (tags.length > 0) {
           if (userContext.user) {

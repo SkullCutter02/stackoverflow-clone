@@ -35,7 +35,7 @@ const CommunityQuestion: React.FC<Props> = ({ post }) => {
           </Link>
           <div className="main-bottom">
             <div className="communities-container">
-              {post.communities.map((community) => (
+              {post.communities.slice(0, 4).map((community) => (
                 <Tag name={community.name} key={community.name} />
               ))}
             </div>

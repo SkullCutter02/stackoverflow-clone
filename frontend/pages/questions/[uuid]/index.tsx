@@ -38,7 +38,7 @@ const QuestionPage: React.FC<Props> = ({ uuid }) => {
             <main>
               <div className="left">
                 <Question data={data} />
-                <Reply />
+                <Reply question={data} />
               </div>
               <Aside borderSide={"left"} />
             </main>

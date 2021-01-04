@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       body: {
-        type: DataTypes.STRING(10000),
+        type: DataTypes.STRING(30000),
         allowNull: false,
       },
       votes: {

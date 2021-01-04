@@ -32,7 +32,7 @@ const AskedBy: React.FC<Props> = ({
         }
 
         .asked-by .username {
-          color: ${postUuid === userUuid ? "#3ca4ff" : "#fff"};
+          color: ${postUuid === userUuid ? "#3ca4ff" : "#fff500"};
           cursor: pointer;
         }
       `}</style>

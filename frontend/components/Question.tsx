@@ -135,7 +135,7 @@ const Question: React.FC<Props> = ({ data }) => {
               </div>
               <div className="post-body-btm">
                 <div className="communities-container">
-                  {data.communities.map((community) => (
+                  {data.communities.slice(0, 4).map((community) => (
                     <Tag name={community.name} key={community.name} />
                   ))}
                 </div>

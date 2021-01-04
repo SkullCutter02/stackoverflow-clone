@@ -27,6 +27,7 @@ label {
 .preview p {
   font-size: 0.9rem;
   margin: 14px 0;
+  line-height: 1.4em;
 }
 
 pre {
@@ -59,4 +60,10 @@ hr {
 
 .post-body-mkd {
   width: 95%;
+}
+
+.reply-preview {
+  width: 92%;
+  margin: 0 10px;
+  clear: right;
 }
