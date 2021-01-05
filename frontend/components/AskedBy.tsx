@@ -3,6 +3,7 @@ import React from "react";
 import { getTime, roundNumber } from "../utils/functions";
 
 interface Props {
+  type: "asked" | "answered";
   username: string;
   createdAt: string;
   postUuid: string;
@@ -11,6 +12,7 @@ interface Props {
 }
 
 const AskedBy: React.FC<Props> = ({
+  type,
   username,
   createdAt,
   postUuid,
@@ -21,8 +23,8 @@ const AskedBy: React.FC<Props> = ({
     <React.Fragment>
       <span>
         <i className="asked-by">
-          asked by: <span className="username">{username}</span>{" "}
-          {reputation && `• ${roundNumber(reputation)} || `}
+          {type} by: <span className="username">{username}</span>{" "}
+          {reputation !== undefined && `• ${roundNumber(reputation)} || `}
           <span className="time"> {getTime(createdAt)}</span>
         </i>
       </span>

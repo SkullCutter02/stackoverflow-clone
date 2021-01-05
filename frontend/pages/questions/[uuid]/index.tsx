@@ -40,6 +40,7 @@ const QuestionPage: React.FC<Props> = ({ uuid }) => {
               <div className="left">
                 <Question question={data} />
                 <Reply question={data} />
+                <h1>Answers:</h1>
                 <Answers question={data} />
               </div>
               <Aside borderSide={"left"} />

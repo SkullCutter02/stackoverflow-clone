@@ -19,6 +19,8 @@ label {
   color: white;
 }
 
+/* Code Block Styling */
+
 .preview {
   margin-bottom: 40px;
   width: 80%;
@@ -66,4 +68,9 @@ hr {
   width: 92%;
   margin: 0 10px;
   clear: right;
+}
+
+.answer-pre {
+  margin: 0 10px;
+  width: 97%;
 }

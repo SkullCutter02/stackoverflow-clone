@@ -150,6 +150,7 @@ const Question: React.FC<Props> = ({ question }) => {
                   ))}
                 </div>
                 <AskedBy
+                  type={"asked"}
                   username={question.user.username}
                   createdAt={question.createdAt}
                   postUuid={question.user.uuid}

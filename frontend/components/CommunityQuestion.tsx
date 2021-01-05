@@ -40,6 +40,7 @@ const CommunityQuestion: React.FC<Props> = ({ post }) => {
               ))}
             </div>
             <AskedBy
+              type={"asked"}
               username={post.user.username}
               createdAt={post.createdAt}
               postUuid={post.user.uuid}
