@@ -7,6 +7,7 @@ import { QuestionType } from "../../../utils/types/individualQuestionType";
 import Question from "../../../components/Question";
 import Reply from "../../../components/Reply";
 import Aside from "../../../components/Aside";
+import Answers from "../../../components/Answers";
 
 interface Props {
   uuid: string;
@@ -37,8 +38,9 @@ const QuestionPage: React.FC<Props> = ({ uuid }) => {
             <div className="h1-border-btm" />
             <main>
               <div className="left">
-                <Question data={data} />
+                <Question question={data} />
                 <Reply question={data} />
+                <Answers question={data} />
               </div>
               <Aside borderSide={"left"} />
             </main>

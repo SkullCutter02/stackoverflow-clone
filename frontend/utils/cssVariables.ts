@@ -20,3 +20,6 @@ export const tagHover = "#5b5b5b";
 export const headerBackground = "#323636";
 
 export const floatingPostBackground = "#3b3b3b";
+
+export const upvote = "#ff4400";
+export const downvote = "#7193ff";

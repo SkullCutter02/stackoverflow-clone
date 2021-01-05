@@ -39,7 +39,7 @@ export function getTime(time: string): string {
 }
 
 export function updateVote(
-  data2: voteType,
+  data: voteType,
   voteType: "upvote" | "downvote",
   setVotes: (votes: number) => void,
   setUpvoteColor: (color: string) => void,
@@ -48,7 +48,7 @@ export function updateVote(
   upvote: string,
   downvote: string
 ): void {
-  if (data2.status === false) {
+  if (data.status === false) {
     if (voteType === "upvote") {
       setVotes(votes + 1);
       setUpvoteColor(upvote);
@@ -56,23 +56,32 @@ export function updateVote(
       setVotes(votes - 1);
       setDownvoteColor(downvote);
     }
-  } else if (data2.status === true) {
-    if (data2.type === "upvote" && voteType === "upvote") {
+  } else if (data.status === true) {
+    if (data.type === "upvote" && voteType === "upvote") {
       setVotes(votes - 1);
       setUpvoteColor("grey");
       setDownvoteColor("grey");
-    } else if (data2.type === "downvote" && voteType === "downvote") {
+    } else if (data.type === "downvote" && voteType === "downvote") {
       setVotes(votes + 1);
       setUpvoteColor("grey");
       setDownvoteColor("grey");
-    } else if (data2.type === "upvote" && voteType === "downvote") {
+    } else if (data.type === "upvote" && voteType === "downvote") {
       setVotes(votes - 2);
       setUpvoteColor("grey");
       setDownvoteColor(downvote);
-    } else if (data2.type === "downvote" && voteType === "upvote") {
+    } else if (data.type === "downvote" && voteType === "upvote") {
       setVotes(votes + 2);
       setUpvoteColor(upvote);
       setDownvoteColor("grey");
     }
   }
+}
+
+export function roundNumber(x: number): string {
+  if (x >= 1000) {
+    const dividedNumber = (x / 1000).toFixed(1);
+    return `${dividedNumber.toString()}k`;
+  }
+
+  return x.toString();
 }

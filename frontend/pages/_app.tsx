@@ -8,6 +8,7 @@ import Layout from "../components/Layout";
 import { UserContextProvider } from "../context/UserContext";
 
 import "../styles.css";
+import "../hljs-styles.css";
 
 const queryClient = new QueryClient();
 

@@ -1,12 +1,13 @@
 import React from "react";
 
-import { getTime } from "../utils/functions";
+import { getTime, roundNumber } from "../utils/functions";
 
 interface Props {
   username: string;
   createdAt: string;
   postUuid: string;
   userUuid: string;
+  reputation?: number;
 }
 
 const AskedBy: React.FC<Props> = ({
@@ -14,12 +15,14 @@ const AskedBy: React.FC<Props> = ({
   createdAt,
   postUuid,
   userUuid,
+  reputation,
 }) => {
   return (
     <React.Fragment>
       <span>
         <i className="asked-by">
-          asked by: <span className="username">{username}</span>
+          asked by: <span className="username">{username}</span>{" "}
+          {reputation && `• ${roundNumber(reputation)} || `}
           <span className="time"> {getTime(createdAt)}</span>
         </i>
       </span>
@@ -32,7 +35,7 @@ const AskedBy: React.FC<Props> = ({
         }
 
         .asked-by .username {
-          color: ${postUuid === userUuid ? "#3ca4ff" : "#fff500"};
+          color: ${postUuid === userUuid ? "#3ca4ff" : "#bebebe"};
           cursor: pointer;
         }
       `}</style>
