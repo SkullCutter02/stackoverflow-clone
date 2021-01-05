@@ -45,15 +45,9 @@ const CommunityQuestions: React.FC<Props> = ({ community }) => {
           ) : (
             <React.Fragment>
               <div className="community-posts-container">
-                {data.posts
-                  .sort((a, b) => {
-                    const dateA = Date.parse(a.createdAt);
-                    const dateB = Date.parse(b.createdAt);
-                    return dateB > dateA ? 1 : -1;
-                  })
-                  .map((post) => (
-                    <CommunityQuestion post={post} key={post.uuid} />
-                  ))}
+                {data.posts.map((post) => (
+                  <CommunityQuestion post={post} key={post.uuid} />
+                ))}
               </div>
               <div className="page-handlers">
                 <p className="current-page">Current Page: {page}</p>

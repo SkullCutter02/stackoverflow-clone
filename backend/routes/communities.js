@@ -91,6 +91,7 @@ router.get("/:name/posts", getRouteLimit, async (req, res) => {
     const communityPosts = await community.getPosts({
       limit: limit * 1,
       offset: (page - 1) * limit,
+      order: [["createdAt", "DESC"]],
       include: [
         {
           model: User,
