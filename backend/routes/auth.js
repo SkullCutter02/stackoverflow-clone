@@ -149,8 +149,13 @@ router.post(
         const host =
           process.env.NODE_ENV === "development" ? "http://localhost:3000" : "";
         const uuid = await v4();
-        const link = `${host}/${uuid}/${user.uuid}/auth/password/reset`;
-        await Email.create({ uuid });
+        const hash = await hashPassword(uuid);
+        const link = `${host}/auth/resetpassword/${uuid}`;
+        await Email.create({
+          hash,
+          userEmail: user.email,
+          expirationDate: new Date(Date.now() + 1000 * 20), // 20 minutes
+        });
 
         const message = {
           from: "coolalan2016@gmail.com",
@@ -177,6 +182,8 @@ router.post(
     }
   }
 );
+
+// TODO: Update password flow
 
 router.post("/email/password/reset", forgetPasswordLimit, async (req, res) => {
   try {

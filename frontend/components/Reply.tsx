@@ -24,7 +24,7 @@ const Reply: React.FC<Props> = ({ question }) => {
     const errMsg = document.getElementById("err-msg") as HTMLDivElement;
 
     if (userContext.user) {
-      if (text.length > 40 && text.length < 19000) {
+      if (text.length > 20 && text.length < 19000) {
         fetch(`${host}/posts/${question.uuid}/comments`, {
           method: "POST",
           headers: {
@@ -48,7 +48,7 @@ const Reply: React.FC<Props> = ({ question }) => {
           })
           .catch((err) => console.log(err));
       } else {
-        errMsg.innerText = "Your reply must be longer than 40 characters";
+        errMsg.innerText = "Your reply must be longer than 20 characters";
       }
     } else {
       await router.push("/auth/signup");
@@ -67,7 +67,6 @@ const Reply: React.FC<Props> = ({ question }) => {
             value={text}
             onChange={(e) => {
               setText(e.target.value);
-              window.scrollBy(0, 100);
             }}
           />
           <button className="reply-btn" type={"submit"}>
