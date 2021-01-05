@@ -1,4 +1,4 @@
-type CommentType = {
+export type CommentType = {
   uuid: string;
   body: string;
   votes: number;
@@ -7,7 +7,7 @@ type CommentType = {
   user: UserType;
 };
 
-type CommunityType = {
+export type CommunityType = {
   uuid: string;
   name: string;
   description: string;
@@ -15,7 +15,7 @@ type CommunityType = {
   updatedAt: string;
 };
 
-type UserType = {
+export type UserType = {
   uuid: string;
   username: string;
   reputation: number;
