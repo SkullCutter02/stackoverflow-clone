@@ -139,22 +139,26 @@ router.post("/logout", (req, res) => {
 
 router.post(
   "/email/password/reset/send",
-  forgetPasswordLimit,
+  // forgetPasswordLimit, // TODO: revert this
   async (req, res) => {
     try {
       const { email } = req.body;
       const user = await User.findOne({ where: { email: email } });
 
       if (user) {
-        const host =
-          process.env.NODE_ENV === "development" ? "http://localhost:3000" : "";
+        const host = process.env.HOST || "http://localhost:3000";
         const uuid = await v4();
-        const hash = await hashPassword(uuid);
         const link = `${host}/auth/resetpassword/${uuid}`;
+
+        const now = new Date();
+        let expiredDate = new Date(now);
+        expiredDate.setMinutes(now.getMinutes() + 20);
+        expiredDate = expiredDate.toUTCString();
+
         await Email.create({
-          hash,
+          uuid,
           userEmail: user.email,
-          expirationDate: new Date(Date.now() + 1000 * 20), // 20 minutes
+          expirationDate: expiredDate, // 20 minutes
         });
 
         const message = {
@@ -173,6 +177,7 @@ router.post(
 
           return res.json(info);
         });
+        // return res.json({ msg: "Sent" });
       } else {
         return res.status(500).json({ msg: "Email doesn't exist" });
       }
@@ -187,22 +192,44 @@ router.post(
 
 router.post("/email/password/reset", forgetPasswordLimit, async (req, res) => {
   try {
-    const { newPassword, userUuid, emailUuid } = req.body;
-    const user = await User.findOne({ where: { uuid: userUuid } });
-    const email = await Email.findOne({ where: { uuid: emailUuid } });
+    const { newPassword, token } = req.body;
+
+    const email = await Email.findOne({ where: { uuid: token } });
 
     if (email) {
-      if (user) {
-        const hash = await hashPassword(newPassword);
-        await user.update({ hash: hash });
-        await email.destroy();
-        return res.json({ msg: "Password updated" });
+      if (Date.now() < Date.parse(email.expirationDate)) {
+        const user = await User.findOne({ where: { email: email.userEmail } });
+
+        if (user) {
+          const hash = await hashPassword(newPassword);
+          await user.update({ hash: hash });
+          await email.destroy();
+          return res.json({ msg: "Password updated" });
+        } else {
+          return res.status(500).json({ msg: "Reset failed" });
+        }
       } else {
-        return res.status(500).json({ msg: "Reset failed" });
+        return res.status(500).json({ msg: "Expiration date reached" });
       }
     } else {
       return res.status(500).json({ msg: "Reset failed" });
     }
+
+    // const user = await User.findOne({ where: { uuid: userUuid } });
+    // const email = await Email.findOne({ where: { uuid: emailUuid } });
+    //
+    // if (email) {
+    //   if (user) {
+    //     const hash = await hashPassword(newPassword);
+    //     await user.update({ hash: hash });
+    //     await email.destroy();
+    //     return res.json({ msg: "Password updated" });
+    //   } else {
+    //     return res.status(500).json({ msg: "Reset failed" });
+    //   }
+    // } else {
+    //   return res.status(500).json({ msg: "Reset failed" });
+    // }
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);

@@ -23,6 +23,11 @@
       "static/chunks/main.js",
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
+    ],
+    "/questions/[uuid]": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/questions/[uuid].js"
     ]
   },
   "ampFirstPages": []

@@ -9,11 +9,11 @@ const app = express();
 app.use(express.json());
 app.use(helmet());
 app.use(cookieParser());
+
 app.use(
   cors({
     credentials: true,
-    origin:
-      process.env.NODE_ENV === "development" ? "http://localhost:3000" : "",
+    origin: process.env.HOST || "http://localhost:3000",
   })
 );
 

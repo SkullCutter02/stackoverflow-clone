@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Email.init(
     {
-      hash: DataTypes.STRING,
+      uuid: DataTypes.STRING,
       userEmail: DataTypes.STRING,
       expirationDate: DataTypes.STRING,
     },
