@@ -426,7 +426,7 @@ router.post("/comments/:commentUuid/vote", verifyToken, (req, res) => {
   });
 });
 
-router.get("/comments/:uuid/vote/status", async (req, res) => {
+router.post("/comments/:uuid/vote/status", async (req, res) => {
   try {
     const { uuid: commentUuid } = req.params; // alias as commentUuid
     const { userUuid } = req.body;

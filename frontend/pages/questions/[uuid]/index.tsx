@@ -25,8 +25,6 @@ const QuestionPage: React.FC<Props> = ({ uuid }) => {
     { cacheTime: 0 }
   );
 
-  // TODO: Change useQuery to useMutation, since the comments are mutating
-
   return (
     <React.Fragment>
       <div>

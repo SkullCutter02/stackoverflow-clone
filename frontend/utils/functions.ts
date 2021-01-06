@@ -1,4 +1,4 @@
-import { voteType } from "./types/voteType";
+import { VoteType } from "./types/voteType";
 
 export function getCookie(cname: string): string {
   if (process.browser) {
@@ -39,7 +39,7 @@ export function getTime(time: string): string {
 }
 
 export function updateVote(
-  data: voteType,
+  data: VoteType,
   voteType: "upvote" | "downvote",
   setVotes: (votes: number) => void,
   setUpvoteColor: (color: string) => void,

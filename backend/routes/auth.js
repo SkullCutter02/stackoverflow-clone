@@ -139,7 +139,7 @@ router.post("/logout", (req, res) => {
 
 router.post(
   "/email/password/reset/send",
-  // forgetPasswordLimit, // TODO: revert this
+  forgetPasswordLimit,
   async (req, res) => {
     try {
       const { email } = req.body;
@@ -188,8 +188,6 @@ router.post(
   }
 );
 
-// TODO: Update password flow
-
 router.post("/email/password/reset", forgetPasswordLimit, async (req, res) => {
   try {
     const { newPassword, token } = req.body;
@@ -214,22 +212,6 @@ router.post("/email/password/reset", forgetPasswordLimit, async (req, res) => {
     } else {
       return res.status(500).json({ msg: "Reset failed" });
     }
-
-    // const user = await User.findOne({ where: { uuid: userUuid } });
-    // const email = await Email.findOne({ where: { uuid: emailUuid } });
-    //
-    // if (email) {
-    //   if (user) {
-    //     const hash = await hashPassword(newPassword);
-    //     await user.update({ hash: hash });
-    //     await email.destroy();
-    //     return res.json({ msg: "Password updated" });
-    //   } else {
-    //     return res.status(500).json({ msg: "Reset failed" });
-    //   }
-    // } else {
-    //   return res.status(500).json({ msg: "Reset failed" });
-    // }
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);

@@ -2,20 +2,34 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="72f0844c-8b37-4796-b385-52962eac77fa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/migrations/20210106000353-update-email-date.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/migrations/20210106010459-update-email-uuid.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/migrations/20210105234746-update-email-table.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/migrations/20210105234746-update-email-table.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/models/email.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/models/email.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/routes/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/posts.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/posts.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/build-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/build-manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/_app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/[community].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/[community].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/questions/[uuid].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/questions/[uuid].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/[community].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/[community].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/_app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/questions/[uuid].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/questions/[uuid].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/utils/host.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/utils/host.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/static/webpack/20c88d36f1185aa479f0.hot-update.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/static/webpack/3f57a0b6bfd33cc78b78.hot-update.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/static/webpack/5c9b9ce9dde16739828c.hot-update.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/static/webpack/858cbd722cdf07e94035.hot-update.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/static/webpack/99e0ecc68e0f28c2e050.hot-update.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/static/webpack/d1eb8deae06e98cba17c.hot-update.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/static/webpack/d8157aea39fad88b3d98.hot-update.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/static/webpack/pages/_app.858cbd722cdf07e94035.hot-update.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/static/webpack/pages/questions/[uuid].858cbd722cdf07e94035.hot-update.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/components/Answer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Answer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/components/Answers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Answers.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/components/Question.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Question.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/questions/[uuid]/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/questions/[uuid]/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/utils/functions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/utils/functions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/utils/types/voteType.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/utils/types/voteType.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +119,8 @@
       <workItem from="1609729733498" duration="53000" />
       <workItem from="1609729813142" duration="504000" />
       <workItem from="1609769405061" duration="11390000" />
-      <workItem from="1609889878384" duration="3669000" />
+      <workItem from="1609889878384" duration="4015000" />
+      <workItem from="1609899103098" duration="828000" />
     </task>
     <servers />
   </component>

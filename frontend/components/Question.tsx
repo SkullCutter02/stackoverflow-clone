@@ -8,7 +8,7 @@ import hljs from "highlight.js";
 
 import { QuestionType } from "../utils/types/individualQuestionType";
 import { getCookie, updateVote } from "../utils/functions";
-import { voteType } from "../utils/types/voteType";
+import { VoteType } from "../utils/types/voteType";
 import host from "../utils/host";
 import { UserContext } from "../context/UserContext";
 import AskedBy from "./AskedBy";
@@ -44,7 +44,7 @@ const Question: React.FC<Props> = ({ question }) => {
         }),
       })
         .then((res) => res.json())
-        .then((data: voteType) => {
+        .then((data: VoteType) => {
           if (data.status) {
             if (data.type === "upvote") {
               setUpvoteColor(upvote);
@@ -77,7 +77,7 @@ const Question: React.FC<Props> = ({ question }) => {
           }),
         })
           .then((res) => res.json())
-          .then((data: voteType) =>
+          .then((data: VoteType) =>
             updateVote(
               data,
               voteType,

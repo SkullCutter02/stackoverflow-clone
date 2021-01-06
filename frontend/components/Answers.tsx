@@ -11,9 +11,11 @@ const Answers: React.FC<Props> = ({ question }) => {
   return (
     <React.Fragment>
       <div className="answers-container">
-        {question.comments.map((comment) => (
-          <Answer comment={comment} key={comment.uuid} />
-        ))}
+        {question.comments
+          .sort((a, b) => b.votes - a.votes)
+          .map((comment) => (
+            <Answer comment={comment} key={comment.uuid} />
+          ))}
       </div>
 
       <style jsx>{`
