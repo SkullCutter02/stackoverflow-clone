@@ -83,7 +83,7 @@ const RequestPostPage: React.FC = () => {
     const bodyTextArea = document.getElementById("body") as HTMLTextAreaElement;
 
     if (bodyTextArea.value.length > 100 && bodyTextArea.value.length < 29000) {
-      if (titleInput.value.length <= 350 && titleInput.value.length > 50) {
+      if (titleInput.value.length <= 350 && titleInput.value.length > 15) {
         if (tags.length > 0) {
           if (userContext.user) {
             await fetch(`${host}/posts`, {
@@ -99,11 +99,12 @@ const RequestPostPage: React.FC = () => {
                 communities: uuids,
               }),
             })
-              .then((res) => {
-                if (res.status >= 200 && res.status < 300) {
-                  router.push("/"); // TODO: Placeholder, change Link later
-                } else {
+              .then((res) => res.json())
+              .then(async (data) => {
+                if (data.msg) {
                   errMsg.innerText = "Something went wrong";
+                } else {
+                  await router.push(`/questions/${data.uuid}`);
                 }
               })
               .catch((err) => console.log(err));
@@ -116,7 +117,7 @@ const RequestPostPage: React.FC = () => {
         }
       } else {
         errMsg.innerText =
-          "Question title cannot be longer than 350 characters or shorter than 50 characters";
+          "Question title cannot be longer than 350 characters or shorter than 15 characters";
       }
     } else {
       errMsg.innerText = "Question body must be longer than 100 characters";

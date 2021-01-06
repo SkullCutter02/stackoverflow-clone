@@ -5,7 +5,7 @@ import { GetServerSideProps } from "next";
 import host from "../../../utils/host";
 import { QuestionType } from "../../../utils/types/individualQuestionType";
 import Question from "../../../components/Question";
-import Reply from "../../../components/Reply";
+import PostAnswer from "../../../components/PostAnswer";
 import Aside from "../../../components/Aside";
 import Answers from "../../../components/Answers";
 
@@ -39,7 +39,7 @@ const QuestionPage: React.FC<Props> = ({ uuid }) => {
             <main>
               <div className="left">
                 <Question question={data} />
-                <Reply question={data} />
+                <PostAnswer question={data} />
                 <h1>Answers:</h1>
                 <Answers question={data} />
               </div>
