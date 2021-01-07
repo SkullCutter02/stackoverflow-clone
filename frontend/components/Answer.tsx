@@ -35,9 +35,14 @@ const Answer: React.FC<Props> = ({ comment }) => {
     const pres = document.querySelectorAll("pre");
 
     for (let i = 0; i < pres.length; i++) {
-      hljs.highlightBlock(pres[i]);
+      if (!editMode) {
+        hljs.highlightBlock(pres[i]);
+        pres[i].classList.remove("plaintext");
+      } else {
+        pres[i].classList.add("plaintext");
+      }
     }
-  }, []);
+  }, [editMode]);
 
   useEffect(() => {
     if (userContext.user) {
@@ -134,7 +139,7 @@ const Answer: React.FC<Props> = ({ comment }) => {
                 onClick={() => vote("downvote")}
               />
             </div>
-            <div style={{ width: "95%" }}>
+            <div className="main-answer-body">
               <ReactMarkdown
                 className="preview answer-pre"
                 source={comment.body}
@@ -199,6 +204,13 @@ const Answer: React.FC<Props> = ({ comment }) => {
 
         .op-actions {
           width: 100px;
+        }
+
+        .main-answer-body {
+          width: 95%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
         }
       `}</style>
     </React.Fragment>

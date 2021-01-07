@@ -77,7 +77,7 @@ const EditQuestion: React.FC<Props> = ({ setEditMode, question }) => {
           <button
             onClick={() => {
               const confirm = window.confirm(
-                "Are you sure to discard your changes?"
+                "Are you sure you want to discard your changes?"
               );
               if (confirm) {
                 setEditMode(false);

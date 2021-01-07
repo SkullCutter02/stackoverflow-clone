@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useRouter } from "next/router";
+import { useQueryClient } from "react-query";
 
 import * as css from "../utils/cssVariables";
 import host from "../utils/host";
@@ -16,7 +17,9 @@ interface Props {
 const PostAnswer: React.FC<Props> = ({ question }) => {
   const [text, setText] = useState<string>("");
   const userContext = useContext(UserContext);
+
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const postAnswer = async (e) => {
     e.preventDefault();
@@ -37,13 +40,13 @@ const PostAnswer: React.FC<Props> = ({ question }) => {
           }),
         })
           .then((res) => res.json())
-          .then((data) => {
+          .then(async (data) => {
             if (data.msg) {
               errMsg.innerText = data.msg;
             } else {
+              await queryClient.prefetchQuery(["individual-question"]);
               errMsg.innerText = "";
               setText("");
-              router.reload();
             }
           })
           .catch((err) => console.log(err));
