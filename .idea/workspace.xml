@@ -3,20 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="72f0844c-8b37-4796-b385-52962eac77fa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/[community].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/[community].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/auth/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/auth/login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/questions/[uuid].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/questions/[uuid].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/[community].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/[community].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/_app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/auth/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/auth/login.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/questions/[uuid].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/questions/[uuid].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/components/EditQuestion.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/EditQuestion.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/OPActions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/OPActions.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/Question.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Question.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/utils/cssVariables.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/utils/cssVariables.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +57,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/public" />
       <recent name="$PROJECT_DIR$/frontend/utils/types" />
       <recent name="$PROJECT_DIR$/frontend/utils" />
     </key>
@@ -108,7 +99,7 @@
       <workItem from="1609769405061" duration="11390000" />
       <workItem from="1609889878384" duration="4015000" />
       <workItem from="1609899103098" duration="2558000" />
-      <workItem from="1609935023111" duration="5725000" />
+      <workItem from="1609935023111" duration="7438000" />
     </task>
     <servers />
   </component>
