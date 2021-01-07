@@ -10,6 +10,8 @@ export const secondaryButton = "#3f4a50";
 export const secondaryButtonHover = "#4d606f";
 export const secondaryButtonText = "#bdedff";
 export const secondaryButtonTextHover = "#e2e2e2";
+export const cancelButton = "#a40000";
+export const cancelButtonHover = "#8f0000";
 
 export const inputBackground = "#454545";
 export const inputBorder = "#dedede";

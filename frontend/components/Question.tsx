@@ -64,6 +64,7 @@ const Question: React.FC<Props> = ({ question, setEditMode, editMode }) => {
 
     if (!editMode) {
       for (let i = 0; i < pres.length; i++) {
+        pres[i].classList.remove("plaintext");
         hljs.highlightBlock(pres[i]);
       }
     } else {
@@ -185,7 +186,6 @@ const Question: React.FC<Props> = ({ question, setEditMode, editMode }) => {
         .question-container {
           width: 92%;
           margin: 0 auto;
-          border: 1px solid red;
         }
 
         .main {
