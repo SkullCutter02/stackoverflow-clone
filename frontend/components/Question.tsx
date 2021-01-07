@@ -155,7 +155,7 @@ const Question: React.FC<Props> = ({ question, setEditMode, editMode }) => {
               </div>
               <div className="post-body-btm">
                 <div className="communities-container">
-                  {question.communities.slice(0, 4).map((community) => (
+                  {question?.communities.slice(0, 4).map((community) => (
                     <Tag name={community.name} key={community.name} />
                   ))}
                 </div>

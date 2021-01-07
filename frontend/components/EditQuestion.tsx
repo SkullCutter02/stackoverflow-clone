@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { useQueryClient } from "react-query";
 
 import { QuestionType } from "../utils/types/individualQuestionType";
 import * as css from "../utils/cssVariables";
@@ -18,6 +19,7 @@ const EditQuestion: React.FC<Props> = ({ setEditMode, question }) => {
   const [text, setText] = useState<string>("Save");
 
   const userContext = useContext(UserContext);
+  const queryClient = useQueryClient();
 
   const editForm = (e) => {
     e.preventDefault();
@@ -37,8 +39,9 @@ const EditQuestion: React.FC<Props> = ({ setEditMode, question }) => {
           body: body,
           userUuid: userContext.user.uuid,
         }),
-      }).then((res) => {
+      }).then(async (res) => {
         if (res.status >= 200 && res.status < 300) {
+          await queryClient.prefetchQuery(["individual-question"]);
           setEditMode(false);
           window.scrollBy(0, -1000);
         } else {

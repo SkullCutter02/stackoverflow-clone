@@ -3,10 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="72f0844c-8b37-4796-b385-52962eac77fa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/build-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/build-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages-manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/questions/[uuid].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/questions/[uuid].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/questions/[uuid].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/questions/[uuid].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/components/EditQuestion.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/EditQuestion.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/components/Question.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Question.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +103,7 @@
       <workItem from="1609769405061" duration="11390000" />
       <workItem from="1609889878384" duration="4015000" />
       <workItem from="1609899103098" duration="2558000" />
-      <workItem from="1609935023111" duration="7438000" />
+      <workItem from="1609935023111" duration="8208000" />
     </task>
     <servers />
   </component>
