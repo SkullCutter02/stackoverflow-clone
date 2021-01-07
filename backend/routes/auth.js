@@ -2,9 +2,13 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const { v4 } = require("uuid");
 const { User, Email } = require("../models");
-const { hashPassword, comparePassword } = require("../hash");
-const transporter = require("../transporter");
-const { signUpLimit, logInLimit, forgetPasswordLimit } = require("../limiters");
+const { hashPassword, comparePassword } = require("../utils/hash");
+const transporter = require("../utils/transporter");
+const {
+  signUpLimit,
+  logInLimit,
+  forgetPasswordLimit,
+} = require("../middleware/limiters");
 const { check, validationResult } = require("express-validator");
 
 const router = express.Router();

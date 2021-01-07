@@ -1,7 +1,7 @@
 const express = require("express");
 const { Community, User, Comment, Post } = require("../models");
-const { getRouteLimit } = require("../limiters");
-const { comparePassword } = require("../hash");
+const { getRouteLimit } = require("../middleware/limiters");
+const { comparePassword } = require("../utils/hash");
 
 const router = express.Router();
 

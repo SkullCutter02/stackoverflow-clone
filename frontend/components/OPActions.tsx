@@ -104,7 +104,6 @@ const OPActions: React.FC<Props> = ({ uuid, type, setEditMode }) => {
 
         .icons-container {
           float: right;
-          margin-top: -10px;
         }
       `}</style>
     </React.Fragment>

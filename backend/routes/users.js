@@ -1,6 +1,6 @@
 const express = require("express");
 const { User, Post, Community, Comment } = require("../models");
-const { getRouteLimit } = require("../limiters");
+const { getRouteLimit } = require("../middleware/limiters");
 
 const router = express.Router();
 
@@ -73,5 +73,3 @@ router.get("/:uuid/comments", getRouteLimit, async (req, res) => {
 });
 
 module.exports = router;
-
-// TODO: Create JWT check

@@ -7,8 +7,12 @@ const {
   PostVote,
   CommentVote,
 } = require("../models");
-const { getRouteLimit, postLimit, commentLimit } = require("../limiters");
-const verifyToken = require("../verifyToken");
+const {
+  getRouteLimit,
+  postLimit,
+  commentLimit,
+} = require("../middleware/limiters");
+const verifyToken = require("../middleware/verifyToken");
 const jwt = require("jsonwebtoken");
 
 const router = express.Router();
@@ -272,6 +276,10 @@ router.delete("/:uuid", verifyToken, (req, res) => {
 
         if (authData.uuid === user.uuid) {
           if (post.user.uuid === user.uuid) {
+            const comments = await post.getComments();
+            for (let i = 0; i < comments.length; i++) {
+              await comments[i].destroy();
+            }
             await post.destroy();
             return res.json({ msg: "Post deleted" });
           } else {

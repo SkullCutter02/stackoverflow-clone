@@ -3,5 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/questions/[uuid]": "pages/questions/[uuid].js",
+  "/request/question": "pages/request/question.js",
   "/[community]": "pages/[community].js"
 }
