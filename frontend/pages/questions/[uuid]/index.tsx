@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "react-query";
 import { GetServerSideProps } from "next";
 
@@ -8,12 +8,15 @@ import Question from "../../../components/Question";
 import PostAnswer from "../../../components/PostAnswer";
 import Aside from "../../../components/Aside";
 import Answers from "../../../components/Answers";
+import EditQuestion from "../../../components/EditQuestion";
 
 interface Props {
   uuid: string;
 }
 
 const QuestionPage: React.FC<Props> = ({ uuid }) => {
+  const [editMode, setEditMode] = useState<boolean>(false);
+
   const fetchQuestions = async () => {
     const res = await fetch(`${host}/posts/${uuid}`);
     return await res.json();
@@ -38,7 +41,15 @@ const QuestionPage: React.FC<Props> = ({ uuid }) => {
             <div className="h1-border-btm" />
             <main>
               <div className="left">
-                <Question question={data} />
+                {!editMode ? (
+                  <Question
+                    question={data}
+                    setEditMode={setEditMode}
+                    editMode={editMode}
+                  />
+                ) : (
+                  <EditQuestion setEditMode={setEditMode} question={data} />
+                )}
                 <PostAnswer question={data} />
                 <h1>Answers:</h1>
                 <Answers question={data} />

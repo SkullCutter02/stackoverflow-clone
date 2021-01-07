@@ -31,3 +31,5 @@ app.listen(PORT, () => {
     .then(console.log("Database Connected!"))
     .catch((err) => console.log(err));
 });
+
+// TODO: Admin put credentials in .env file

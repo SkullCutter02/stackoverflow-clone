@@ -14,12 +14,15 @@ import { UserContext } from "../context/UserContext";
 import AskedBy from "./AskedBy";
 import Tag from "./Tag";
 import * as css from "../utils/cssVariables";
+import OPActions from "./OPActions";
 
 interface Props {
   question: QuestionType;
+  setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+  editMode: boolean;
 }
 
-const Question: React.FC<Props> = ({ question }) => {
+const Question: React.FC<Props> = ({ question, setEditMode, editMode }) => {
   const [votes, setVotes] = useState<number>(question.votes);
   const [upvoteColor, setUpvoteColor] = useState<string>("grey");
   const [downvoteColor, setDownvoteColor] = useState<string>("grey");
@@ -59,10 +62,16 @@ const Question: React.FC<Props> = ({ question }) => {
   useEffect(() => {
     const pres = document.querySelectorAll("pre");
 
-    for (let i = 0; i < pres.length; i++) {
-      hljs.highlightBlock(pres[i]);
+    if (!editMode) {
+      for (let i = 0; i < pres.length; i++) {
+        hljs.highlightBlock(pres[i]);
+      }
+    } else {
+      for (let i = 0; i < pres.length; i++) {
+        pres[i].classList.add("plaintext");
+      }
     }
-  }, []);
+  }, [editMode]);
 
   const vote = async (voteType: "upvote" | "downvote") => {
     if (userContext.user) {
@@ -158,6 +167,15 @@ const Question: React.FC<Props> = ({ question }) => {
                   reputation={question.user.reputation}
                 />
               </div>
+              {question.user.uuid === userContext?.user?.uuid ? (
+                <OPActions
+                  uuid={question.uuid}
+                  type={"question"}
+                  setEditMode={setEditMode}
+                />
+              ) : (
+                <div />
+              )}
             </div>
           </div>
         </div>
@@ -167,6 +185,7 @@ const Question: React.FC<Props> = ({ question }) => {
         .question-container {
           width: 92%;
           margin: 0 auto;
+          border: 1px solid red;
         }
 
         .main {

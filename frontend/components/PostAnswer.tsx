@@ -62,7 +62,6 @@ const PostAnswer: React.FC<Props> = ({ question }) => {
           <textarea
             id="reply"
             className="reply-form-textarea"
-            required
             placeholder={"Reply to this question"}
             value={text}
             onChange={(e) => {

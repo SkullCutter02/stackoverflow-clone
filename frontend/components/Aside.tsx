@@ -39,7 +39,7 @@ const Aside: React.FC<Props> = ({ borderSide }) => {
 
         .section-btn {
           background-color: ${css.mainButton};
-          border: 1.5px solid ${css.buttonBorder};
+          border: none;
           color: ${css.mainButtonText};
           height: 30px;
           width: 56%;

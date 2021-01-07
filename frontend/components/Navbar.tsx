@@ -47,7 +47,10 @@ const Navbar: React.FC = () => {
           ) : (
             <div className="nav-right">
               <p>{userContext.user.username}</p>
-              <button className="nav-auth-btn nav-sign-up-btn" onClick={logOut}>
+              <button
+                className="nav-auth-btn nav-sign-up-btn logout"
+                onClick={logOut}
+              >
                 Log Out
               </button>
             </div>
@@ -129,6 +132,10 @@ const Navbar: React.FC = () => {
           background: ${css.secondaryButtonHover};
           border: 1.5px solid #4d606d;
           color: ${css.secondaryButtonTextHover};
+        }
+
+        .logout {
+          border: none;
         }
       `}</style>
     </React.Fragment>
