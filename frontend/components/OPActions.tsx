@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { useQueryClient } from "react-query";
+import { useRouter } from "next/router";
 
 import host from "../utils/host";
 import { getCookie } from "../utils/functions";
@@ -16,6 +17,7 @@ interface Props {
 const OPActions: React.FC<Props> = ({ uuid, type, setEditMode }) => {
   const userContext = useContext(UserContext);
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const style = {
     cursor: "pointer",
@@ -47,7 +49,24 @@ const OPActions: React.FC<Props> = ({ uuid, type, setEditMode }) => {
             body: JSON.stringify({ userUuid: userContext.user.uuid }),
           }).then(async (res) => {
             if (res.status >= 200 && res.status < 300) {
-              await queryClient.prefetchQuery(["individual-question"]);
+              await queryClient.prefetchQuery(["individual-question"], {
+                cacheTime: 0,
+              });
+            } else {
+              alert("Something went wrong");
+            }
+          });
+        } else if (type === "question") {
+          fetch(`${host}/posts/${uuid}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${getCookie("token")}`,
+            },
+            body: JSON.stringify({ userUuid: userContext.user.uuid }),
+          }).then((res) => {
+            if (res.status >= 200 && res.status < 300) {
+              router.back();
             } else {
               alert("Something went wrong");
             }

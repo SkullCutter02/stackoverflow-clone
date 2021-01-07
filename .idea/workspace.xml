@@ -9,11 +9,9 @@
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/questions/[uuid].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/questions/[uuid].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/Answer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Answer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/components/EditAnswer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/EditAnswer.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/components/EditQuestion.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/EditQuestion.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/components/OPActions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/OPActions.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/PostAnswer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/PostAnswer.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +104,7 @@
       <workItem from="1609769405061" duration="11390000" />
       <workItem from="1609889878384" duration="4015000" />
       <workItem from="1609899103098" duration="2558000" />
-      <workItem from="1609935023111" duration="12776000" />
+      <workItem from="1609935023111" duration="13078000" />
     </task>
     <servers />
   </component>

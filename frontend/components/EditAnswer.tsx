@@ -42,7 +42,9 @@ const EditAnswer: React.FC<Props> = ({ setEditMode, comment }) => {
         }),
       }).then(async (res) => {
         if (res.status >= 200 && res.status < 300) {
-          await queryClient.prefetchQuery(["individual-question"]);
+          await queryClient.prefetchQuery(["individual-question"], {
+            cacheTime: 0,
+          });
           setEditMode(false);
         } else {
           alert("Something went wrong");
