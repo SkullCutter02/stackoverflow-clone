@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { useQueryClient } from "react-query";
@@ -8,6 +8,7 @@ import * as css from "../utils/cssVariables";
 import host from "../utils/host";
 import { getCookie } from "../utils/functions";
 import { UserContext } from "../context/UserContext";
+import Spinner from "./Spinner";
 
 interface Props {
   setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,13 +21,13 @@ const EditQuestion: React.FC<Props> = ({ setEditMode, question }) => {
 
   const userContext = useContext(UserContext);
   const queryClient = useQueryClient();
+  const spinner = useRef<HTMLDivElement>(null);
 
   const editForm = (e) => {
     e.preventDefault();
 
     if (userContext.user) {
-      const spinner = document.getElementById("spinner") as HTMLDivElement;
-      spinner.style.display = "block";
+      spinner.current.style.display = "block";
       setText("");
 
       fetch(`${host}/posts/${question.uuid}`, {
@@ -47,7 +48,7 @@ const EditQuestion: React.FC<Props> = ({ setEditMode, question }) => {
         } else {
           alert("Something went wrong");
           setText("Save");
-          spinner.style.display = "none";
+          spinner.current.style.display = "none";
         }
       });
     }
@@ -69,11 +70,9 @@ const EditQuestion: React.FC<Props> = ({ setEditMode, question }) => {
           plugins={[remarkGfm]}
         />
         <div className="buttons-container">
-          <button className="save" id="save">
+          <button className="save">
             {text}
-            <div id="spinner" className="smt-spinner-circle">
-              <div className="smt-spinner" />
-            </div>
+            <Spinner spinner={spinner} />
           </button>
           <button
             onClick={() => {
@@ -143,35 +142,6 @@ const EditQuestion: React.FC<Props> = ({ setEditMode, question }) => {
 
         .cancel:hover {
           background: ${css.cancelButtonHover};
-        }
-
-        .smt-spinner-circle {
-          width: 17px;
-          height: 17px;
-          position: relative;
-          border-radius: 50%;
-          margin: 0 auto;
-          display: none;
-        }
-
-        .smt-spinner {
-          height: 100%;
-          width: 100%;
-          border-radius: 50%;
-          border-right: 2px solid rgba(255, 255, 255, 0.6);
-          border-top: 2px solid #bababa;
-          border-left: 2px solid #dedede;
-          border-bottom: 2px solid #ffffff;
-          animation: rotate--spinner 1.6s infinite;
-        }
-
-        @keyframes rotate--spinner {
-          from {
-            transform: rotate(0);
-          }
-          to {
-            transform: rotate(360deg);
-          }
         }
       `}</style>
     </React.Fragment>

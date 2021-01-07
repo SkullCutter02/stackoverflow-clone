@@ -13,6 +13,8 @@ import { UserContext } from "../context/UserContext";
 import hljs from "highlight.js";
 import host from "../utils/host";
 import { updateVote, getCookie } from "../utils/functions";
+import OPActions from "./OPActions";
+import EditAnswer from "./EditAnswer";
 
 interface Props {
   comment: CommentType;
@@ -22,6 +24,7 @@ const Answer: React.FC<Props> = ({ comment }) => {
   const [votes, setVotes] = useState<number>(comment.votes);
   const [upvoteColor, setUpvoteColor] = useState<string>("grey");
   const [downvoteColor, setDownvoteColor] = useState<string>("grey");
+  const [editMode, setEditMode] = useState<boolean>(false);
 
   const userContext = useContext(UserContext);
   const router = useRouter();
@@ -107,45 +110,64 @@ const Answer: React.FC<Props> = ({ comment }) => {
   return (
     <React.Fragment>
       <div className="answer-container">
-        <div className="votes">
-          <FontAwesomeIcon
-            icon={faSortUp}
-            color={upvoteColor}
-            style={style}
-            size={"2x"}
-            onClick={() => vote("upvote")}
-          />
-          <p
-            className="vote-count"
-            style={{ color: "#c6c6c6", margin: "-8px 0" }}
-          >
-            {votes}
-          </p>
-          <FontAwesomeIcon
-            icon={faSortDown}
-            color={downvoteColor}
-            style={style}
-            size={"2x"}
-            onClick={() => vote("downvote")}
-          />
-        </div>
-        <div style={{ width: "95%" }}>
-          <ReactMarkdown
-            className="preview answer-pre"
-            source={comment.body}
-            plugins={[remarkGfm]}
-          />
-          <div className="user">
-            <AskedBy
-              type={"answered"}
-              username={comment.user.username}
-              createdAt={comment.createdAt}
-              postUuid={comment.user.uuid}
-              userUuid={userContext?.user?.uuid}
-              reputation={comment.user.reputation}
-            />
-          </div>
-        </div>
+        {!editMode ? (
+          <React.Fragment>
+            <div className="votes">
+              <FontAwesomeIcon
+                icon={faSortUp}
+                color={upvoteColor}
+                style={style}
+                size={"2x"}
+                onClick={() => vote("upvote")}
+              />
+              <p
+                className="vote-count"
+                style={{ color: "#c6c6c6", margin: "-8px 0" }}
+              >
+                {votes}
+              </p>
+              <FontAwesomeIcon
+                icon={faSortDown}
+                color={downvoteColor}
+                style={style}
+                size={"2x"}
+                onClick={() => vote("downvote")}
+              />
+            </div>
+            <div style={{ width: "95%" }}>
+              <ReactMarkdown
+                className="preview answer-pre"
+                source={comment.body}
+                plugins={[remarkGfm]}
+              />
+              <div className="below">
+                <div className="user">
+                  <AskedBy
+                    type={"answered"}
+                    username={comment.user.username}
+                    createdAt={comment.createdAt}
+                    postUuid={comment.user.uuid}
+                    userUuid={userContext?.user?.uuid}
+                    reputation={comment.user.reputation}
+                  />
+                </div>
+                {comment.user.uuid === userContext?.user?.uuid ? (
+                  <div className="op-actions">
+                    <OPActions
+                      uuid={comment.uuid}
+                      type={"answer"}
+                      setEditMode={setEditMode}
+                    />
+                  </div>
+                ) : (
+                  <div />
+                )}
+              </div>
+            </div>
+          </React.Fragment>
+        ) : (
+          <EditAnswer setEditMode={setEditMode} comment={comment} />
+        )}
       </div>
 
       <style jsx>{`
@@ -155,14 +177,15 @@ const Answer: React.FC<Props> = ({ comment }) => {
           padding: 5px 5px 20px;
           border-radius: 10px;
           background: ${css.floatingPostBackground};
-          position: relative;
-          display: flex;
+          display: ${!editMode ? "flex" : "block"};
         }
 
-        .user {
-          position: absolute;
-          bottom: 10px;
-          right: 5px;
+        .below {
+          display: flex;
+          flex-direction: row-reverse;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: -5px;
         }
 
         .votes {
@@ -172,6 +195,10 @@ const Answer: React.FC<Props> = ({ comment }) => {
           align-items: center;
           justify-content: flex-start;
           margin-top: 14px;
+        }
+
+        .op-actions {
+          width: 100px;
         }
       `}</style>
     </React.Fragment>

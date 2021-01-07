@@ -17,7 +17,10 @@ const OPActions: React.FC<Props> = ({ uuid, type, setEditMode }) => {
 
   const edit = () => {
     setEditMode(true);
-    window.scrollBy(0, -1000);
+
+    if (type === "question") {
+      window.scrollBy(0, -1000);
+    }
   };
 
   const remove = () => {};
