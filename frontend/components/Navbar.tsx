@@ -81,15 +81,17 @@ const Navbar: React.FC = () => {
                 />
               </div>
 
-              <div className="signed-in-state pop-up-item">
-                <p className="pop-up-txt">Profile</p>
-                <FontAwesomeIcon
-                  icon={faIdBadge}
-                  color={"white"}
-                  size={"1x"}
-                  style={{ marginRight: "10px" }}
-                />
-              </div>
+              <Link href={`/user/${userContext.user.username}`}>
+                <div className="signed-in-state pop-up-item">
+                  <p className="pop-up-txt">Profile</p>
+                  <FontAwesomeIcon
+                    icon={faIdBadge}
+                    color={"white"}
+                    size={"1x"}
+                    style={{ marginRight: "10px" }}
+                  />
+                </div>
+              </Link>
 
               <div className="signed-in-state pop-up-item" onClick={logOut}>
                 <p className="pop-up-txt">Logout</p>

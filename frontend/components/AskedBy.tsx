@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 import { getTime, roundNumber } from "../utils/functions";
 
@@ -23,7 +24,10 @@ const AskedBy: React.FC<Props> = ({
     <React.Fragment>
       <span>
         <i className="asked-by">
-          {type} by: <span className="username">{username}</span>{" "}
+          {type} by:
+          <Link href={`/user/${username}`}>
+            <span className="username"> {username}</span>
+          </Link>{" "}
           {reputation !== undefined && `• ${roundNumber(reputation)} || `}
           <span className="time"> {getTime(createdAt)}</span>
         </i>
