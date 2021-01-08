@@ -4,13 +4,21 @@ const { getRouteLimit } = require("../middleware/limiters");
 
 const router = express.Router();
 
-router.get("/:uuid", getRouteLimit, async (req, res) => {
+router.get("/:identifier", getRouteLimit, async (req, res) => {
   try {
-    const { uuid } = req.params;
+    const { identifier } = req.params;
     const user = await User.findOne({
-      where: { uuid: uuid },
+      where: { username: identifier },
     });
-    return res.json(user);
+
+    if (user) {
+      return res.json(user);
+    } else {
+      const userByUuid = await User.findOne({
+        where: { uuid: identifier },
+      });
+      return res.json(userByUuid);
+    }
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);

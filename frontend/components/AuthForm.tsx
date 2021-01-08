@@ -88,10 +88,12 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
             } else {
               errorMsg.innerText = "";
               const payload = JSON.parse(atob(data.token.split(".")[1]));
+              console.log(payload);
               fetch(`${host}/users/${payload.uuid}`)
                 .then((res) => res.json())
                 .then((data) => userContext.setState(data))
                 .catch((err) => console.log(err));
+              console.log(data);
               await router.push("/");
             }
           })

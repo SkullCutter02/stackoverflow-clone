@@ -72,7 +72,7 @@ const Navbar: React.FC = () => {
                   }
                 }}
               >
-                <p className="username">{userContext.user.username}</p>
+                <p className="username">{userContext?.user?.username}</p>
                 <FontAwesomeIcon
                   icon={caretStatus === "down" ? faCaretDown : faCaretUp}
                   color={"white"}
@@ -183,6 +183,8 @@ const Navbar: React.FC = () => {
 
         .signed-in-state {
           border: 2px solid #888888;
+          background: #414141;
+          z-index: 1000;
           margin-right: 40px;
           height: 80%;
           width: 170px;

@@ -18,9 +18,9 @@ router.post(
   check("username")
     .isLength({ max: 20 })
     .withMessage("Username must not be longer than 20 characters")
-    .matches(/^[/a-zA-Z0-9_-]*$/)
+    .matches(/^[/a-z0-9_-]*$/)
     .withMessage(
-      "Username can only contain letters, numbers, dash and underscore"
+      "Username can only contain lowercase letters, numbers, dash and underscore"
     ),
   check("email").isEmail().withMessage("Please enter a valid email"),
   check("password")
