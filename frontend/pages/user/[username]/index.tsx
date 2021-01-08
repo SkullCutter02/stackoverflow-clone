@@ -6,9 +6,9 @@ const UserProfilePage: React.FC = () => {
   const { username } = router.query;
 
   return (
-    <div>
+    <React.Fragment>
       <p>{username}</p>
-    </div>
+    </React.Fragment>
   );
 };
 

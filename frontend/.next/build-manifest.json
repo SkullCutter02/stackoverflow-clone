@@ -14,16 +14,6 @@
     "static/development/_ssgManifest.js"
   ],
   "pages": {
-    "/": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/index.js"
-    ],
-    "/[community]": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/[community].js"
-    ],
     "/_app": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
@@ -39,20 +29,10 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/auth/login.js"
     ],
-    "/next/dist/pages/_error": [
+    "/auth/resetpassword": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/next/dist/pages/_error.js"
-    ],
-    "/questions/[uuid]": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/questions/[uuid].js"
-    ],
-    "/user/[username]": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/user/[username].js"
+      "static/chunks/pages/auth/resetpassword.js"
     ]
   },
   "ampFirstPages": []

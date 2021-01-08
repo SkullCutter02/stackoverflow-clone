@@ -222,7 +222,9 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
                     Remember Me
                   </label>
                 </div>
-                <p className="auth-form-forgot-password">Forgot Password?</p>
+                <Link href={"/auth/resetpassword"}>
+                  <p className="auth-form-forgot-password">Forgot Password?</p>
+                </Link>
               </div>
               <div className="auth-form-error-msg" id="error-msg" />
               <button type="submit" className="auth-form-submit-btn">

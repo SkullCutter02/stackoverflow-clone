@@ -26,7 +26,7 @@ router.post(
   check("password")
     .isLength({ min: 8 })
     .withMessage("Password must be more than 8 characters long")
-    .matches(/^.*(?=.{8,20})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/)
+    .matches(/^.*(?=.{8,100})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/)
     .withMessage(
       "Password must contain at least one uppercase, one lowercase, and one special character"
     ),
@@ -142,7 +142,7 @@ router.post("/logout", (req, res) => {
 
 router.post(
   "/email/password/reset/send",
-  forgetPasswordLimit,
+  // forgetPasswordLimit,
   async (req, res) => {
     try {
       const { email } = req.body;
@@ -166,7 +166,10 @@ router.post(
 
         return res.json({ link });
       } else {
-        return res.status(500).json({ msg: "Email doesn't exist" });
+        console.log("trigger");
+        return res
+          .status(500)
+          .json({ msg: "Email doesn't exist in our database" });
       }
     } catch (err) {
       console.log(err);
@@ -175,34 +178,47 @@ router.post(
   }
 );
 
-router.post("/email/password/reset", forgetPasswordLimit, async (req, res) => {
-  try {
-    const { newPassword, token } = req.body;
+router.post(
+  "/email/password/reset",
+  check("newPassword")
+    .isLength({ min: 8 })
+    .withMessage("Password must be more than 8 characters long")
+    .matches(/^.*(?=.{8,100})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/)
+    .withMessage(
+      "Password must contain at least one uppercase, one lowercase, and one special character"
+    ),
+  forgetPasswordLimit,
+  async (req, res) => {
+    try {
+      const { newPassword, token } = req.body;
 
-    const email = await Email.findOne({ where: { uuid: token } });
+      const email = await Email.findOne({ where: { uuid: token } });
 
-    if (email) {
-      if (Date.now() < Date.parse(email.expirationDate)) {
-        const user = await User.findOne({ where: { email: email.userEmail } });
+      if (email) {
+        if (Date.now() < Date.parse(email.expirationDate)) {
+          const user = await User.findOne({
+            where: { email: email.userEmail },
+          });
 
-        if (user) {
-          const hash = await hashPassword(newPassword);
-          await user.update({ hash: hash });
-          await email.destroy();
-          return res.json({ msg: "Password updated" });
+          if (user) {
+            const hash = await hashPassword(newPassword);
+            await user.update({ hash: hash });
+            await email.destroy();
+            return res.json({ msg: "Password updated" });
+          } else {
+            return res.status(500).json({ msg: "Reset failed" });
+          }
         } else {
-          return res.status(500).json({ msg: "Reset failed" });
+          return res.status(500).json({ msg: "Expiration date reached" });
         }
       } else {
-        return res.status(500).json({ msg: "Expiration date reached" });
+        return res.status(500).json({ msg: "Reset failed" });
       }
-    } else {
-      return res.status(500).json({ msg: "Reset failed" });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json(err);
     }
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
   }
-});
+);
 
 module.exports = router;

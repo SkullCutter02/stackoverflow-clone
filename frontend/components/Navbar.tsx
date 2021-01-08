@@ -59,15 +59,15 @@ const Navbar: React.FC = () => {
                 className="signed-in-state og"
                 onClick={() => {
                   setCaretStatus(caretStatus === "down" ? "up" : "down");
-                  const popUps = document.getElementsByClassName(
-                    "pop-up-item"
-                  ) as any;
+                  const popUps = document.getElementsByClassName("pop-up-item");
 
                   for (let i = 0; i < popUps.length; i++) {
                     if (caretStatus === "up") {
-                      popUps[i].style.visibility = "hidden";
+                      const popUp = popUps[i] as HTMLElement;
+                      popUp.style.visibility = "hidden";
                     } else if (caretStatus === "down") {
-                      popUps[i].style.visibility = "visible";
+                      const popUp = popUps[i] as HTMLElement;
+                      popUp.style.visibility = "visible";
                     }
                   }
                 }}
@@ -82,7 +82,20 @@ const Navbar: React.FC = () => {
               </div>
 
               <Link href={`/user/${userContext.user.username}`}>
-                <div className="signed-in-state pop-up-item">
+                <div
+                  className="signed-in-state pop-up-item"
+                  onClick={() => {
+                    setCaretStatus("down");
+                    const popUps = document.getElementsByClassName(
+                      "pop-up-item"
+                    );
+
+                    for (let i = 0; i < popUps.length; i++) {
+                      const popUp = popUps[i] as HTMLElement;
+                      popUp.style.visibility = "hidden";
+                    }
+                  }}
+                >
                   <p className="pop-up-txt">Profile</p>
                   <FontAwesomeIcon
                     icon={faIdBadge}

@@ -2,10 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/user/[username]": "pages/user/[username].js",
-  "/[community]": "pages/[community].js",
-  "/questions/[uuid]": "pages/questions/[uuid].js",
-  "/next/dist/pages/_error": "pages/next/dist/pages/_error.js",
+  "/auth/resetpassword": "pages/auth/resetpassword.js",
   "/auth/login": "pages/auth/login.js"
 }
