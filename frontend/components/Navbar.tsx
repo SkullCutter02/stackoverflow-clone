@@ -1,12 +1,21 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCaretDown,
+  faCaretUp,
+  faSignOutAlt,
+  faIdBadge,
+} from "@fortawesome/free-solid-svg-icons";
 
 import { UserContext } from "../context/UserContext";
 import host from "../utils/host";
 import * as css from "../utils/cssVariables";
 
 const Navbar: React.FC = () => {
+  const [caretStatus, setCaretStatus] = useState<"up" | "down">("down");
+
   const userContext = useContext(UserContext);
   const router = useRouter();
 
@@ -45,14 +54,52 @@ const Navbar: React.FC = () => {
               </Link>
             </div>
           ) : (
-            <div className="nav-right">
-              <p>{userContext.user.username}</p>
-              <button
-                className="nav-auth-btn nav-sign-up-btn logout"
-                onClick={logOut}
+            <div className="nav-right signed-in">
+              <div
+                className="signed-in-state og"
+                onClick={() => {
+                  setCaretStatus(caretStatus === "down" ? "up" : "down");
+                  const popUps = document.getElementsByClassName(
+                    "pop-up-item"
+                  ) as any;
+
+                  for (let i = 0; i < popUps.length; i++) {
+                    if (caretStatus === "up") {
+                      popUps[i].style.visibility = "hidden";
+                    } else if (caretStatus === "down") {
+                      popUps[i].style.visibility = "visible";
+                    }
+                  }
+                }}
               >
-                Log Out
-              </button>
+                <p className="username">{userContext.user.username}</p>
+                <FontAwesomeIcon
+                  icon={caretStatus === "down" ? faCaretDown : faCaretUp}
+                  color={"white"}
+                  size={"1x"}
+                  style={{ marginRight: "20px" }}
+                />
+              </div>
+
+              <div className="signed-in-state pop-up-item">
+                <p className="pop-up-txt">Profile</p>
+                <FontAwesomeIcon
+                  icon={faIdBadge}
+                  color={"white"}
+                  size={"1x"}
+                  style={{ marginRight: "10px" }}
+                />
+              </div>
+
+              <div className="signed-in-state pop-up-item" onClick={logOut}>
+                <p className="pop-up-txt">Logout</p>
+                <FontAwesomeIcon
+                  icon={faSignOutAlt}
+                  color={"white"}
+                  size={"1x"}
+                  style={{ marginRight: "10px" }}
+                />
+              </div>
             </div>
           )}
         </div>
@@ -134,8 +181,43 @@ const Navbar: React.FC = () => {
           color: ${css.secondaryButtonTextHover};
         }
 
-        .logout {
+        .signed-in-state {
+          border: 2px solid #888888;
+          margin-right: 40px;
+          height: 80%;
+          width: 170px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          cursor: pointer;
+        }
+
+        .signed-in-state > .username {
+          margin: 0 20px;
+        }
+
+        .signed-in {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: center;
+          align-self: flex-start;
+          height: 100px;
+          width: 25%;
+        }
+
+        .og {
+          margin-top: 5px;
+        }
+
+        .pop-up-item {
           border: none;
+          border-right: 2px solid #888888;
+          border-left: 2px solid #888888;
+          border-bottom: 2px solid #888888;
+          flex-direction: row-reverse;
+          justify-content: center;
+          visibility: hidden;
         }
       `}</style>
     </React.Fragment>

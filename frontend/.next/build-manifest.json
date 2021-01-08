@@ -14,10 +14,10 @@
     "static/development/_ssgManifest.js"
   ],
   "pages": {
-    "/[community]": [
+    "/": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/[community].js"
+      "static/chunks/pages/index.js"
     ],
     "/_app": [
       "static/chunks/main.js",
@@ -29,15 +29,10 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
     ],
-    "/questions/[uuid]": [
+    "/auth/login": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/questions/[uuid].js"
-    ],
-    "/request/question": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/request/question.js"
+      "static/chunks/pages/auth/login.js"
     ]
   },
   "ampFirstPages": []

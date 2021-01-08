@@ -16,7 +16,7 @@ const CommunityQuestions: React.FC<Props> = ({ community }) => {
 
   const fetchPosts = async (page: number) => {
     const res = await fetch(
-      `${host}/communities/${community}/posts?page=${page}&limit=10`
+      `${host}/communities/${community}/posts?page=${page}&limit=20`
     );
     const data: CommunityPostsType = await res.json();
     return data;

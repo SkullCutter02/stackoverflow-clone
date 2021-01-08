@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const { v4 } = require("uuid");
 const { User, Email } = require("../models");
 const { hashPassword, comparePassword } = require("../utils/hash");
-const transporter = require("../utils/transporter");
 const {
   signUpLimit,
   logInLimit,
@@ -165,23 +164,7 @@ router.post(
           expirationDate: expiredDate, // 20 minutes
         });
 
-        const message = {
-          from: "coolalan2016@gmail.com",
-          to: email,
-          subject: "Password reset link",
-          text: `Click here to reset your password: ${link}`,
-          html: `<p>Click here to reset your password: ${link}</p>`,
-        };
-
-        transporter.sendMail(message, (err, info) => {
-          if (err) {
-            console.log(err);
-            return res.status(500).json(err);
-          }
-
-          return res.json(info);
-        });
-        // return res.json({ msg: "Sent" });
+        return res.json({ link });
       } else {
         return res.status(500).json({ msg: "Email doesn't exist" });
       }
