@@ -49,7 +49,8 @@ router.get("/:uuid/posts", getRouteLimit, async (req, res) => {
         },
       ],
     });
-    return res.json({ user, posts });
+    const tempPosts = await user.getPosts();
+    return res.json({ user, posts, hasMore: tempPosts.length > page * limit });
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);

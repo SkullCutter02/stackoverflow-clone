@@ -1,9 +1,10 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useQuery } from "react-query";
 import { GetServerSideProps } from "next";
 
 import host from "../../../utils/host";
 import { UserContext } from "../../../context/UserContext";
+import UserQuestions from "../../../components/UserQuestions";
 
 type UserType = {
   uuid: string;
@@ -84,7 +85,11 @@ const UserProfilePage: React.FC<Props> = ({ username }) => {
             </span>
           </div>
           <div className="user-content">
-            {tab === "question" ? <div>Question</div> : <div>Answer</div>}
+            {tab === "question" ? (
+              <UserQuestions uuid={data.uuid} />
+            ) : (
+              <div>Answer</div>
+            )}
           </div>
         </div>
       )}

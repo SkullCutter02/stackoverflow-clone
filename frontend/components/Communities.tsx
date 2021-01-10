@@ -14,7 +14,7 @@ const Communities: React.FC<Props> = ({ filter }) => {
 
   const fetchCommunities = async (page: number = 1, filter: string = "") => {
     const res = await fetch(
-      `${host}/communities?page=${page}&limit=10&filter=${filter}`
+      `${host}/communities?page=${page}&limit=20&filter=${filter}`
     );
     const data: CommunitiesType = await res.json();
     return data;
