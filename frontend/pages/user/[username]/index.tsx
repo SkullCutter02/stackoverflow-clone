@@ -68,28 +68,30 @@ const UserProfilePage: React.FC<Props> = ({ username }) => {
           ) : (
             <div />
           )}
-          <div className="tab-nav">
-            <span
-              className="nav-item active"
-              id="question"
-              onClick={() => handleTab("question")}
-            >
-              <p>Questions</p>
-            </span>
-            <span
-              className="nav-item"
-              id="answer"
-              onClick={() => handleTab("answer")}
-            >
-              <p>Answers</p>
-            </span>
-          </div>
-          <div className="user-content">
-            {tab === "question" ? (
-              <UserQuestions uuid={data.uuid} />
-            ) : (
-              <div>Answer</div>
-            )}
+          <div className="user-content-container">
+            <div className="tab-nav">
+              <span
+                className="nav-item active"
+                id="question"
+                onClick={() => handleTab("question")}
+              >
+                <p>Questions</p>
+              </span>
+              <span
+                className="nav-item"
+                id="answer"
+                onClick={() => handleTab("answer")}
+              >
+                <p>Answers</p>
+              </span>
+            </div>
+            <div className="user-content">
+              {tab === "question" ? (
+                <UserQuestions uuid={data.uuid} />
+              ) : (
+                <div>Answer</div>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -100,7 +102,6 @@ const UserProfilePage: React.FC<Props> = ({ username }) => {
         }
 
         .tab-nav {
-          margin-top: 30px;
           width: 100%;
           height: 40px;
           display: flex;
@@ -128,6 +129,12 @@ const UserProfilePage: React.FC<Props> = ({ username }) => {
 
         .active:hover {
           background: #a0a0a0;
+        }
+
+        .user-content-container {
+          margin-top: 30px;
+          display: grid;
+          grid-row: 2;
         }
 
         .user-content {

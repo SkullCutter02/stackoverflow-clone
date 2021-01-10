@@ -23,8 +23,6 @@ type UserType = {
   role: string;
   createdAt: string;
   updatedAt: string;
-  communities: CommunityType[];
-  comments: CommentType[];
 };
 
 type PostType = {
@@ -34,6 +32,8 @@ type PostType = {
   votes: number;
   createdAt: string;
   updatedAt: string;
+  communities: CommunityType[];
+  comments: CommentType[];
 };
 
 export type UserPostsType = {
