@@ -142,7 +142,7 @@ router.post("/logout", (req, res) => {
 
 router.post(
   "/email/password/reset/send",
-  // forgetPasswordLimit,
+  forgetPasswordLimit,
   async (req, res) => {
     try {
       const { email } = req.body;
@@ -155,13 +155,13 @@ router.post(
 
         const now = new Date();
         let expiredDate = new Date(now);
-        expiredDate.setMinutes(now.getMinutes() + 20);
+        expiredDate.setMinutes(now.getMinutes() + 40);
         expiredDate = expiredDate.toUTCString();
 
         await Email.create({
           uuid,
           userEmail: user.email,
-          expirationDate: expiredDate, // 20 minutes
+          expirationDate: expiredDate, // 40 minutes
         });
 
         return res.json({ link });
@@ -189,6 +189,13 @@ router.post(
     ),
   forgetPasswordLimit,
   async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res
+        .status(403)
+        .json({ errors: errors.array({ onlyFirstError: true }) });
+    }
+
     try {
       const { newPassword, token } = req.body;
 
@@ -203,8 +210,8 @@ router.post(
           if (user) {
             const hash = await hashPassword(newPassword);
             await user.update({ hash: hash });
-            await email.destroy();
-            return res.json({ msg: "Password updated" });
+            // await email.destroy();
+            return res.json({ message: "Password reset!" });
           } else {
             return res.status(500).json({ msg: "Reset failed" });
           }

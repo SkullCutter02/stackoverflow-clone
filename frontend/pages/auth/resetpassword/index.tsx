@@ -1,6 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
 import * as emailjs from "emailjs-com";
-import { init } from "emailjs-com";
 
 import * as css from "../../../utils/cssVariables";
 import host from "../../../utils/host";
@@ -15,7 +14,7 @@ const ResetPasswordEmailPage = () => {
   const spinnerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    init("user_T4JvjEK9hRkJhuh75F1iy");
+    emailjs.init("user_T4JvjEK9hRkJhuh75F1iy");
   }, []);
 
   const sendEmail = async (e) => {
@@ -101,7 +100,7 @@ const ResetPasswordEmailPage = () => {
           border: 1px solid ${css.inputBorder};
           background: ${css.inputBackground};
           color: #fff;
-          height: 40px;
+          min-height: 40px;
           width: 100%;
           text-indent: 15px;
           font-size: 0.8rem;
@@ -112,7 +111,7 @@ const ResetPasswordEmailPage = () => {
           background: ${css.mainButton};
           color: white;
           width: 90px;
-          height: 25px;
+          min-height: 25px;
           border-radius: 4px;
           cursor: pointer;
         }

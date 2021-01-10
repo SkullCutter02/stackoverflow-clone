@@ -1,6 +1,6 @@
 const rateLimit = require("express-rate-limit");
 
-const message = "Woah! Slow down!";
+const message = { msg: "Too many requests" };
 
 const signUpLimit = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
