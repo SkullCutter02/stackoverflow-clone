@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="72f0844c-8b37-4796-b385-52962eac77fa" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/components/UserInfo.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/build-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/build-manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages-manifest.json" afterDir="false" />
@@ -9,9 +10,8 @@
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/user/[username].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/user/[username].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/UserQuestions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/UserQuestions.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/request/question.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/request/question.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/user/[username]/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/user/[username]/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/utils/types/userPostsType.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/utils/types/userPostsType.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +23,8 @@
       <list>
         <option value="JavaScript File" />
         <option value="CSS File" />
-        <option value="TypeScript JSX File" />
         <option value="TypeScript File" />
+        <option value="TypeScript JSX File" />
       </list>
     </option>
   </component>
@@ -112,7 +112,7 @@
       <workItem from="1610106258354" duration="3565000" />
       <workItem from="1610156060847" duration="483000" />
       <workItem from="1610238387723" duration="4253000" />
-      <workItem from="1610275091454" duration="7182000" />
+      <workItem from="1610275091454" duration="7708000" />
     </task>
     <servers />
   </component>

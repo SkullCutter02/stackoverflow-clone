@@ -323,6 +323,7 @@ const RequestPostPage: React.FC = () => {
           color: #cbcbcb;
           padding: 8px;
           border-radius: 4px;
+          cursor: pointer;
         }
 
         .form-submit-btn:hover {
