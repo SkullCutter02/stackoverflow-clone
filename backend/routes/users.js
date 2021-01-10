@@ -28,27 +28,28 @@ router.get("/:identifier", getRouteLimit, async (req, res) => {
 router.get("/:uuid/posts", getRouteLimit, async (req, res) => {
   try {
     const { uuid } = req.params;
+    const { page, limit } = req.query;
+
     const user = await User.findOne({
       where: { uuid: uuid },
+    });
+    const posts = await user.getPosts({
+      limit: limit * 1,
+      offset: (page - 1) * limit,
+      order: [["createdAt", "DESC"]],
       include: [
         {
-          model: Post,
-          as: "posts",
-          include: [
-            {
-              model: Community,
-              as: "communities",
-              through: { attributes: [] },
-            },
-            {
-              model: Comment,
-              as: "comments",
-            },
-          ],
+          model: Community,
+          as: "communities",
+          through: { attributes: [] },
+        },
+        {
+          model: Comment,
+          as: "comments",
         },
       ],
     });
-    return res.json(user);
+    return res.json({ user, posts });
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);
