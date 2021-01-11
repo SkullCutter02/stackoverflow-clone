@@ -6,6 +6,7 @@ import host from "../utils/host";
 import { UserPostsType } from "../utils/types/userPostsType";
 import * as css from "../utils/cssVariables";
 import Tag from "./Tag";
+import PageHandlers from "./PageHandlers";
 
 interface Props {
   uuid: string;
@@ -65,24 +66,13 @@ const UserQuestions: React.FC<Props> = ({ uuid }) => {
                   </div>
                 </div>
               ))}
-              <div className="page-handlers">
-                <button
-                  onClick={() => setPage((old) => Math.max(old - 1, 0))}
-                  disabled={page === 1}
-                >
-                  Previous Page
-                </button>
-                <button
-                  onClick={() => {
-                    if (!isPreviousData && data.hasMore) {
-                      setPage((old) => old + 1);
-                    }
-                  }}
-                  disabled={isPreviousData || !data.hasMore}
-                >
-                  Next Page
-                </button>
-              </div>
+              <PageHandlers
+                page={page}
+                setPage={setPage}
+                isPreviousData={isPreviousData}
+                hasMore={data.hasMore}
+                width={97}
+              />
             </div>
           ) : (
             <div className="empty">

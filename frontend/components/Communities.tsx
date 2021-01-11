@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import host from "../utils/host";
 import Community from "./Community";
 import { CommunitiesType } from "../utils/types/communityType";
+import PageHandlers from "./PageHandlers";
 
 interface Props {
   filter: string;
@@ -49,29 +50,13 @@ const Communities: React.FC<Props> = ({ filter }) => {
                 key={community.uuid}
               />
             ))}
-            <div className="page-handlers">
-              <p className="current-page">Current Page: {page}</p>
-              <button
-                onClick={() => {
-                  setPage((old) => Math.max(old - 1, 0));
-                  window.scrollTo(0, -500);
-                }}
-                disabled={page === 1}
-              >
-                Previous Page
-              </button>
-              <button
-                onClick={() => {
-                  if (!isPreviousData && data.hasMore) {
-                    setPage((old) => old + 1);
-                    window.scrollTo(0, -500);
-                  }
-                }}
-                disabled={isPreviousData || !data.hasMore}
-              >
-                Next Page
-              </button>
-            </div>
+            <PageHandlers
+              page={page}
+              setPage={setPage}
+              isPreviousData={isPreviousData}
+              hasMore={data.hasMore}
+              width={96}
+            />
           </React.Fragment>
         )}
       </div>
@@ -81,24 +66,6 @@ const Communities: React.FC<Props> = ({ filter }) => {
           position: relative;
           margin-bottom: 40px;
           min-height: 20px;
-        }
-
-        .page-handlers {
-          position: absolute;
-          bottom: -20px;
-          right: 30px;
-          display: flex;
-          height: 28px;
-          width: calc(100% - 30px);
-          justify-content: flex-end;
-          align-items: flex-end;
-        }
-
-        button {
-          height: 70%;
-          width: 90px;
-          margin: 0 5px;
-          font-size: 0.6rem;
         }
       `}</style>
     </React.Fragment>

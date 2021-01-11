@@ -6,6 +6,7 @@ import { CommunityPostsType } from "../utils/types/questionType";
 import CommunityQuestion from "./CommunityQuestion";
 import Aside from "./Aside";
 import * as css from "../utils/cssVariables";
+import PageHandlers from "./PageHandlers";
 
 interface Props {
   community: string;
@@ -49,29 +50,13 @@ const CommunityQuestions: React.FC<Props> = ({ community }) => {
                   <CommunityQuestion post={post} key={post.uuid} />
                 ))}
               </div>
-              <div className="page-handlers">
-                <p className="current-page">Current Page: {page}</p>
-                <button
-                  onClick={() => {
-                    setPage((old) => Math.max(old - 1, 0));
-                    window.scrollTo(0, -500);
-                  }}
-                  disabled={page === 1}
-                >
-                  Previous Page
-                </button>
-                <button
-                  onClick={() => {
-                    if (!isPreviousData && data.hasMore) {
-                      setPage((old) => old + 1);
-                      window.scrollTo(0, -500);
-                    }
-                  }}
-                  disabled={isPreviousData || !data.hasMore}
-                >
-                  Next Page
-                </button>
-              </div>
+              <PageHandlers
+                page={page}
+                setPage={setPage}
+                isPreviousData={isPreviousData}
+                hasMore={data.hasMore}
+                width={90}
+              />
             </React.Fragment>
           )}
         </div>
@@ -116,22 +101,6 @@ const CommunityQuestions: React.FC<Props> = ({ community }) => {
           display: flex;
           flex-direction: column;
           align-items: center;
-        }
-
-        .page-handlers {
-          width: 90%;
-          margin: 30px auto;
-          display: flex;
-          justify-content: flex-end;
-          align-items: center;
-          height: 30px;
-        }
-
-        button {
-          height: 70%;
-          width: 90px;
-          margin: 0 5px;
-          font-size: 0.6rem;
         }
       `}</style>
     </React.Fragment>
