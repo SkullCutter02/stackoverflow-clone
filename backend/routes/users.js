@@ -60,22 +60,28 @@ router.get("/:uuid/posts", getRouteLimit, async (req, res) => {
 router.get("/:uuid/comments", getRouteLimit, async (req, res) => {
   try {
     const { uuid } = req.params;
+    const { page, limit } = req.query;
+
     const user = await User.findOne({
       where: { uuid: uuid },
+    });
+    const comments = await user.getComments({
+      limit: limit * 1,
+      offset: (page - 1) * limit,
+      order: [["createdAt", "DESC"]],
       include: [
         {
-          model: Comment,
-          as: "comments",
-          include: [
-            {
-              model: Post,
-              as: "post",
-            },
-          ],
+          model: Post,
+          as: "post",
         },
       ],
     });
-    return res.json(user);
+    const tempComments = await user.getComments();
+    return res.json({
+      user,
+      comments,
+      hasMore: tempComments.length > page * limit,
+    });
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);

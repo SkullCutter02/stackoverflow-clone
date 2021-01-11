@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useQuery } from "react-query";
 
 import UserQuestions from "./UserQuestions";
+import UserAnswers from "./UserAnswers";
 import { UserContext } from "../context/UserContext";
 import host from "../utils/host";
 
@@ -88,7 +89,7 @@ const UserInfo: React.FC<Props> = ({ username }) => {
               {tab === "question" ? (
                 <UserQuestions uuid={data.uuid} />
               ) : (
-                <div>Answer</div>
+                <UserAnswers uuid={data.uuid} />
               )}
             </div>
           </div>
