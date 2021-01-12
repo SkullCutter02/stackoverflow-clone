@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { useQuery } from "react-query";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -58,13 +59,15 @@ const UserAnswers: React.FC<Props> = ({ uuid }) => {
                       <p>{answer.votes}</p>
                       <p>Votes</p>
                     </div>
-                    <div className="main">
-                      <ReactMarkdown
-                        source={answer.body}
-                        plugins={[remarkGfm]}
-                        className="preview user-answer-markdown"
-                      />
-                    </div>
+                    <Link href={`/questions/${answer?.post?.uuid}`}>
+                      <div className="main">
+                        <ReactMarkdown
+                          source={answer.body}
+                          plugins={[remarkGfm]}
+                          className="preview user-answer-markdown"
+                        />
+                      </div>
+                    </Link>
                   </div>
                 ))}
               </div>
@@ -116,6 +119,7 @@ const UserAnswers: React.FC<Props> = ({ uuid }) => {
         .main {
           width: 97%;
           margin: -15px 25px;
+          cursor: pointer;
         }
       `}</style>
     </React.Fragment>

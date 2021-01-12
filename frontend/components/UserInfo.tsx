@@ -1,5 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useQuery } from "react-query";
+import { useRouter } from "next/router";
 
 import UserQuestions from "./UserQuestions";
 import UserAnswers from "./UserAnswers";
@@ -19,12 +20,14 @@ type UserType = {
 
 interface Props {
   username: string;
+  type: "question" | "answer";
 }
 
-const UserInfo: React.FC<Props> = ({ username }) => {
-  const [tab, setTab] = useState<"question" | "answer">("question");
+const UserInfo: React.FC<Props> = ({ username, type }) => {
+  const [tab, setTab] = useState<"question" | "answer">(type);
 
   const userContext = useContext(UserContext);
+  const router = useRouter();
 
   const fetchUser = async () => {
     const res = await fetch(`${host}/users/${username}`);
@@ -50,8 +53,16 @@ const UserInfo: React.FC<Props> = ({ username }) => {
 
       activeTab.classList.add("active");
       setTab(tab);
+      router.push(`/user/${username}?type=${tab}`);
     }
   }
+
+  useEffect(() => {
+    if (data) {
+      const activeTab = document.getElementById(type) as HTMLSpanElement;
+      activeTab.classList.add("active");
+    }
+  }, [data]);
 
   return (
     <React.Fragment>
@@ -71,7 +82,7 @@ const UserInfo: React.FC<Props> = ({ username }) => {
           <div className="user-content-container">
             <div className="tab-nav">
               <span
-                className="nav-item active"
+                className="nav-item"
                 id="question"
                 onClick={() => handleTab("question")}
               >
@@ -120,11 +131,11 @@ const UserInfo: React.FC<Props> = ({ username }) => {
         }
 
         .nav-item:hover {
-          background: #7c7c7c;
+          background: #a9a9a9;
         }
 
         .active {
-          background: #565656;
+          background: #737373;
         }
 
         .active:hover {

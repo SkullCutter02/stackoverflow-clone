@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
         credentials: "include",
       });
       userContext.setState(null);
-      await router.reload();
+      await router.push("/");
     } catch (err) {
       console.log(err);
     }
@@ -81,7 +81,7 @@ const Navbar: React.FC = () => {
                 />
               </div>
 
-              <Link href={`/user/${userContext.user.username}`}>
+              <Link href={`/user/${userContext.user.username}?type=question`}>
                 <div
                   className="signed-in-state pop-up-item"
                   onClick={() => {
