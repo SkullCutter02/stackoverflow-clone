@@ -14,7 +14,7 @@ type CommunityType = {
   updatedAt: string;
 };
 
-type UserType = {
+export type UserType = {
   uuid: string;
   username: string;
   email: string;

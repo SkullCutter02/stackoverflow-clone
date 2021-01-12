@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortDown, faSortUp } from "@fortawesome/free-solid-svg-icons";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import hljs from "highlight.js";
 import { useRouter } from "next/router";
 
 import { CommentType } from "../utils/types/individualQuestionType";
@@ -10,7 +11,6 @@ import { VoteType } from "../utils/types/voteType";
 import * as css from "../utils/cssVariables";
 import AskedBy from "./AskedBy";
 import { UserContext } from "../context/UserContext";
-import hljs from "highlight.js";
 import host from "../utils/host";
 import { updateVote, getCookie } from "../utils/functions";
 import OPActions from "./OPActions";
