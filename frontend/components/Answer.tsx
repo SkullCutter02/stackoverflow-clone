@@ -108,7 +108,7 @@ const Answer: React.FC<Props> = ({ comment }) => {
         alert("You can't vote on your own comment!");
       }
     } else {
-      await router.push("/auth/signup");
+      await router.push(`/auth/signup?redirect=${router.asPath}`);
     }
   };
 
@@ -157,7 +157,7 @@ const Answer: React.FC<Props> = ({ comment }) => {
                   />
                 </div>
                 {comment.user.uuid === userContext?.user?.uuid ||
-                userContext?.user.role === "god" ? (
+                userContext?.user?.role === "god" ? (
                   <div className="op-actions">
                     <OPActions
                       uuid={comment.uuid}

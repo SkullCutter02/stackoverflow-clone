@@ -5,10 +5,24 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/build-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/build-manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages-manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/[community].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/[community].js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/_app.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/_app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/auth/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/auth/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/auth/signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/auth/signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/questions/[uuid].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/questions/[uuid].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/request/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/request/community.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/auth/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/auth/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/auth/signup.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/auth/signup.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/questions/[uuid].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/questions/[uuid].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/request/community.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/request/community.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/components/Answer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Answer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/components/Aside.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Aside.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/components/AuthForm.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/AuthForm.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/components/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/components/Question.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/Question.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/request/community.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/request/community.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -115,7 +129,7 @@
       <workItem from="1610499263021" duration="85000" />
       <workItem from="1610499352611" duration="31000" />
       <workItem from="1610499415284" duration="491000" />
-      <workItem from="1610534496282" duration="3486000" />
+      <workItem from="1610534496282" duration="4705000" />
     </task>
     <servers />
   </component>

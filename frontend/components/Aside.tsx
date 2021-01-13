@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTags, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
@@ -11,6 +12,8 @@ interface Props {
 }
 
 const Aside: React.FC<Props> = ({ borderSide }) => {
+  const router = useRouter();
+
   return (
     <React.Fragment>
       <aside>
@@ -20,7 +23,13 @@ const Aside: React.FC<Props> = ({ borderSide }) => {
             Question
           </button>
         </Link>
-        <Link href={getCookie("token") ? "/request/community" : "/auth/signup"}>
+        <Link
+          href={
+            getCookie("token")
+              ? `/request/community?redirect=${router.asPath}`
+              : `/auth/signup?redirect=${router.asPath}`
+          }
+        >
           <button className="section-btn request-community-btn">
             <FontAwesomeIcon icon={faTags} color={"white"} /> Request a
             Community

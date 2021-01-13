@@ -3,6 +3,8 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/request/community": "pages/request/community.js",
-  "/request/question": "pages/request/question.js"
+  "/[community]": "pages/[community].js",
+  "/auth/login": "pages/auth/login.js",
+  "/questions/[uuid]": "pages/questions/[uuid].js",
+  "/auth/signup": "pages/auth/signup.js"
 }

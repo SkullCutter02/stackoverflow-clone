@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
         credentials: "include",
       });
       userContext.setState(null);
-      await router.push("/");
+      await router.reload();
     } catch (err) {
       console.log(err);
     }
@@ -44,10 +44,10 @@ const Navbar: React.FC = () => {
           </div>
           {userContext.user === undefined ? (
             <div className="nav-right">
-              <Link href={"/auth/login"}>
+              <Link href={`/auth/login?redirect=${router.asPath}`}>
                 <button className="nav-auth-btn nav-log-in-btn">Log In</button>
               </Link>
-              <Link href={"/auth/signup"}>
+              <Link href={`/auth/signup?redirect=${router.asPath}`}>
                 <button className="nav-auth-btn nav-sign-up-btn">
                   Sign Up
                 </button>

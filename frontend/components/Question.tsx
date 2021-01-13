@@ -114,7 +114,7 @@ const Question: React.FC<Props> = ({ question, setEditMode, editMode }) => {
         alert("You can't vote on your own post!");
       }
     } else {
-      await router.push("/auth/signup");
+      await router.push(`/auth/signup?redirect=${router.asPath}`);
     }
   };
 

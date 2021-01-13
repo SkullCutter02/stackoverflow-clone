@@ -7,6 +7,7 @@ import { getCookie } from "../../utils/functions";
 
 const RequestCommunityPage: React.FC = () => {
   const router = useRouter();
+  const redirect = router.query.redirect;
 
   const requestCommunity = (e) => {
     e.preventDefault();
@@ -32,10 +33,11 @@ const RequestCommunityPage: React.FC = () => {
           errMsg.innerText = data.msg;
         } else {
           errMsg.style.color = "white";
-          errMsg.innerText =
-            "Request Sent! Redirecting you back to home page in 3 seconds";
+          errMsg.innerText = "Request Sent! Redirecting you in 3 seconds";
           setTimeout(() => {
-            router.push("/");
+            if (typeof redirect === "string") {
+              router.push(redirect);
+            }
           }, 3000);
         }
       });

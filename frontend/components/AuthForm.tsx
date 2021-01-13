@@ -13,6 +13,7 @@ interface Props {
 const AuthForm: React.FC<Props> = ({ formType }) => {
   const userContext = useContext(UserContext);
   const router = useRouter();
+  const redirect = router.query.redirect;
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -59,7 +60,9 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
                 .then((res) => res.json())
                 .then((data) => userContext.setState(data))
                 .catch((err) => console.log(err));
-              await router.push("/");
+              if (typeof redirect === "string") {
+                await router.push(redirect);
+              }
             }
           })
           .catch((err) => console.log(err));
@@ -94,7 +97,9 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
                 .then((data) => userContext.setState(data))
                 .catch((err) => console.log(err));
               console.log(data);
-              await router.push("/");
+              if (typeof redirect === "string") {
+                await router.push(redirect);
+              }
             }
           })
           .catch((err) => console.log(err));
@@ -122,7 +127,9 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
                 .then((res) => res.json())
                 .then((data) => userContext.setState(data))
                 .catch((err) => console.log(err));
-              await router.push("/");
+              if (typeof redirect === "string") {
+                await router.push(redirect);
+              }
             }
           })
           .catch((err) => console.log(err));
@@ -181,7 +188,7 @@ const AuthForm: React.FC<Props> = ({ formType }) => {
                     Remember Me
                   </label>
                 </div>
-                <Link href={"/auth/login"}>
+                <Link href={`/auth/login?redirect=${redirect}`}>
                   <p className="auth-form-forgot-password">
                     Already have an account?
                   </p>
