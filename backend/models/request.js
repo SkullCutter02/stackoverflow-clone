@@ -17,13 +17,16 @@ module.exports = (sequelize, DataTypes) => {
   }
   Request.init(
     {
-      uuid: DataTypes.STRING,
+      uuid: {
+        type: DataTypes.STRING,
+        defaultValue: DataTypes.UUIDV4,
+      },
       name: DataTypes.STRING,
       link: DataTypes.STRING,
     },
     {
       sequelize,
-      tableName: "request",
+      tableName: "requests",
       modelName: "Request",
     }
   );
