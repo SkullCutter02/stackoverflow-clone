@@ -7,6 +7,7 @@ import {
   faCaretUp,
   faSignOutAlt,
   faIdBadge,
+  faUsersCog,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { UserContext } from "../context/UserContext";
@@ -29,6 +30,21 @@ const Navbar: React.FC = () => {
       await router.reload();
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const hideNav = () => {
+    setCaretStatus(caretStatus === "down" ? "up" : "down");
+    const popUps = document.getElementsByClassName("pop-up-item");
+
+    for (let i = 0; i < popUps.length; i++) {
+      if (caretStatus === "up") {
+        const popUp = popUps[i] as HTMLElement;
+        popUp.style.visibility = "hidden";
+      } else if (caretStatus === "down") {
+        const popUp = popUps[i] as HTMLElement;
+        popUp.style.visibility = "visible";
+      }
     }
   };
 
@@ -55,23 +71,7 @@ const Navbar: React.FC = () => {
             </div>
           ) : (
             <div className="nav-right signed-in">
-              <div
-                className="signed-in-state og"
-                onClick={() => {
-                  setCaretStatus(caretStatus === "down" ? "up" : "down");
-                  const popUps = document.getElementsByClassName("pop-up-item");
-
-                  for (let i = 0; i < popUps.length; i++) {
-                    if (caretStatus === "up") {
-                      const popUp = popUps[i] as HTMLElement;
-                      popUp.style.visibility = "hidden";
-                    } else if (caretStatus === "down") {
-                      const popUp = popUps[i] as HTMLElement;
-                      popUp.style.visibility = "visible";
-                    }
-                  }
-                }}
-              >
+              <div className="signed-in-state og" onClick={hideNav}>
                 <p className="username">{userContext?.user?.username}</p>
                 <FontAwesomeIcon
                   icon={caretStatus === "down" ? faCaretDown : faCaretUp}
@@ -115,6 +115,26 @@ const Navbar: React.FC = () => {
                   style={{ marginRight: "10px" }}
                 />
               </div>
+
+              {userContext?.user?.role === "god" ? (
+                <div
+                  className="signed-in-state pop-up-item"
+                  onClick={() => {
+                    router.push("/admin");
+                    hideNav();
+                  }}
+                >
+                  <p className="pop-up-txt">Admin Area</p>
+                  <FontAwesomeIcon
+                    icon={faUsersCog}
+                    color={"white"}
+                    size={"1x"}
+                    style={{ marginRight: "10px" }}
+                  />
+                </div>
+              ) : (
+                <div />
+              )}
             </div>
           )}
         </div>

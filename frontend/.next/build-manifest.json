@@ -34,20 +34,25 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
     ],
+    "/admin": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/admin.js"
+    ],
     "/auth/login": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
       "static/chunks/pages/auth/login.js"
     ],
-    "/auth/signup": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/auth/signup.js"
-    ],
     "/questions/[uuid]": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
       "static/chunks/pages/questions/[uuid].js"
+    ],
+    "/user/[username]": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/user/[username].js"
     ]
   },
   "ampFirstPages": []
