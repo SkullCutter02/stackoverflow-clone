@@ -38,11 +38,6 @@
       "static/chunks/main.js",
       "static/chunks/webpack.js",
       "static/chunks/pages/questions/[uuid].js"
-    ],
-    "/user/[username]": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/user/[username].js"
     ]
   },
   "ampFirstPages": []

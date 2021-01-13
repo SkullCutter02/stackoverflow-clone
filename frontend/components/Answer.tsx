@@ -156,7 +156,8 @@ const Answer: React.FC<Props> = ({ comment }) => {
                     reputation={comment.user.reputation}
                   />
                 </div>
-                {comment.user.uuid === userContext?.user?.uuid ? (
+                {comment.user.uuid === userContext?.user?.uuid ||
+                userContext?.user.role === "god" ? (
                   <div className="op-actions">
                     <OPActions
                       uuid={comment.uuid}

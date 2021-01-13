@@ -168,7 +168,8 @@ const Question: React.FC<Props> = ({ question, setEditMode, editMode }) => {
                   reputation={question.user.reputation}
                 />
               </div>
-              {question.user.uuid === userContext?.user?.uuid ? (
+              {question.user.uuid === userContext?.user?.uuid ||
+              userContext?.user?.role === "god" ? (
                 <OPActions
                   uuid={question.uuid}
                   type={"question"}

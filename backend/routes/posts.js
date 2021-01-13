@@ -239,8 +239,8 @@ router.patch("/:uuid", verifyToken, (req, res) => {
         });
         const user = await User.findOne({ where: { uuid: userUuid } });
 
-        if (authData.uuid === user.uuid) {
-          if (post.user.uuid === user.uuid) {
+        if (authData.uuid === user.uuid || user.role === "god") {
+          if (post.user.uuid === user.uuid || user.role === "god") {
             await post.update({ body: body });
             return res.json(post);
           } else {
@@ -274,8 +274,8 @@ router.delete("/:uuid", verifyToken, (req, res) => {
         });
         const user = await User.findOne({ where: { uuid: userUuid } });
 
-        if (authData.uuid === user.uuid) {
-          if (post.user.uuid === user.uuid) {
+        if (authData.uuid === user.uuid || user.role === "god") {
+          if (post.user.uuid === user.uuid || user.role === "god") {
             const comments = await post.getComments();
             for (let i = 0; i < comments.length; i++) {
               await comments[i].destroy();
@@ -468,8 +468,8 @@ router.patch("/comments/:commentUuid", verifyToken, (req, res) => {
         });
         const user = await User.findOne({ where: { uuid: userUuid } });
 
-        if (authData.uuid === user.uuid) {
-          if (comment.user.uuid === user.uuid) {
+        if (authData.uuid === user.uuid || user.role === "god") {
+          if (comment.user.uuid === user.uuid || user.role === "god") {
             await comment.update({ body: body });
             return res.json(comment);
           } else {
@@ -503,8 +503,8 @@ router.delete("/comments/:commentUuid", verifyToken, (req, res) => {
         });
         const user = await User.findOne({ where: { uuid: userUuid } });
 
-        if (authData.uuid === user.uuid) {
-          if (comment.user.uuid === user.uuid) {
+        if (authData.uuid === user.uuid || user.role === "god") {
+          if (comment.user.uuid === user.uuid || user.role === "god") {
             await comment.destroy();
             return res.json({ msg: "Post deleted" });
           } else {

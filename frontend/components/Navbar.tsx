@@ -81,7 +81,7 @@ const Navbar: React.FC = () => {
                 />
               </div>
 
-              <Link href={`/user/${userContext.user.username}?type=question`}>
+              <Link href={`/user/${userContext?.user?.username}?type=question`}>
                 <div
                   className="signed-in-state pop-up-item"
                   onClick={() => {
