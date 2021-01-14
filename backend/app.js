@@ -17,6 +17,8 @@ app.use(
   })
 );
 
+app.set("trust proxy", 1);
+
 app.use("/auth", require("./routes/auth"));
 app.use("/posts", require("./routes/posts"));
 app.use("/users", require("./routes/users"));

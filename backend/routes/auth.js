@@ -64,10 +64,11 @@ router.post(
                 return res.status(500).json({ err });
               } else {
                 if (!rememberMe) {
-                  res.cookie("token", token);
+                  res.cookie("token", token, { secure: true });
                 } else {
                   res.cookie("token", token, {
                     maxAge: 31536000000,
+                    secure: true,
                   });
                 }
                 return res.json({ token });
@@ -109,10 +110,11 @@ router.post("/login", logInLimit, async (req, res) => {
             return res.status(500).json({ err });
           } else {
             if (!rememberMe) {
-              res.cookie("token", token);
+              res.cookie("token", token, { secure: true });
             } else {
               res.cookie("token", token, {
                 maxAge: 31536000000,
+                secure: true,
               });
             }
             return res.json({ token });

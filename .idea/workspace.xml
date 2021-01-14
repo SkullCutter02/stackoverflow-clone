@@ -2,15 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="72f0844c-8b37-4796-b385-52962eac77fa" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/communities.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/communities.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/build-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/build-manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/admin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/pages/admin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/admin.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +25,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/backend" />
   </component>
   <component name="ProjectId" id="1lzslzjn9m3KKPLrhHU4i2Uu58N" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -116,12 +113,16 @@
       <workItem from="1610499263021" duration="85000" />
       <workItem from="1610499352611" duration="31000" />
       <workItem from="1610499415284" duration="491000" />
-      <workItem from="1610534496282" duration="8966000" />
+      <workItem from="1610534496282" duration="9356000" />
+      <workItem from="1610607134081" duration="6694000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="com.intellij.fileTypeFactory" implementationName="*.toml" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

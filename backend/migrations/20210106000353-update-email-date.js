@@ -10,7 +10,7 @@ module.exports = {
      */
 
     return Promise.all([
-      queryInterface.changeColumn("emails", "expirationDate", Sequelize.STRING),
+      queryInterface.addColumn("emails", "expirationDate", Sequelize.STRING),
     ]);
   },
 

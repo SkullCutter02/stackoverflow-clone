@@ -8,9 +8,6 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    return Promise.all([
-      queryInterface.addColumn("posts", "votes", Sequelize.INTEGER),
-    ]);
   },
 
   down: async (queryInterface, Sequelize) => {
