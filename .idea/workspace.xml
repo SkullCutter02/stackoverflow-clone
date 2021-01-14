@@ -2,22 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="72f0844c-8b37-4796-b385-52962eac77fa" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/public/rick.gif" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/routes/requests.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/requests.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/build-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/build-manifest.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/[community].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/[community].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/questions/[uuid].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/questions/[uuid].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/server/pages/user/[username].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/server/pages/user/[username].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/questions/[uuid].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/questions/[uuid].js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/user/[username].js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/pages/user/[username].js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/chunks/webpack.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/.next/static/development/_buildManifest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/AskedBy.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/AskedBy.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/components/PageHandlers.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/components/PageHandlers.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/pages/admin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/admin.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -69,11 +61,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/frontend/public" />
       <recent name="$PROJECT_DIR$/frontend/pages/auth/resetpassword" />
       <recent name="$PROJECT_DIR$/backend/middleware" />
       <recent name="$PROJECT_DIR$/backend/utils" />
       <recent name="$PROJECT_DIR$/frontend/public" />
-      <recent name="$PROJECT_DIR$/frontend/utils/types" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="project-level" UseSingleDictionary="false" transferred="true" />
@@ -124,7 +116,7 @@
       <workItem from="1610499263021" duration="85000" />
       <workItem from="1610499352611" duration="31000" />
       <workItem from="1610499415284" duration="491000" />
-      <workItem from="1610534496282" duration="6996000" />
+      <workItem from="1610534496282" duration="7141000" />
     </task>
     <servers />
   </component>

@@ -64,8 +64,21 @@ const AdminPage = () => {
           )}
         </div>
       ) : (
-        <div />
+        <div className="rickroll">
+          <img src={"/rick.gif"} alt="rick" />
+        </div>
       )}
+
+      <style jsx>{`
+        .rickroll {
+          margin: 100px auto;
+        }
+
+        .rickroll img {
+          display: block;
+          margin: 0 auto;
+        }
+      `}</style>
     </React.Fragment>
   );
 };
