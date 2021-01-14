@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const { shouldSendSameSiteNone } = require("should-send-same-site-none");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 const { sequelize } = require("./models");
@@ -9,6 +10,7 @@ const app = express();
 app.use(express.json());
 app.use(helmet());
 app.use(cookieParser());
+app.use(shouldSendSameSiteNone);
 
 app.use(
   cors({
@@ -16,9 +18,6 @@ app.use(
     origin: process.env.HOST || "http://localhost:3000",
   })
 );
-
-app.enable("trust proxy");
-app.set("trust proxy", 1);
 
 app.use("/auth", require("./routes/auth"));
 app.use("/posts", require("./routes/posts"));
