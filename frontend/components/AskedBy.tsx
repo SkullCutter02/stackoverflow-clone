@@ -25,7 +25,7 @@ const AskedBy: React.FC<Props> = ({
       <span>
         <i className="asked-by">
           {type} by:
-          <Link href={`/user/${username}`}>
+          <Link href={`/user/${username}?type=question`}>
             <span className="username"> {username}</span>
           </Link>{" "}
           {reputation !== undefined && `• ${roundNumber(reputation)} || `}

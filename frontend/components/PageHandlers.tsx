@@ -6,6 +6,7 @@ interface Props {
   isPreviousData: boolean;
   hasMore: boolean;
   width: number;
+  flex?: "flex-start";
 }
 
 const PageHandlers: React.FC<Props> = ({
@@ -14,6 +15,7 @@ const PageHandlers: React.FC<Props> = ({
   isPreviousData,
   hasMore,
   width,
+  flex,
 }) => {
   return (
     <React.Fragment>
@@ -46,7 +48,7 @@ const PageHandlers: React.FC<Props> = ({
           width: ${width}%;
           margin: 20px auto;
           display: flex;
-          justify-content: flex-end;
+          justify-content: ${flex === undefined ? "flex-end" : flex};
         }
 
         button {

@@ -13,8 +13,9 @@ router.get("/", async (req, res) => {
       limit: limit * 1,
       offset: (page - 1) * limit,
     });
+    const tempRequests = await Request.findAll();
 
-    return res.json(requests);
+    return res.json({ requests, hasMore: tempRequests.length > page * limit });
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);
