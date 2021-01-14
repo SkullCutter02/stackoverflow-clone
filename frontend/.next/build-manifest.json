@@ -39,10 +39,10 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/admin.js"
     ],
-    "/auth/login": [
+    "/request/community": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/auth/login.js"
+      "static/chunks/pages/request/community.js"
     ]
   },
   "ampFirstPages": []

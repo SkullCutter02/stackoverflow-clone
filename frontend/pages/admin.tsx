@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { useQuery } from "react-query";
 import PageHandlers from "../components/PageHandlers";
 
@@ -21,6 +21,9 @@ const AdminPage = () => {
 
   const userContext = useContext(UserContext);
 
+  const nameRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+
   const fetchRequests = async (page: number) => {
     const res = await fetch(`${host}/requests?page=${page}&limit=20`);
     return await res.json();
@@ -32,6 +35,33 @@ const AdminPage = () => {
   >(["requests", page], () => fetchRequests(page), {
     keepPreviousData: true,
   });
+
+  const postCommunity = (e) => {
+    e.preventDefault();
+
+    if (userContext.user) {
+      fetch(`${host}/communities`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: nameRef.current.value,
+          description: descriptionRef.current.value,
+          uuid: userContext.user.uuid,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.msg) {
+            console.log(data.msg);
+          } else {
+            nameRef.current.value = "";
+            descriptionRef.current.value = "";
+          }
+        });
+    }
+  };
 
   if (userContext.user === undefined) {
     return <div />;
@@ -46,21 +76,42 @@ const AdminPage = () => {
           ) : isError ? (
             <div>{error.message}</div>
           ) : (
-            <React.Fragment>
+            <div className="admin-area">
               <div className="requests-container">
                 {data.requests.map((request) => (
-                  <div>{request.uuid}</div>
+                  <div>
+                    <p>{request.name}</p>
+                    <a href={request.link} style={{ color: "white" }}>
+                      {request.link}
+                    </a>
+                  </div>
                 ))}
+                <PageHandlers
+                  page={page}
+                  setPage={setPage}
+                  isPreviousData={isPreviousData}
+                  hasMore={data.hasMore}
+                  width={100}
+                  flex={"flex-start"}
+                />
               </div>
-              <PageHandlers
-                page={page}
-                setPage={setPage}
-                isPreviousData={isPreviousData}
-                hasMore={data.hasMore}
-                width={100}
-                flex={"flex-start"}
-              />
-            </React.Fragment>
+              <form onSubmit={postCommunity}>
+                <input
+                  type="text"
+                  placeholder="Name: "
+                  ref={nameRef}
+                  required
+                />
+                <textarea
+                  cols={30}
+                  rows={10}
+                  placeholder="Description: "
+                  ref={descriptionRef}
+                  required
+                />
+                <button type="submit">Submit</button>
+              </form>
+            </div>
           )}
         </div>
       ) : (
@@ -77,6 +128,18 @@ const AdminPage = () => {
         .rickroll img {
           display: block;
           margin: 0 auto;
+        }
+
+        .admin-area {
+          margin: 200px 200px;
+          display: flex;
+          justify-content: space-between;
+        }
+
+        form input,
+        form textarea {
+          display: block;
+          resize: none;
         }
       `}</style>
     </React.Fragment>

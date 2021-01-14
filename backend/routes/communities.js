@@ -1,7 +1,6 @@
 const express = require("express");
 const { Community, User, Comment, Post } = require("../models");
 const { getRouteLimit } = require("../middleware/limiters");
-const { comparePassword } = require("../utils/hash");
 
 const router = express.Router();
 
@@ -129,11 +128,10 @@ router.get("/:name/posts", getRouteLimit, async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const { name, description, email, password } = req.body;
-    const user = await User.findOne({ where: { email: email } });
-    const isValidPass = await comparePassword(password, user.hash);
+    const { name, description, uuid } = req.body;
+    const user = await User.findOne({ where: { uuid: uuid } });
 
-    if (isValidPass && user.role === "god") {
+    if (user.role === "god") {
       const community = await Community.create({ name, description });
       return res.json(community);
     } else {
@@ -148,13 +146,12 @@ router.post("/", async (req, res) => {
 router.patch("/:uuid", async (req, res) => {
   try {
     const { uuid } = req.params;
-    const { name, description, email, password } = req.body;
+    const { name, description, userUuid } = req.body;
     const community = await Community.findOne({ where: { uuid: uuid } });
 
-    const user = await User.findOne({ where: { email: email } });
-    const isValidPass = await comparePassword(password, user.hash);
+    const user = await User.findOne({ where: { uuid: userUuid } });
 
-    if (isValidPass && user.role === "god") {
+    if (user.role === "god") {
       if (name) await community.update({ name });
       if (description) await community.update({ description });
       return res.json(community);
@@ -170,12 +167,13 @@ router.patch("/:uuid", async (req, res) => {
 router.delete("/:uuid", async (req, res) => {
   try {
     const { uuid } = req.params;
+    const { userUuid } = req.body;
+
     const community = await Community.findOne({ where: { uuid: uuid } });
 
-    const user = await User.findOne({ where: { email: email } });
-    const isValidPass = await comparePassword(password, user.hash);
+    const user = await User.findOne({ where: { uuid: userUuid } });
 
-    if (isValidPass && user.role === "god") {
+    if (user.role === "god") {
       await community.destroy();
       return res.json({ msg: "Community deleted" });
     } else {
