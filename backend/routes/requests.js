@@ -55,4 +55,24 @@ router.post("/", verifyToken, (req, res) => {
   });
 });
 
+router.delete("/:uuid", verifyToken, (req, res) => {
+  jwt.verify(req.token, "secretkey", async (err, authData) => {
+    if (err) {
+      return res.status(403).json(err);
+    } else {
+      try {
+        const { uuid } = req.params;
+
+        const request = await Request.findOne({ where: { uuid: uuid } });
+        await request.destroy();
+
+        return res.json({ msg: "Request deleted" });
+      } catch (err) {
+        console.log(err);
+        return res.status(500).json(err);
+      }
+    }
+  });
+});
+
 module.exports = router;
