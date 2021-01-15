@@ -116,16 +116,6 @@ router.post("/login", logInLimit, async (req, res) => {
   }
 });
 
-router.post("/logout", (req, res) => {
-  try {
-    res.clearCookie("token");
-    return res.json({ msg: "Logged out" });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
-  }
-});
-
 router.post(
   "/email/password/reset/send",
   forgetPasswordLimit,
