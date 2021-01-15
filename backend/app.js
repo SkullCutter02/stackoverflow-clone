@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const { shouldSendSameSiteNone } = require("should-send-same-site-none");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 const { sequelize } = require("./models");
@@ -10,14 +9,15 @@ const app = express();
 app.use(express.json());
 app.use(helmet());
 app.use(cookieParser());
-app.use(shouldSendSameSiteNone);
 
 app.use(
   cors({
     credentials: true,
-    origin: process.env.HOST || "http://localhost:3000",
+    origin: true,
   })
 );
+
+app.enable("trust proxy");
 
 app.use("/auth", require("./routes/auth"));
 app.use("/posts", require("./routes/posts"));
@@ -34,5 +34,3 @@ app.listen(PORT, () => {
     .then(console.log("Database Connected!"))
     .catch((err) => console.log(err));
 });
-
-// TODO: Admin put credentials in .env file
